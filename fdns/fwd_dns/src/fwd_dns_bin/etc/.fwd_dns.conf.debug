@@ -1,0 +1,81 @@
+;			======== fwddns main configuration file ==========
+[nic]
+use_ports_mask = 3
+promisc = 1
+; Lcore io, <port, queue, lcore>
+rx = (0,1,2),(0,2,3),(0,3,4),(0,4,5),(0,5,6),(0,6,7),(0,7,8),(0,8,9),(1,1,2),(1,2,3),(1,3,4),(1,4,5),(1,5,6),(1,6,7),(1,7,8),(1,8,9)
+tx = (0,1,2),(0,2,3),(0,3,4),(0,4,5),(0,5,6),(0,6,7),(0,7,8),(0,8,9),(1,1,2),(1,2,3),(1,3,4),(1,4,5),(1,5,6),(1,6,7),(1,7,8),(1,8,9)
+kni = 0
+misc = 1
+promisc = on
+lcore_kni = (0,9,0),(1,10,0)
+
+; <port id, ip address>
+
+port0_ip = 192.168.1.110
+port1_ip = 192.168.1.114
+[system]
+log_path = /home/dns_dev_bak/dpdk_dns_forwarder/fwd_dns/src/fwd_dns_bin/runlog/pipe/
+
+;retry 1,means total 2 times
+;retry will first try the healthy forwarder in the view;if none,will try the backup view if the backup is health,then any other health view
+forwarder_retry = 1
+
+;second
+forwarder_retry_interval = 2
+
+;forwarder down after continus forwarder_fail_down times
+forwarder_fail_down = 10
+
+;forwarder try to be up after forwarder_up_after_down seconds
+forwarder_up_after_down = 120
+
+;s
+charge_topn_interval = 10
+
+;us
+timer_exec_interval = 10
+
+;us
+ttl_expire_clean_exec_interval = 1
+
+ttl_expire_clean_hash_size = 5
+;every time check 50 hash bucket to find expire nodes and free them
+
+;1<<22 = 4194304 about 400w
+lcore_node_max = 4194304
+
+;1<<19 = 524288 about 50w
+view_hash_table_size = 524288
+
+;in develop,not ready. edns_on ,every packet will has edns-client-subnet on
+edns_on = 0
+
+;error,warn,info,none
+bind_addr = 10.65.254.183
+bind_port = 6666
+query_log_level = none
+answer_log_level = none
+server_log_level = warn
+[view]
+
+viewlist = default,chinanet,unicom,zhejiang
+default = 182.182.182.182:53,182.182.182.182:54,182.182.182.182:55
+default__backup = default
+
+
+chinanet = 189.189.189.189:53,182.182.182.182:53
+chinanet__backup = unicom
+chinanet__acl = /home/dns_dev_bak/dpdk_dns_forwarder/fwd_dns/src/fwd_dns_bin/etc/acl_data/chinanet.acl
+
+
+unicom = 182.182.182.182:53,189.189.189.189:53
+unicom__backup = chinanet
+unicom__acl = /home/dns_dev_bak/dpdk_dns_forwarder/fwd_dns/src/fwd_dns_bin/etc/acl_data/unicom.acl
+
+
+zhejiang = 182.182.182.182:53,189.189.189.189:53
+zhejiang__backup = chinanet
+zhejiang__acl = /home/dns_dev_bak/dpdk_dns_forwarder/fwd_dns/src/fwd_dns_bin/etc/acl_data/zhejiang.acl
+
+

@@ -1,0 +1,77 @@
+#!/bin/bash
+HOST="0.0.0.0"
+PORT=8000
+
+PROJECT_PATH=/home/work/pdns-server
+export PATH=/home/tops/bin:$PATH
+LOGGING=$PROJECT_PATH/logs
+if [ ! -d $LOGGING ]
+then
+    mkdir -p $LOGGING
+fi
+action=$1
+
+function server_status(){
+  ps aux | grep "pdns-manage.py" |grep -v grep >& /dev/null
+  #ps aux | grep "" |grep -v grep >& /dev/null
+  status=$?
+  if [ $status -eq 0 ]
+  then
+      echo -e "pdns-manage server [\e[1;32mON\e[0m]"
+  else
+      echo -e "pdns-manage server [\e[1;31mOFF\e[0m]"
+  fi
+
+}
+
+
+function server_start(){
+    nohup /bin/env python $PROJECT_PATH/pdns-manage.py runserver $HOST:$PORT>& $LOGGING/web-nohup.log &
+    #/home/tops/bin/uwsgi -x /home/work/pdns-manage/deploy/uwsgi.xml --daemonize /home/work/pdns-manage/deploy/uwsgi.log &
+    sleep 1
+    server_status
+}
+
+
+function server_stop(){
+    ps aux |grep "pdns-manage.py" |grep -v grep | tr -s " "|cut -d" " -f 2 |xargs -I {}  kill {}
+    #kill -9 `ps aux | grep 'uwsgi' | grep -v grep | awk '{print $2}'`
+    sleep 1
+    server_status
+}
+
+
+function start(){
+    server_start
+}
+
+function stop(){
+    server_stop
+}
+
+function status(){
+    server_status
+}
+
+function restart(){
+    stop
+    start
+}
+case $action in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    status)
+        status
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    *)
+     echo "USAGE:$0 {start|stop|restart|status}"
+     exit 2
+esac

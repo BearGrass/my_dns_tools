@@ -1,0 +1,2 @@
+#!/bin/sh
+$LOG_BASE/bin/cronolog -S $LOG_BASE/query_log/query_log $LOG_BASE/query_log/query_log.%Y%m%d%H< $LOG_BASE/pipe/fwd_query.log

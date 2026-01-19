@@ -1,0 +1,497 @@
+{% extends "layout/default.html" %}
+<script type="text/javascript" src="/static/content/portal/portal.js"></script>
+{% block content %}
+    <script language="javascript" type="text/javascript">
+    Ext.require([
+        'Ext.ux.DataTip',
+        'Ext.layout.container.Column'
+    ]);
+    //全局变量，记录protal版本和用户信息
+    var portal_version_config ={
+        current_user_name : '{{ user.username }}',
+        current_user_password : '{{ user.password }}'
+    };
+    Ext.onReady(function () {
+        var pdns_server_store = Ext.create('Ext.data.Store', {
+            model: 'pdns_server',
+            storeId: 'pdns-server-store',
+            pageSize: 15,
+            autoLoad: true,
+            proxy: {
+                type: 'ajax',
+                url: '/server/pdns_server_list/',
+                reader: {
+                    type: 'json',
+                    root: 'result'
+                }
+            }
+        });
+        var pdns_server_grid = Ext.create('Ext.grid.Panel', {
+            store: pdns_server_store,
+            id: 'pdns-server-grid',
+            columns: [
+                {text: "ID", width: 20, dataIndex: 'id', sortable: true},
+                {text: "IP", width: 40, dataIndex: 'ip'},
+                {text: "NAME", width: 60, dataIndex: 'name'},
+                {text: "AGENT PORT", width: 20, dataIndex: 'port', hidden: true},
+                {text: "VIEW ID", width: 40, dataIndex: 'view_id', hidden: true},
+                {text: "VIEW NAME", width: 40, dataIndex: 'view_name'},
+                {text: "Server类型", width: 30, dataIndex: 'type'},
+                {text: "Server状态", width: 30, dataIndex: 'status',  renderer: function (value) {
+                    if (value == "online") {
+                        return "<span style='color:green'>ONLINE</span>";
+                    } else {
+                        return "<span style='color:red'>OFFLINE</span>";
+                    }
+                }},
+                {text: "Agent状态", width: 30, dataIndex: 'agent_status',  renderer: function (value) {
+                    if (value == "online") {
+                        return "<span style='color:green'>ONLINE</span>";
+                    }
+                    else {
+                        return "<span style='color:red'>OFFLINE</span>";
+                    }
+                }},
+                {text: "PDNS版本", width: 60, dataIndex: 'pdns_version'},
+                {text: "Agent版本", width: 60, dataIndex: 'agent_version'}
+            ],
+            viewConfig: {
+                enableTextSelection: true
+            },
+            forceFit: true,
+            height: "100%",
+            split: true,
+            region: 'north',
+            bbar: Ext.create('Ext.PagingToolbar', {
+                store: pdns_server_store,
+                displayInfo: true,
+                id: 'PagingToolbarId',
+                displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
+                emptyMsg: "没有数据",
+                plugins : [
+                    Ext.create('Ext.ux.PagingToolbarResizer',{options : [15,30,50,100,200]})
+                ],
+                listeners: {
+                    beforechange: function (obj, page_count) {
+                        pdns_server_store.proxy.extraParams.server_name = Ext.getCmp('server-search-name').value || "";
+                    }
+                }
+            })
+        });
+        Ext.create('Ext.Panel', {
+            renderTo: 'server-template-pannel',
+            width: '100%',
+            height: document.documentElement.clientHeight,
+            loadMask: true,
+            layout: 'border',
+            tbar: [
+                {
+                    xtype: 'textfield',
+                    emptyText: '输入名称搜索',
+                    id: "server-search-name"
+                },
+                {
+                    xtype: 'button',
+                    text: '搜索',
+                    iconCls: 'icon-search',
+                    handler: pdns.refresh_grid
+                },
+                '-',
+                {
+                    xtype: 'button',
+                    text: '添加',
+                    iconCls: 'icon-add',
+                    handler: pdns.create_server_edit_window
+                },
+                '-',
+                {
+                    xtype: 'button',
+                    text: '更新',
+                    iconCls: 'icon-edit',
+                    handler: pdns.open_edit_server
+                },
+                '-',
+                {
+                    text: '删除',
+                    tooltip: '修改所选中的域名',
+                    iconCls: 'icon-delete',
+                    handler: function () {
+                        var pdns_server_grid = Ext.getCmp('pdns-server-grid');
+                        var selected = pdns_server_grid.getSelectionModel().getSelection();
+                        Ext.MessageBox.confirm("确认删除", "是否确认删除<b>&nbsp;" + selected[0].data.name + "</b>?", function (click_button) {
+                            if (click_button == "yes") {
+                                var pdns_server_id = selected[0].data.id;
+                                Ext.Ajax.request({
+                                    url: "/server/delete_pdns_server/",
+                                    params: {"pdns_server": JSON.stringify({id: pdns_server_id})},
+                                    success: function (response) {
+                                        var resopnse_info = JSON.parse(response.responseText);
+                                        if (resopnse_info.result == "success") {
+                                            alert("服务器删除成功", null, function () {
+                                                Ext.getCmp('server-edit-window').close();
+                                            });
+                                        } else {
+                                            alert(resopnse_info["message"] || "服务器删除失败");
+                                        }
+                                        pdns.refresh_grid();
+                                    },
+                                    method: "post"
+                                });
+                            }
+                        });
+                    }
+                }
+            ],
+            items: [
+                pdns_server_grid, {
+                    columnWidth: 0.35,
+                    margin: '0 0 0 10',
+                    xtype: 'fieldset',
+                    title: 'Company details'}
+            ]
+        });
+
+    });
+
+    pdns.create_server_edit_window = function () {
+        var server_edit_window = Ext.getCmp('server-edit-window');
+        if (server_edit_window) {
+            server_edit_window.show();
+        } else {
+            Ext.create('Ext.window.Window', {
+                title: '添加服务器',
+                autoShow: true,
+                id: 'server-edit-window',
+                width: 300,
+                height: 350,
+                minWidth: 300,
+                minHeight: 200,
+                layout: 'fit',
+                plain: true,
+                items: pdns.edit_server_form_panel(),
+                buttons: [
+                    {
+                        text: '保存配置',
+                        handler: function () {
+                            var form = Ext.getCmp('edit-server-form-panel').getForm();
+                            var form_value = form.getFieldValues();
+                            if (!pdns.validate_from_params(form)) {
+                                return;
+                            }
+                            var commit_info = {};
+                            commit_info["id"] = form_value.pdns_server_id;
+                            commit_info["ip"] = form_value.pdns_server_ip;
+                            commit_info["host"] = form_value.pdns_server_host;
+                            commit_info["type"] = form_value.pdns_server_type;
+                            commit_info["view_name"] = form_value.pdns_server_view;
+                            var request_url = "/server/add_pdns_server/";
+                            var action_mssage = "新建";
+                            Ext.Ajax.request({
+                                url: request_url,
+                                params: {"pdns_server": JSON.stringify(commit_info)},
+                                success: function (response) {
+                                    var resopnse_info = JSON.parse(response.responseText);
+                                    if (resopnse_info.result == "success") {
+                                        alert("服务器" + action_mssage + "成功", null, function () {
+                                            Ext.getCmp('server-edit-window').close();
+                                        });
+                                    } else {
+                                        alert(resopnse_info["message"] || "服务器" + action_mssage + "失败");
+                                    }
+                                    pdns.refresh_grid();
+                                },
+                                method: "post",
+                                failure: function (response) {
+                                    pdns.plugin.response_exception(response);
+                                }
+                            });
+                        }
+                    },
+                    {
+                        text: '取消',
+                        handler: function () {
+                            Ext.getCmp('server-edit-window').close();
+                        }
+                    }
+                ]
+            });
+        }
+    };
+
+    pdns.update_server_edit_window = function () {
+        var server_update_window = Ext.getCmp('server-update-window');
+        if (server_update_window) {
+            server_update_window.show();
+        } else {
+            Ext.create('Ext.window.Window', {
+                title: '更新服务器',
+                autoShow: true,
+                id: 'server-update-window',
+                width: 300,
+                height: 350,
+                minWidth: 300,
+                minHeight: 200,
+                layout: 'fit',
+                plain: true,
+                items: pdns.update_server_form_panel(),
+                buttons: [
+                    {
+                        text: '保存配置',
+                        handler: function () {
+                            var form = Ext.getCmp('update-server-form-panel').getForm();
+                            var form_value = form.getFieldValues();
+                            if (!pdns.validate_from_params(form)) {
+                                return;
+                            }
+                            var commit_info = {};
+                            commit_info["id"] = form_value.pdns_server_id;
+                            commit_info["ip"] = form_value.pdns_server_ip;
+                            commit_info["host"] = form_value.pdns_server_host;
+                            commit_info["type"] = form_value.pdns_server_type;
+                            commit_info["view_name"] = form_value.pdns_server_view;
+                            var request_url = "/server/update_pdns_server/";
+                            var action_mssage = "更新";
+                            Ext.Ajax.request({
+                                url: request_url,
+                                params: {"pdns_server": JSON.stringify(commit_info)},
+                                success: function (response) {
+                                    var resopnse_info = JSON.parse(response.responseText);
+                                    if (resopnse_info.result == "success") {
+                                        alert("服务器" + action_mssage + "成功", null, function () {
+                                            Ext.getCmp('server-update-window').close();
+                                        });
+                                    } else {
+                                        alert(resopnse_info["message"] || "服务器" + action_mssage + "失败");
+                                    }
+                                    pdns.refresh_grid();
+                                },
+                                method: "post",
+                                failure: function (response) {
+                                    pdns.plugin.response_exception(response);
+                                }
+                            });
+                        }
+                    },
+                    {
+                        text: '取消',
+                        handler: function () {
+                            Ext.getCmp('server-update-window').close();
+                        }
+                    }
+                ]
+            });
+        }
+    };
+
+    pdns.edit_server_form_panel = function () {
+        return Ext.create('Ext.form.Panel', {
+            autoScroll: true,
+            autoShow: true,
+            id: 'edit-server-form-panel',
+            defaultType: 'textfield',
+            bodyStyle: 'padding:5px 5px 0',
+            defaults: {
+                labelWidth: 100,
+                labelStyle: 'color:green',
+                labelAlign: 'top',
+                labelSeparator: '',
+                layout: 'anchor',
+                msgTarget: 'side'
+            },
+            items: [
+                {
+                    xtype: 'textfield',
+                    fieldLabel: 'IP',
+                    id: 'pdns-server-ip',
+                    width: 280,
+                    name: 'pdns_server_ip'
+                },
+                {
+                    xtype: 'textfield',
+                    fieldLabel: 'HOST',
+                    id: 'pdns-server-host',
+                    width: 280,
+                    name: 'pdns_server_host'
+                },
+                {
+                    xtype: 'combo',
+                    fieldLabel: 'SERVER TYPE',
+                    labelWidth: 60,
+                    value: 'cdn',
+                    store:Ext.create('Ext.data.Store', {
+                            fields: ['pdns_server_type'],
+                            autoLoad: true,
+                            storeId: 'pdns-server-type-store',
+                            data:[
+                                {pdns_server_type:'cdn'},
+                                {pdns_server_type:'forwarder'}
+                            ]
+                        }),
+                    editable: false,
+                    allowBlank: false,
+                    displayField: 'pdns_server_type',
+                    valueField: 'pdns_server_type',
+                    width: 160,
+                    emptyText:'请选择SERVER类型',
+                    name: 'pdns_server_type',
+                    id: "pdns-server-type",
+                    listeners: {
+                        select: function(combox, selected, index){
+                            var server_type = selected[0].data.pdns_server_type;
+                            if (server_type == 'cdn') {
+                                Ext.getCmp('pdns-server-view').show();
+                            } else {
+                                Ext.getCmp('pdns-server-view').hide();
+                            }
+                        }
+                    }
+                },{
+                    xtype: 'textfield',
+                    fieldLabel: 'VIEW NAME',
+                    id: 'pdns-server-view',
+                    width: 280,
+                    name: 'pdns_server_view'
+                },
+                {
+                    xtype: 'hiddenfield',
+                    fieldLabel: 'id',
+                    id: 'pdns-server-id',
+                    width: 280,
+                    name: 'pdns_server_id'
+                }
+            ]
+        });
+    };
+
+    pdns.update_server_form_panel = function () {
+        return Ext.create('Ext.form.Panel', {
+            autoScroll: true,
+            autoShow: true,
+            id: 'update-server-form-panel',
+            defaultType: 'textfield',
+            bodyStyle: 'padding:5px 5px 0',
+            defaults: {
+                labelWidth: 100,
+                labelStyle: 'color:green',
+                labelAlign: 'top',
+                labelSeparator: '',
+                layout: 'anchor',
+                msgTarget: 'side'
+            },
+            items: [
+                {
+                    xtype: 'textfield',
+                    fieldLabel: 'IP',
+                    id: 'pdns-server-ip',
+                    width: 280,
+                    name: 'pdns_server_ip'
+                },
+                {
+                    xtype: 'textfield',
+                    fieldLabel: 'HOST',
+                    id: 'pdns-server-host',
+                    width: 280,
+                    name: 'pdns_server_host'
+                },
+                {
+                    xtype: 'textfield',
+                    fieldLabel: 'TYPE',
+                    id: 'pdns-server-type',
+                    width: 280,
+                    readOnly: true,
+                    name: 'pdns_server_type',
+                },{
+                    xtype: 'textfield',
+                    fieldLabel: 'VIEW NAME',
+                    id: 'pdns-server-view',
+                    width: 280,
+                    name: 'pdns_server_view'
+                },
+                {
+                    xtype: 'hiddenfield',
+                    fieldLabel: 'id',
+                    id: 'pdns-server-id',
+                    width: 280,
+                    name: 'pdns_server_id'
+                }
+            ]
+        });
+    };
+
+    /**
+     *打开更新界面
+    **/
+    pdns.open_edit_server = function () {
+        var pdns_server_grid = Ext.getCmp('pdns-server-grid');
+        var selected = pdns_server_grid.getSelectionModel().getSelection();
+        var pdns_server_id = selected[0].data.id;
+        Ext.Ajax.request({
+            url: "/server/pdns_server_info/",
+            params: {"id": pdns_server_id },
+            success: function (response) {
+                var resopnse_info = JSON.parse(response.responseText);
+                if (resopnse_info.result != "error") {
+                    var server = resopnse_info.result;
+                    var is_update = true;
+                    pdns.update_server_edit_window(is_update, pdns_server_id);
+                    Ext.getCmp("pdns-server-ip").setValue(server.ip);
+                    Ext.getCmp("pdns-server-host").setValue(server.host);
+                    Ext.getCmp("pdns-server-type").setValue(server.type);
+                    if (server.type == 'cdn'){
+                        Ext.getCmp("pdns-server-view").setValue(server.view_name);
+                    }
+                    else{
+                        Ext.getCmp('pdns-server-view').hide();
+                    }
+                    Ext.getCmp("pdns-server-id").setValue(pdns_server_id)
+                } else {
+                    alert(resopnse_info.message);
+                }
+            },
+            method: "post"
+        });
+        var is_update = true;
+        pdns.update_server_edit_window(is_update);
+    };
+
+    /**
+     * @param form
+     * @returns {boolean}
+     */
+    pdns.validate_from_params = function (form) {
+        var form_panel = form;
+        var form_value = form_panel.getFieldValues();
+        if (!form_value.pdns_server_ip) {
+            alert("请输入IP！");
+            return false;
+        }
+        if (!pdns.plugin.is_ip(form_value.pdns_server_ip)){
+            alert("IPv4 data地址不合法！");
+            return false
+        }
+        if (!form_value.pdns_server_host) {
+            alert("请输入HOST！");
+            return false;
+        }
+        if (form_value.pdns_server_type == 'cdn'){
+            if (!form_value.pdns_server_view){
+                alert("请输入VIEW NAME")
+                return false
+            }
+        }
+
+        return true;
+    };
+
+    /**
+     * 刷新表格的数据信息
+     */
+    pdns.refresh_grid = function () {
+        // 回到第一页，触发beforechange的listener发送请求
+        var recover_pannel = Ext.getCmp('PagingToolbarId');
+        recover_pannel.moveFirst();
+    }
+    </script>
+    <div id="server-template-pannel">
+    </div>
+{% endblock %}

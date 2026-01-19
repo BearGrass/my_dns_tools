@@ -1,0 +1,3 @@
+
+INCLUDE += -I$(LDNS_TRUNK)/include/knl/
+

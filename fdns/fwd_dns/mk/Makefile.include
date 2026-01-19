@@ -1,0 +1,5 @@
+
+INCLUDE+=-I$(LDNS_TRUNK)/include/common/
+INCLUDE+=-I$(LDNS_TRUNK)/src/ldns/
+INCLUDE+=-I./
+

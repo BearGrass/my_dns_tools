@@ -1,0 +1,28 @@
+# RFC Compliance
+- RFC 1034 Domain Names – Concepts and Facilities
+- RFC 1035 Domain Names – Implementation and Specifciation
+- RFC 1101 DNS Encoding of Network Names and Other Types
+- RFC 1123 Requirements for Internet Hosts -- Application and Support
+- RFC 1183 New DNS RR Definitions
+- RFC 1982 Serial Number Arithmetic
+- RFC 2181 Clarifications to the DNS Specification
+- RFC 2308 Negative Caching of DNS Queries (DNS NCACHE)
+- RFC 2502 A DNS RR for specifying the location of services (DNS SRV)
+- RFC 2606 Reserved Top Level DNS Names
+- RFC 2673 Binary Labels in the Domain Name System
+- RFC 2915 The Naming Authority Pointer (NAPTR) DNS Resource Record
+- RFC 3597 Handling of Unknown DNS Resource Record (RR) Types
+- RFC 4343 Domain Name System (DNS) Case Insensitivity Clarification
+- RFC 4592 The Role of Wildcards in the Domain Name System
+- RFC 4697 Observed DNS Resolution Misbehavior
+- RFC 5001 DNS Name Server Identifier (NSID) Option
+- RFC 5358 Preventing Use of Recursive Nameservers in Reflector Attacks
+- RFC 5452 Measures for Making DNS More Resilient against Forged Answers
+- RFC 6303 Locally Served DNS Zones
+- RFC 6761 Special-Use Domain Names
+- RFC 7706 Decreasing Access Time to Root Servers by Running One on Loopback
+- RFC 7871 Client Subnet in DNS Queries
+- RFC 8020 NXDOMAIN: There Really Is Nothing Underneath
+- RFC 8767 Serving Stale Data to Improve DNS Resiliency
+- RFC 8806 Running a Root Server Local to a Resolver
+- RFC 6891 Extension Mechanisms for DNS (EDNS0)

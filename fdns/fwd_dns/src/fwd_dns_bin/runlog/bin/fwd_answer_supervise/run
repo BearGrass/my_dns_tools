@@ -1,0 +1,2 @@
+#!/bin/sh
+$LOG_BASE/bin/cronolog -S $LOG_BASE/answer_log/answer_log $LOG_BASE/answer_log/answer_log.%Y%m%d%H%M < $LOG_BASE/pipe/fwd_answer.log

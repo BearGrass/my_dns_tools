@@ -1,0 +1,25 @@
+
+include $(LDNS_TRUNK)/mk/Makefile.config
+include $(LDNS_TRUNK)/mk/Makefile.include
+
+all = $(PROG)
+
+C_FLAGS += $(INCLUDE)
+
+.c.o:
+	gcc -c -g $< $(C_FLAGS)
+
+$(PROG):$(PROG_OBJ)
+	gcc -o $(PROG) $(PROG_OBJ) ss.a libbase.a  $(C_FLAGS) -L$(LDNS_TRUNK)/target/lib/linux $(LIB)
+
+clean:
+	@rm -rf *.o
+	@rm -f $(PROG)
+
+ifndef USE_SPEC_INSTALL
+install:$(PROG)
+	cp $(PROG) $(LDNS_TRUNK)/target/bin/
+endif
+
+configure:
+

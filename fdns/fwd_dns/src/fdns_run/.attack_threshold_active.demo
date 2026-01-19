@@ -1,0 +1,6 @@
+sample_level,100000
+total_zone_level,250
+single_zone_high,50
+single_zone_low,25
+build_window,1
+effect_window,3

@@ -1,0 +1,616 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ADNS_DNSSEC_ALG_DH	src/knl/consts.h	/^    ADNS_DNSSEC_ALG_DH                 =  2,$/;"	e	enum:__anon10
+ADNS_DNSSEC_ALG_DSA	src/knl/consts.h	/^    ADNS_DNSSEC_ALG_DSA                =  3,$/;"	e	enum:__anon10
+ADNS_DNSSEC_ALG_DSA_NSEC3_SHA1	src/knl/consts.h	/^    ADNS_DNSSEC_ALG_DSA_NSEC3_SHA1     =  6,$/;"	e	enum:__anon10
+ADNS_DNSSEC_ALG_ECC_GOST	src/knl/consts.h	/^    ADNS_DNSSEC_ALG_ECC_GOST           = 12,$/;"	e	enum:__anon10
+ADNS_DNSSEC_ALG_ECDSAP256SHA256	src/knl/consts.h	/^    ADNS_DNSSEC_ALG_ECDSAP256SHA256    = 13,$/;"	e	enum:__anon10
+ADNS_DNSSEC_ALG_ECDSAP384SHA384	src/knl/consts.h	/^    ADNS_DNSSEC_ALG_ECDSAP384SHA384    = 14$/;"	e	enum:__anon10
+ADNS_DNSSEC_ALG_RSAMD5	src/knl/consts.h	/^    ADNS_DNSSEC_ALG_RSAMD5             =  1,$/;"	e	enum:__anon10
+ADNS_DNSSEC_ALG_RSASHA1	src/knl/consts.h	/^    ADNS_DNSSEC_ALG_RSASHA1            =  5,$/;"	e	enum:__anon10
+ADNS_DNSSEC_ALG_RSASHA1_NSEC3_SHA1	src/knl/consts.h	/^    ADNS_DNSSEC_ALG_RSASHA1_NSEC3_SHA1 =  7,$/;"	e	enum:__anon10
+ADNS_DNSSEC_ALG_RSASHA256	src/knl/consts.h	/^    ADNS_DNSSEC_ALG_RSASHA256          =  8,$/;"	e	enum:__anon10
+ADNS_DNSSEC_ALG_RSASHA512	src/knl/consts.h	/^    ADNS_DNSSEC_ALG_RSASHA512          = 10,$/;"	e	enum:__anon10
+ADNS_DS_ALG_GOST	src/knl/consts.h	/^    ADNS_DS_ALG_GOST   = 3,$/;"	e	enum:__anon11
+ADNS_DS_ALG_SHA1	src/knl/consts.h	/^    ADNS_DS_ALG_SHA1   = 1,$/;"	e	enum:__anon11
+ADNS_DS_ALG_SHA256	src/knl/consts.h	/^    ADNS_DS_ALG_SHA256 = 2,$/;"	e	enum:__anon11
+ADNS_DS_ALG_SHA384	src/knl/consts.h	/^    ADNS_DS_ALG_SHA384 = 4$/;"	e	enum:__anon11
+ADNS_DS_DIGEST_LEN_GOST	src/knl/consts.h	/^    ADNS_DS_DIGEST_LEN_GOST   = 32, \/*!< RFC 5933 *\/$/;"	e	enum:adns_ds_algorithm_len
+ADNS_DS_DIGEST_LEN_SHA1	src/knl/consts.h	/^    ADNS_DS_DIGEST_LEN_SHA1   = 20, \/*!< RFC 3658 *\/$/;"	e	enum:adns_ds_algorithm_len
+ADNS_DS_DIGEST_LEN_SHA256	src/knl/consts.h	/^    ADNS_DS_DIGEST_LEN_SHA256 = 32, \/*!< RFC 4509 *\/$/;"	e	enum:adns_ds_algorithm_len
+ADNS_DS_DIGEST_LEN_SHA384	src/knl/consts.h	/^    ADNS_DS_DIGEST_LEN_SHA384 = 48  \/*!< RFC 6605 *\/$/;"	e	enum:adns_ds_algorithm_len
+ADNS_EDNS_DO_MASK	src/knl/edns.c	/^    ADNS_EDNS_DO_MASK = (uint16_t)0x8000,$/;"	e	enum:adns_edns_consts	file:
+ADNS_EDNS_OPTION_STEP	src/knl/edns.c	/^    ADNS_EDNS_OPTION_STEP = 1$/;"	e	enum:adns_edns_consts	file:
+ADNS_OPCODE_IQUERY	src/knl/consts.h	/^    ADNS_OPCODE_IQUERY = 1, \/*!< Inverse query. *\/$/;"	e	enum:__anon5
+ADNS_OPCODE_NOTIFY	src/knl/consts.h	/^    ADNS_OPCODE_NOTIFY = 4, \/*!< Notify message. *\/$/;"	e	enum:__anon5
+ADNS_OPCODE_QUERY	src/knl/consts.h	/^    ADNS_OPCODE_QUERY  = 0, \/*!< Standard query. *\/$/;"	e	enum:__anon5
+ADNS_OPCODE_STATUS	src/knl/consts.h	/^    ADNS_OPCODE_STATUS = 2, \/*!< Server status request. *\/$/;"	e	enum:__anon5
+ADNS_OPCODE_UPDATE	src/knl/consts.h	/^    ADNS_OPCODE_UPDATE = 5  \/*!< Dynamic update. *\/$/;"	e	enum:__anon5
+ADNS_QUERY_AXFR	src/knl/consts.h	/^    ADNS_QUERY_AXFR,      \/*!< Request for AXFR transfer. *\/$/;"	e	enum:__anon7
+ADNS_QUERY_INVALID	src/knl/consts.h	/^    ADNS_QUERY_INVALID,   \/*!< Invalid query. *\/$/;"	e	enum:__anon7
+ADNS_QUERY_IXFR	src/knl/consts.h	/^    ADNS_QUERY_IXFR,      \/*!< Request for IXFR transfer. *\/$/;"	e	enum:__anon7
+ADNS_QUERY_NORMAL	src/knl/consts.h	/^    ADNS_QUERY_NORMAL,    \/*!< Normal query. *\/$/;"	e	enum:__anon7
+ADNS_QUERY_NOTIFY	src/knl/consts.h	/^    ADNS_QUERY_NOTIFY,    \/*!< NOTIFY query. *\/$/;"	e	enum:__anon7
+ADNS_QUERY_UPDATE	src/knl/consts.h	/^    ADNS_QUERY_UPDATE,    \/*!< Dynamic update. *\/$/;"	e	enum:__anon7
+ADNS_RCODE_BADALG	src/knl/consts.h	/^    ADNS_RCODE_BADALG   = 21, \/*!< Algorithm not supported. *\/$/;"	e	enum:__anon6
+ADNS_RCODE_BADKEY	src/knl/consts.h	/^    ADNS_RCODE_BADKEY   = 17, \/*!< Key is not supported. *\/$/;"	e	enum:__anon6
+ADNS_RCODE_BADMODE	src/knl/consts.h	/^    ADNS_RCODE_BADMODE  = 19, \/*!< Bad TKEY mode. *\/$/;"	e	enum:__anon6
+ADNS_RCODE_BADNAME	src/knl/consts.h	/^    ADNS_RCODE_BADNAME  = 20, \/*!< Duplicate key name. *\/$/;"	e	enum:__anon6
+ADNS_RCODE_BADSIG	src/knl/consts.h	/^    ADNS_RCODE_BADSIG   = 16, \/*!< TSIG signature failed. *\/$/;"	e	enum:__anon6
+ADNS_RCODE_BADTIME	src/knl/consts.h	/^    ADNS_RCODE_BADTIME  = 18, \/*!< Signature out of time window. *\/$/;"	e	enum:__anon6
+ADNS_RCODE_BADTRUNC	src/knl/consts.h	/^    ADNS_RCODE_BADTRUNC = 22  \/*!< Bad truncation. *\/$/;"	e	enum:__anon6
+ADNS_RCODE_FORMERR	src/knl/consts.h	/^    ADNS_RCODE_FORMERR  =  1, \/*!< Format error. *\/$/;"	e	enum:__anon6
+ADNS_RCODE_NOERROR	src/knl/consts.h	/^    ADNS_RCODE_NOERROR  =  0, \/*!< No error. *\/$/;"	e	enum:__anon6
+ADNS_RCODE_NOTAUTH	src/knl/consts.h	/^    ADNS_RCODE_NOTAUTH  =  9, \/*!< Server not authoritative. *\/$/;"	e	enum:__anon6
+ADNS_RCODE_NOTIMPL	src/knl/consts.h	/^    ADNS_RCODE_NOTIMPL  =  4, \/*!< Not implemented. *\/$/;"	e	enum:__anon6
+ADNS_RCODE_NOTZONE	src/knl/consts.h	/^    ADNS_RCODE_NOTZONE  = 10, \/*!< Name is not inside zone. *\/$/;"	e	enum:__anon6
+ADNS_RCODE_NXDOMAIN	src/knl/consts.h	/^    ADNS_RCODE_NXDOMAIN =  3, \/*!< Non-existend domain. *\/$/;"	e	enum:__anon6
+ADNS_RCODE_NXRRSET	src/knl/consts.h	/^    ADNS_RCODE_NXRRSET  =  8, \/*!< RR set does not exist. *\/$/;"	e	enum:__anon6
+ADNS_RCODE_REFUSED	src/knl/consts.h	/^    ADNS_RCODE_REFUSED  =  5, \/*!< Refused. *\/$/;"	e	enum:__anon6
+ADNS_RCODE_SERVFAIL	src/knl/consts.h	/^    ADNS_RCODE_SERVFAIL =  2, \/*!< Server failure. *\/$/;"	e	enum:__anon6
+ADNS_RCODE_YXDOMAIN	src/knl/consts.h	/^    ADNS_RCODE_YXDOMAIN =  6, \/*!< Name should not exist. *\/$/;"	e	enum:__anon6
+ADNS_RCODE_YXRRSET	src/knl/consts.h	/^    ADNS_RCODE_YXRRSET  =  7, \/*!< RR set should not exist. *\/$/;"	e	enum:__anon6
+ADNS_RESPONSE_AXFR	src/knl/consts.h	/^    ADNS_RESPONSE_AXFR,   \/*!< AXFR transfer response. *\/$/;"	e	enum:__anon7
+ADNS_RESPONSE_IXFR	src/knl/consts.h	/^    ADNS_RESPONSE_IXFR,   \/*!< IXFR transfer response. *\/$/;"	e	enum:__anon7
+ADNS_RESPONSE_NORMAL	src/knl/consts.h	/^    ADNS_RESPONSE_NORMAL, \/*!< Normal response. *\/$/;"	e	enum:__anon7
+ADNS_RESPONSE_NOTIFY	src/knl/consts.h	/^    ADNS_RESPONSE_NOTIFY, \/*!< NOTIFY response. *\/$/;"	e	enum:__anon7
+ADNS_RESPONSE_UPDATE	src/knl/consts.h	/^    ADNS_RESPONSE_UPDATE  \/*!< Dynamic update response. *\/$/;"	e	enum:__anon7
+ADNS_RRTYPE_OPT	src/knl/edns.h	23;"	d
+ADNS_TSIG_ALG_DIG_LENGTH_GSS_TSIG	src/knl/consts.h	/^    ADNS_TSIG_ALG_DIG_LENGTH_GSS_TSIG =  0,$/;"	e	enum:__anon9
+ADNS_TSIG_ALG_DIG_LENGTH_HMAC_MD5	src/knl/consts.h	/^    ADNS_TSIG_ALG_DIG_LENGTH_HMAC_MD5 = 16,$/;"	e	enum:__anon9
+ADNS_TSIG_ALG_DIG_LENGTH_SHA1	src/knl/consts.h	/^    ADNS_TSIG_ALG_DIG_LENGTH_SHA1     = 20,$/;"	e	enum:__anon9
+ADNS_TSIG_ALG_DIG_LENGTH_SHA224	src/knl/consts.h	/^    ADNS_TSIG_ALG_DIG_LENGTH_SHA224   = 28,$/;"	e	enum:__anon9
+ADNS_TSIG_ALG_DIG_LENGTH_SHA256	src/knl/consts.h	/^    ADNS_TSIG_ALG_DIG_LENGTH_SHA256   = 32,$/;"	e	enum:__anon9
+ADNS_TSIG_ALG_DIG_LENGTH_SHA384	src/knl/consts.h	/^    ADNS_TSIG_ALG_DIG_LENGTH_SHA384   = 48,$/;"	e	enum:__anon9
+ADNS_TSIG_ALG_DIG_LENGTH_SHA512	src/knl/consts.h	/^    ADNS_TSIG_ALG_DIG_LENGTH_SHA512   = 64$/;"	e	enum:__anon9
+ADNS_TSIG_ALG_GSS_TSIG	src/knl/consts.h	/^    ADNS_TSIG_ALG_GSS_TSIG    = 128,$/;"	e	enum:__anon8
+ADNS_TSIG_ALG_HMAC_MD5	src/knl/consts.h	/^    ADNS_TSIG_ALG_HMAC_MD5    = 157,$/;"	e	enum:__anon8
+ADNS_TSIG_ALG_HMAC_SHA1	src/knl/consts.h	/^    ADNS_TSIG_ALG_HMAC_SHA1   = 161,$/;"	e	enum:__anon8
+ADNS_TSIG_ALG_HMAC_SHA224	src/knl/consts.h	/^    ADNS_TSIG_ALG_HMAC_SHA224 = 162,$/;"	e	enum:__anon8
+ADNS_TSIG_ALG_HMAC_SHA256	src/knl/consts.h	/^    ADNS_TSIG_ALG_HMAC_SHA256 = 163,$/;"	e	enum:__anon8
+ADNS_TSIG_ALG_HMAC_SHA384	src/knl/consts.h	/^    ADNS_TSIG_ALG_HMAC_SHA384 = 164,$/;"	e	enum:__anon8
+ADNS_TSIG_ALG_HMAC_SHA512	src/knl/consts.h	/^    ADNS_TSIG_ALG_HMAC_SHA512 = 165$/;"	e	enum:__anon8
+ADNS_TSIG_ALG_NULL	src/knl/consts.h	/^    ADNS_TSIG_ALG_NULL        =   0,$/;"	e	enum:__anon8
+ADNS_WIRE_AA_MASK	src/knl/consts.h	/^    ADNS_WIRE_AA_MASK = (uint8_t)0x04U,      \/*!< AA bit mask. *\/$/;"	e	enum:adns_wire_flags1_consts
+ADNS_WIRE_AA_SHIFT	src/knl/consts.h	/^    ADNS_WIRE_AA_SHIFT = 2,                  \/*!< AA bit shift. *\/$/;"	e	enum:adns_wire_flags1_consts
+ADNS_WIRE_AD_MASK	src/knl/consts.h	/^    ADNS_WIRE_AD_MASK = (uint8_t)0x20U,     \/*!< AD bit mask. *\/$/;"	e	enum:adns_wire_flags2_consts
+ADNS_WIRE_AD_SHIFT	src/knl/consts.h	/^    ADNS_WIRE_AD_SHIFT = 5,                 \/*!< AD bit shift. *\/$/;"	e	enum:adns_wire_flags2_consts
+ADNS_WIRE_CD_MASK	src/knl/consts.h	/^    ADNS_WIRE_CD_MASK = (uint8_t)0x10U,     \/*!< CD bit mask. *\/$/;"	e	enum:adns_wire_flags2_consts
+ADNS_WIRE_CD_SHIFT	src/knl/consts.h	/^    ADNS_WIRE_CD_SHIFT = 4,                 \/*!< CD bit shift. *\/$/;"	e	enum:adns_wire_flags2_consts
+ADNS_WIRE_OFFSET_ANCOUNT	src/knl/consts.h	/^    ADNS_WIRE_OFFSET_ANCOUNT = 6,$/;"	e	enum:adns_wire_offsets
+ADNS_WIRE_OFFSET_ARCOUNT	src/knl/consts.h	/^    ADNS_WIRE_OFFSET_ARCOUNT = 10$/;"	e	enum:adns_wire_offsets
+ADNS_WIRE_OFFSET_FLAGS1	src/knl/consts.h	/^    ADNS_WIRE_OFFSET_FLAGS1 = 2,$/;"	e	enum:adns_wire_offsets
+ADNS_WIRE_OFFSET_FLAGS2	src/knl/consts.h	/^    ADNS_WIRE_OFFSET_FLAGS2 = 3,$/;"	e	enum:adns_wire_offsets
+ADNS_WIRE_OFFSET_ID	src/knl/consts.h	/^    ADNS_WIRE_OFFSET_ID = 0,$/;"	e	enum:adns_wire_offsets
+ADNS_WIRE_OFFSET_NSCOUNT	src/knl/consts.h	/^    ADNS_WIRE_OFFSET_NSCOUNT = 8,$/;"	e	enum:adns_wire_offsets
+ADNS_WIRE_OFFSET_QDCOUNT	src/knl/consts.h	/^    ADNS_WIRE_OFFSET_QDCOUNT = 4,$/;"	e	enum:adns_wire_offsets
+ADNS_WIRE_OPCODE_MASK	src/knl/consts.h	/^    ADNS_WIRE_OPCODE_MASK = (uint8_t)0x78U,  \/*!< OPCODE mask. *\/$/;"	e	enum:adns_wire_flags1_consts
+ADNS_WIRE_OPCODE_SHIFT	src/knl/consts.h	/^    ADNS_WIRE_OPCODE_SHIFT = 3,              \/*!< OPCODE shift. *\/$/;"	e	enum:adns_wire_flags1_consts
+ADNS_WIRE_QR_MASK	src/knl/consts.h	/^    ADNS_WIRE_QR_MASK = (uint8_t)0x80U,      \/*!< QR bit mask. *\/$/;"	e	enum:adns_wire_flags1_consts
+ADNS_WIRE_QR_SHIFT	src/knl/consts.h	/^    ADNS_WIRE_QR_SHIFT = 7                   \/*!< QR bit shift. *\/$/;"	e	enum:adns_wire_flags1_consts
+ADNS_WIRE_RA_MASK	src/knl/consts.h	/^    ADNS_WIRE_RA_MASK = (uint8_t)0x80U,     \/*!< RA bit mask. *\/$/;"	e	enum:adns_wire_flags2_consts
+ADNS_WIRE_RA_SHIFT	src/knl/consts.h	/^    ADNS_WIRE_RA_SHIFT = 7                  \/*!< RA bit shift. *\/$/;"	e	enum:adns_wire_flags2_consts
+ADNS_WIRE_RCODE_MASK	src/knl/consts.h	/^    ADNS_WIRE_RCODE_MASK = (uint8_t)0x0fU,  \/*!< RCODE mask. *\/$/;"	e	enum:adns_wire_flags2_consts
+ADNS_WIRE_RCODE_SHIFT	src/knl/consts.h	/^    ADNS_WIRE_RCODE_SHIFT = 0,              \/*!< RCODE shift. *\/$/;"	e	enum:adns_wire_flags2_consts
+ADNS_WIRE_RD_MASK	src/knl/consts.h	/^    ADNS_WIRE_RD_MASK = (uint8_t)0x01U,      \/*!< RD bit mask. *\/$/;"	e	enum:adns_wire_flags1_consts
+ADNS_WIRE_RD_SHIFT	src/knl/consts.h	/^    ADNS_WIRE_RD_SHIFT = 0,                  \/*!< RD bit shift. *\/$/;"	e	enum:adns_wire_flags1_consts
+ADNS_WIRE_TC_MASK	src/knl/consts.h	/^    ADNS_WIRE_TC_MASK = (uint8_t)0x02U,      \/*!< TC bit mask. *\/$/;"	e	enum:adns_wire_flags1_consts
+ADNS_WIRE_TC_SHIFT	src/knl/consts.h	/^    ADNS_WIRE_TC_SHIFT = 1,                  \/*!< TC bit shift. *\/$/;"	e	enum:adns_wire_flags1_consts
+ADNS_WIRE_Z_MASK	src/knl/consts.h	/^    ADNS_WIRE_Z_MASK = (uint8_t)0x40U,      \/*!< Zero bit mask. *\/$/;"	e	enum:adns_wire_flags2_consts
+ADNS_WIRE_Z_SHIFT	src/knl/consts.h	/^    ADNS_WIRE_Z_SHIFT = 6,                  \/*!< Zero bit shift. *\/$/;"	e	enum:adns_wire_flags2_consts
+AM_CMD_BIND	src/asmega_adm/asmega_adm.c	/^    AM_CMD_BIND,$/;"	e	enum:__anon13	file:
+AM_CMD_ERR	src/asmega_adm/asmega_adm.c	/^    AM_CMD_ERR,$/;"	e	enum:__anon13	file:
+AM_CMD_INIT	src/asmega_adm/asmega_adm.c	/^    AM_CMD_INIT = 1,$/;"	e	enum:__anon13	file:
+AM_CMD_SHOW	src/asmega_adm/asmega_adm.c	/^    AM_CMD_SHOW,$/;"	e	enum:__anon13	file:
+AM_CMD_UNBIND	src/asmega_adm/asmega_adm.c	/^    AM_CMD_UNBIND,$/;"	e	enum:__anon13	file:
+ANSWER_MAX_LEN	src/knl/dataplane.c	41;"	d	file:
+ASMEGA_ADM_CMD_ERR	src/include/errcode.h	/^    ASMEGA_ADM_CMD_ERR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_ADM_CREATE_SOCKET_ERROR	src/include/errcode.h	/^    ASMEGA_ADM_CREATE_SOCKET_ERROR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_ADM_GET_SOCKOPT_BUFF_SIZE_ERROR	src/include/errcode.h	/^    ASMEGA_ADM_GET_SOCKOPT_BUFF_SIZE_ERROR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_ADM_GET_SOCKOPT_FAILED_ERROR	src/include/errcode.h	/^    ASMEGA_ADM_GET_SOCKOPT_FAILED_ERROR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_ADM_GET_SOCKOPT_TNL_NUM_ERROR	src/include/errcode.h	/^    ASMEGA_ADM_GET_SOCKOPT_TNL_NUM_ERROR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_ADM_OK	src/include/errcode.h	/^    ASMEGA_ADM_OK = 0,$/;"	e	enum:adm_operate_errcode
+ASMEGA_ADM_PARSE_TUNNEL_ERROR	src/include/errcode.h	/^    ASMEGA_ADM_PARSE_TUNNEL_ERROR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_ADM_PARSE_VIEW_ERROR	src/include/errcode.h	/^    ASMEGA_ADM_PARSE_VIEW_ERROR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_ADM_SET_SOCKOPT_BIND_ERROR	src/include/errcode.h	/^    ASMEGA_ADM_SET_SOCKOPT_BIND_ERROR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_ADM_SET_SOCKOPT_CLEAR_ERROR	src/include/errcode.h	/^    ASMEGA_ADM_SET_SOCKOPT_CLEAR_ERROR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_ADM_SET_SOCKOPT_TNL_NUM_ERROR	src/include/errcode.h	/^    ASMEGA_ADM_SET_SOCKOPT_TNL_NUM_ERROR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_ADM_SET_SOCKOPT_UNBIND_ERROR	src/include/errcode.h	/^    ASMEGA_ADM_SET_SOCKOPT_UNBIND_ERROR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_ADM_SOCKET_BUSY	src/include/errcode.h	/^    ASMEGA_ADM_SOCKET_BUSY,$/;"	e	enum:adm_operate_errcode
+ASMEGA_ADM_TNL_ADD_ERROR	src/include/errcode.h	/^    ASMEGA_ADM_TNL_ADD_ERROR = -100,$/;"	e	enum:adm_operate_errcode
+ASMEGA_ADM_TNL_DEL_ERROR	src/include/errcode.h	/^    ASMEGA_ADM_TNL_DEL_ERROR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_ADM_TNL_LIST_NULL_ERROR	src/include/errcode.h	/^    ASMEGA_ADM_TNL_LIST_NULL_ERROR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_ADM_TNL_NUM_NULL_ERROR	src/include/errcode.h	/^    ASMEGA_ADM_TNL_NUM_NULL_ERROR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_ADM_TNL_SET_ERROR	src/include/errcode.h	/^    ASMEGA_ADM_TNL_SET_ERROR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_KNL_GET_SOCKOPT_BUF_LEN_ERROR	src/include/errcode.h	/^    ASMEGA_KNL_GET_SOCKOPT_BUF_LEN_ERROR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_KNL_GET_SOCKOPT_COPY_ERROR	src/include/errcode.h	/^    ASMEGA_KNL_GET_SOCKOPT_COPY_ERROR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_KNL_SET_SOCKOPT_COPY_ERROR	src/include/errcode.h	/^    ASMEGA_KNL_SET_SOCKOPT_COPY_ERROR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_KNL_SET_SOCKOPT_TNL_NUM_ERROR	src/include/errcode.h	/^    ASMEGA_KNL_SET_SOCKOPT_TNL_NUM_ERROR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_KNL_TNL_ADD_ERROR	src/include/errcode.h	/^    ASMEGA_KNL_TNL_ADD_ERROR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_KNL_TNL_DB_ALLOC_ERROR	src/include/errcode.h	/^    ASMEGA_KNL_TNL_DB_ALLOC_ERROR = -200,$/;"	e	enum:adm_operate_errcode
+ASMEGA_KNL_TNL_DEL_ERROR	src/include/errcode.h	/^    ASMEGA_KNL_TNL_DEL_ERROR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_KNL_TNL_SET_ALL_NOT_SORT_ERROR	src/include/errcode.h	/^    ASMEGA_KNL_TNL_SET_ALL_NOT_SORT_ERROR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_KNL_TNL_SET_ERROR	src/include/errcode.h	/^    ASMEGA_KNL_TNL_SET_ERROR,$/;"	e	enum:adm_operate_errcode
+ASMEGA_TARGET	Makefile	/^ASMEGA_TARGET=\/home\/asmega$/;"	m
+AS_ACCEPT_LINEARIZE_IN	src/knl/stats.h	/^    AS_ACCEPT_LINEARIZE_IN,$/;"	e	enum:__anon12
+AS_ACCEPT_LINEARIZE_OUT	src/knl/stats.h	/^    AS_ACCEPT_LINEARIZE_OUT,$/;"	e	enum:__anon12
+AS_ACCEPT_LOCAL_IN_L3	src/knl/stats.h	/^    AS_ACCEPT_LOCAL_IN_L3,$/;"	e	enum:__anon12
+AS_ACCEPT_LOCAL_IN_L4	src/knl/stats.h	/^    AS_ACCEPT_LOCAL_IN_L4,$/;"	e	enum:__anon12
+AS_ACCEPT_LOCAL_IN_L7	src/knl/stats.h	/^    AS_ACCEPT_LOCAL_IN_L7,$/;"	e	enum:__anon12
+AS_ACCEPT_LOCAL_OUT_L3	src/knl/stats.h	/^    AS_ACCEPT_LOCAL_OUT_L3,$/;"	e	enum:__anon12
+AS_ACCEPT_LOCAL_OUT_L4	src/knl/stats.h	/^    AS_ACCEPT_LOCAL_OUT_L4,$/;"	e	enum:__anon12
+AS_ACCEPT_LOCAL_OUT_L7	src/knl/stats.h	/^    AS_ACCEPT_LOCAL_OUT_L7,$/;"	e	enum:__anon12
+AS_ACCEPT_NOSUPPORT	src/knl/stats.h	/^    AS_ACCEPT_NOSUPPORT,$/;"	e	enum:__anon12
+AS_ACCEPT_NOT_FIND_VIEW_ID	src/knl/stats.h	/^    AS_ACCEPT_NOT_FIND_VIEW_ID,$/;"	e	enum:__anon12
+AS_ADD_ESTATS	src/knl/stats.h	84;"	d
+AS_BARELY_TRUSTED_SEC	src/knl/control.h	39;"	d
+AS_CACHE_CLEAN_BULK_NUM	src/knl/control.h	43;"	d
+AS_CACHE_CLEAN_INTERVAL_MS	src/knl/control.h	42;"	d
+AS_COUNTERS_END	src/knl/stats.h	/^    AS_COUNTERS_END,$/;"	e	enum:__anon12
+AS_COUNTERS_START	src/knl/stats.h	/^    AS_COUNTERS_START = 0,$/;"	e	enum:__anon12
+AS_DEC_ESTATS	src/knl/stats.h	86;"	d
+AS_DNSQUERY	src/knl/dns.h	13;"	d
+AS_DNSRES	src/knl/dns.h	12;"	d
+AS_DROP_EDNS_NEW_ERR	src/knl/stats.h	/^    AS_DROP_EDNS_NEW_ERR,$/;"	e	enum:__anon12
+AS_DROP_EDNS_TO_WIRE	src/knl/stats.h	/^    AS_DROP_EDNS_TO_WIRE,$/;"	e	enum:__anon12
+AS_DROP_LOCAL_IN_L7	src/knl/stats.h	/^    AS_DROP_LOCAL_IN_L7,$/;"	e	enum:__anon12
+AS_DROP_PAC_INCOMPLETE	src/knl/stats.h	/^    AS_DROP_PAC_INCOMPLETE,$/;"	e	enum:__anon12
+AS_DROP_PARSE_EDNS	src/knl/stats.h	/^    AS_DROP_PARSE_EDNS,$/;"	e	enum:__anon12
+AS_DROP_PARSE_ERROR	src/knl/stats.h	/^    AS_DROP_PARSE_ERROR,$/;"	e	enum:__anon12
+AS_ERROR	src/knl/util.h	63;"	d
+AS_ERROR_ADDITION_NUM	src/knl/stats.h	/^    AS_ERROR_ADDITION_NUM,$/;"	e	enum:__anon12
+AS_ERROR_DATAGRAM_SMALL	src/knl/stats.h	/^    AS_ERROR_DATAGRAM_SMALL,$/;"	e	enum:__anon12
+AS_ERROR_EDNS_LEN	src/knl/stats.h	/^    AS_ERROR_EDNS_LEN,$/;"	e	enum:__anon12
+AS_ERROR_EDNS_TYPE	src/knl/stats.h	/^    AS_ERROR_EDNS_TYPE,$/;"	e	enum:__anon12
+AS_ERROR_EDNS_VERSION	src/knl/stats.h	/^    AS_ERROR_EDNS_VERSION,$/;"	e	enum:__anon12
+AS_ERROR_NOMEM_REQUEST	src/knl/stats.h	/^    AS_ERROR_NOMEM_REQUEST,$/;"	e	enum:__anon12
+AS_ERROR_NOMEM_SKB	src/knl/stats.h	/^    AS_ERROR_NOMEM_SKB,$/;"	e	enum:__anon12
+AS_ERROR_OVERSIZE_LABEL_LEN	src/knl/stats.h	/^    AS_ERROR_OVERSIZE_LABEL_LEN,$/;"	e	enum:__anon12
+AS_FORWARD_RATELIMIT_QPS	src/knl/control.h	40;"	d
+AS_FORWARD_RATELIMIT_SEC	src/knl/control.h	41;"	d
+AS_FORWARD_TIMEOUT_SEC	src/knl/control.h	36;"	d
+AS_GET_ESTATS	src/knl/stats.h	88;"	d
+AS_INC_ESTATS	src/knl/stats.h	82;"	d
+AS_IP_RATELIMIT_ON	src/knl/control.h	44;"	d
+AS_IP_RATELIMIT_QPS	src/knl/control.h	45;"	d
+AS_IP_REC_RATELIMIT_ON	src/knl/control.h	46;"	d
+AS_IP_REC_RATELIMIT_QPS	src/knl/control.h	47;"	d
+AS_MAX_CACHE_NUM	src/knl/control.h	35;"	d
+AS_MIB_ITEM	src/knl/stats.h	20;"	d
+AS_MIB_LAST	src/knl/stats.h	30;"	d
+AS_MIB_START	src/knl/stats.h	25;"	d
+AS_NEW_NODE	src/knl/util.h	66;"	d
+AS_NONSUPPORT	src/knl/util.h	61;"	d
+AS_NONSUP_BIG_DOT_NUM	src/knl/stats.h	/^    AS_NONSUP_BIG_DOT_NUM,$/;"	e	enum:__anon12
+AS_NONSUP_CLASS	src/knl/stats.h	/^    AS_NONSUP_CLASS,$/;"	e	enum:__anon12
+AS_NONSUP_MUL_ADD	src/knl/stats.h	/^    AS_NONSUP_MUL_ADD,$/;"	e	enum:__anon12
+AS_NONSUP_NO_ANSWER	src/knl/stats.h	/^    AS_NONSUP_NO_ANSWER,$/;"	e	enum:__anon12
+AS_NONSUP_OPCODE	src/knl/stats.h	/^    AS_NONSUP_OPCODE,$/;"	e	enum:__anon12
+AS_NONSUP_OVERSIZE_LABEL_LEN	src/knl/stats.h	/^    AS_NONSUP_OVERSIZE_LABEL_LEN,$/;"	e	enum:__anon12
+AS_NONSUP_QUESTIONS	src/knl/stats.h	/^    AS_NONSUP_QUESTIONS,$/;"	e	enum:__anon12
+AS_NO_VXLAN	src/knl/edns.h	25;"	d
+AS_OFF	src/knl/control.h	32;"	d
+AS_ON	src/knl/control.h	33;"	d
+AS_PVT_EDNS	src/knl/util.h	60;"	d
+AS_REQUEST_IN	src/knl/stats.h	/^    AS_REQUEST_IN,$/;"	e	enum:__anon12
+AS_REQUEST_OUT	src/knl/stats.h	/^    AS_REQUEST_OUT,$/;"	e	enum:__anon12
+AS_REQ_WAITLIST_NUM	src/knl/control.h	38;"	d
+AS_RR_HEAD	src/knl/dns.h	25;"	d
+AS_SUCCESS	src/knl/util.h	62;"	d
+AS_UPDATE_NODE	src/knl/util.h	65;"	d
+AS_UPDATE_NXDOMAIN	src/knl/control.h	48;"	d
+AS_UPDATE_SERVFAIL	src/knl/control.h	49;"	d
+AS_VCTK_VXLAN_ANOTHER_DPORT	src/knl/control.h	50;"	d
+AS_VXLAN	src/knl/edns.h	26;"	d
+CACHE_EXPIRED_SEC	src/knl/control.h	37;"	d
+DNS_EDNS0_MAX_LENGTH	src/knl/edns.h	22;"	d
+DNS_MAGIC	src/knl/util.h	15;"	d
+DNS_PORT	src/knl/control.h	34;"	d
+DNS_TRUNK	Makefile	/^export DNS_TRUNK=$(CURDIR)$/;"	m
+DOMAIN_LABEL_MAX_LEN	src/knl/dataplane.c	42;"	d	file:
+DOMAIN_LABEL_MAX_NUM	src/knl/dataplane.c	43;"	d	file:
+ECS_FAMILY_IPV4	src/knl/edns.h	18;"	d
+ECS_FAMILY_IPV6	src/knl/edns.h	19;"	d
+ECS_MIN_SIZE	src/knl/edns.h	20;"	d
+EDNS_MAX_UDP_PAYLOAD	src/knl/edns.h	/^    EDNS_MAX_UDP_PAYLOAD = 4096, \/* Maximum UDP payload with EDNS enabled. *\/$/;"	e	enum:adns_edns_const
+EDNS_MIN_SIZE	src/knl/edns.h	/^    EDNS_MIN_SIZE        = 11,   \/* Minimum size of EDNS OPT RR in wire format. *\/$/;"	e	enum:adns_edns_const
+EDNS_NOT_SUPPORTED	src/knl/edns.h	/^    EDNS_NOT_SUPPORTED   = 255,  \/* EDNS not supported. *\/$/;"	e	enum:adns_edns_const
+EDNS_OPT	src/knl/edns.h	/^    EDNS_OPT             = 41,$/;"	e	enum:adns_edns_const
+EDNS_OPTION_COOKIE	src/knl/edns.h	/^    EDNS_OPTION_COOKIE   = 10,   \/* cookie option code *\/$/;"	e	enum:adns_edns_const
+EDNS_OPTION_ECS	src/knl/edns.h	/^    EDNS_OPTION_ECS      = 8,    \/* client-subnet option code. *\/$/;"	e	enum:adns_edns_const
+EDNS_OPTION_NSID	src/knl/edns.h	/^    EDNS_OPTION_NSID     = 3,    \/* NSID option code. *\/$/;"	e	enum:adns_edns_const
+EDNS_OPTION_PVT	src/knl/edns.h	/^    EDNS_OPTION_PVT      = 65535 \/* private zone dedicated *\/$/;"	e	enum:adns_edns_const
+EDNS_VERSION	src/knl/edns.h	/^    EDNS_VERSION         = 0,    \/* Supported EDNS version. *\/$/;"	e	enum:adns_edns_const
+ERRBASE	src/include/errcode.h	4;"	d
+EnterFunction	src/knl/util.h	37;"	d
+EnterFunction	src/knl/util.h	44;"	d
+LOG_BUFF_LEN	src/asmega_adm/asmega_adm.c	28;"	d	file:
+LOG_BUFF_LEN	src/asmega_adm/lib_asmega_adm.c	26;"	d	file:
+LeaveFunction	src/knl/util.h	48;"	d
+LeaveFunction	src/knl/util.h	55;"	d
+MAJOR_VERSION	src/include/config.h	12;"	d
+MAX_DOMAIN_SIZE	src/knl/dns.h	29;"	d
+MAX_PARA_LEN	src/knl/control.h	29;"	d
+MAX_RR_SIZE	src/knl/dns.h	28;"	d
+MAX_TNL_ID	src/include/lib_asmega.h	14;"	d
+MAX_TNL_NUM	src/include/lib_asmega.h	13;"	d
+MAX_UDP_PAYLOAD	src/knl/edns.h	21;"	d
+MAX_VIEW_ID	src/include/lib_asmega.h	15;"	d
+MAX_VIEW_ID_NUM	src/include/lib_asmega.h	17;"	d
+MINOR_VERSION	src/include/config.h	13;"	d
+MIN_VIEW_ID	src/include/lib_asmega.h	16;"	d
+MOD	src/knl/Makefile	/^MOD = asmega$/;"	m
+MOD_OBJ	src/knl/Makefile	/^MOD_OBJ = dataplane.o \\$/;"	m
+NOERROR	src/knl/dataplane.c	38;"	d	file:
+NXDOMAIN	src/knl/dataplane.c	37;"	d	file:
+OPTEND	src/asmega_adm/asmega_adm.c	29;"	d	file:
+OPT_ALL	src/asmega_adm/asmega_adm.c	34;"	d	file:
+OPT_NONE	src/asmega_adm/asmega_adm.c	31;"	d	file:
+OPT_TNL_ID	src/asmega_adm/asmega_adm.c	32;"	d	file:
+OPT_VIEW_ID	src/asmega_adm/asmega_adm.c	33;"	d	file:
+PATCH_VERSION	src/include/config.h	14;"	d
+PRINT_IP	src/knl/util.h	20;"	d
+PRINT_IP_FORMAT	src/knl/util.h	25;"	d
+PRINT_MAC	src/knl/util.h	27;"	d
+PRINT_MAC_FORMAT	src/knl/util.h	34;"	d
+PROG	src/asmega_adm/Makefile	/^PROG = asmega_adm$/;"	m
+PROG_OBJ	src/asmega_adm/Makefile	/^PROG_OBJ = asmega_adm.o$/;"	m
+PVT_EDNS_OPT_SIZE	src/knl/edns.h	24;"	d
+QUESTION_MAX_LEN	src/knl/dataplane.c	40;"	d	file:
+RPM_TOPDIR	Makefile	/^RPM_TOPDIR=$(HOME)\/rpmbuild$/;"	m
+RR_CLASS_IN	src/knl/dns.h	23;"	d
+RR_END	src/knl/dns.h	14;"	d
+RR_NUM	src/knl/dns.h	27;"	d
+RR_TYPE_AAAA	src/knl/dns.h	22;"	d
+RR_TYPE_ANAME	src/knl/dns.h	15;"	d
+RR_TYPE_CNAME	src/knl/dns.h	16;"	d
+RR_TYPE_MX	src/knl/dns.h	19;"	d
+RR_TYPE_NS	src/knl/dns.h	17;"	d
+RR_TYPE_PTR	src/knl/dns.h	18;"	d
+RR_TYPE_SOA	src/knl/dns.h	20;"	d
+RR_TYPE_TXT	src/knl/dns.h	21;"	d
+SO	src/asmega_adm/Makefile	/^SO = libasmega_adm.so$/;"	m
+SOCKET_OPS_GET_ALL	src/include/lib_asmega.h	/^    SOCKET_OPS_GET_ALL,$/;"	e	enum:__anon2
+SOCKET_OPS_GET_BASE	src/include/lib_asmega.h	/^    SOCKET_OPS_GET_BASE = 512,$/;"	e	enum:__anon2
+SOCKET_OPS_GET_MAX	src/include/lib_asmega.h	/^    SOCKET_OPS_GET_MAX,$/;"	e	enum:__anon2
+SOCKET_OPS_SET_BASE	src/include/lib_asmega.h	/^    SOCKET_OPS_SET_BASE = 512,$/;"	e	enum:__anon1
+SOCKET_OPS_SET_BATCH	src/include/lib_asmega.h	/^    SOCKET_OPS_SET_BATCH,$/;"	e	enum:__anon1
+SOCKET_OPS_SET_BIND	src/include/lib_asmega.h	/^    SOCKET_OPS_SET_BIND,$/;"	e	enum:__anon1
+SOCKET_OPS_SET_CLEAR	src/include/lib_asmega.h	/^    SOCKET_OPS_SET_CLEAR,$/;"	e	enum:__anon1
+SOCKET_OPS_SET_MAX	src/include/lib_asmega.h	/^    SOCKET_OPS_SET_MAX,$/;"	e	enum:__anon1
+SOCKET_OPS_SET_UNBIND	src/include/lib_asmega.h	/^    SOCKET_OPS_SET_UNBIND,$/;"	e	enum:__anon1
+SO_FLAGS	src/asmega_adm/Makefile	/^SO_FLAGS = -fPIC -shared$/;"	m
+SO_LIB	src/asmega_adm/Makefile	/^SO_LIB =$/;"	m
+SO_OBJ	src/asmega_adm/Makefile	/^SO_OBJ = lib_asmega_adm.o$/;"	m
+SUBDIRS	src/Makefile	/^SUBDIRS=knl asmega_adm$/;"	m
+TEST	src/asmega_adm/Makefile	/^TEST = test_asmega_adm$/;"	m
+TEST_FLAGS	src/asmega_adm/Makefile	/^TEST_FLAGS = -L. $/;"	m
+TEST_LIB	src/asmega_adm/Makefile	/^TEST_LIB = -lasmega_adm$/;"	m
+TEST_OBJ	src/asmega_adm/Makefile	/^TEST_OBJ = lib_asmega_adm_test.o$/;"	m
+VCTK_IN	src/knl/core.c	23;"	d	file:
+VCTK_OUT	src/knl/core.c	24;"	d	file:
+VCTK_VXLAN_TOS_BYPASS_SG	src/knl/vxlan.h	41;"	d
+VXLAN_FLAGS	src/knl/vxlan.h	49;"	d
+VXLAN_HLEN	src/knl/vxlan.h	48;"	d
+VXLAN_LISTEN_PORT	src/knl/vxlan.h	50;"	d
+VXLAN_N_VID	src/knl/vxlan.h	46;"	d
+VXLAN_VID_MAX	src/knl/vxlan.h	47;"	d
+VX_SLB_HC	src/knl/vxlan.h	43;"	d
+VX_SLB_L7	src/knl/vxlan.h	44;"	d
+_ADNS_CONSTS_H_	src/knl/consts.h	2;"	d
+_ADNS_EDNS_H_	src/knl/edns.h	2;"	d
+_AS_VXLAN_H_	src/knl/vxlan.h	2;"	d
+_MEGA_COMMON_ERRCODE_H_	src/include/errcode.h	2;"	d
+_PVT_TNL_DB_H_	src/knl/pvt_tnl_db.h	2;"	d
+__AS_STAT_MAX	src/knl/stats.h	/^    __AS_STAT_MAX$/;"	e	enum:__anon12
+__CONFIG_H__	src/include/config.h	10;"	d
+__CONTROL_H__	src/knl/control.h	10;"	d
+__DNS_H__	src/knl/dns.h	10;"	d
+__LIB_ASMEGA_ADM_H_	src/include/lib_asmega_adm.h	10;"	d
+__LIB_ASMEGA_H__	src/include/lib_asmega.h	10;"	d
+__MANAGE_H__	src/knl/manage.h	10;"	d
+__STATS_H__	src/knl/stats.h	10;"	d
+__UTIL_H__	src/knl/util.h	10;"	d
+__as_pvt_tnl_set_all	src/knl/pvt_tnl_db.c	/^int __as_pvt_tnl_set_all(struct pvt_tnl_db *tnl_db, uint32_t new_index, uint32_t list_len) {$/;"	f
+__lib_asmega_adm_get	src/asmega_adm/lib_asmega_adm.c	/^int __lib_asmega_adm_get(am_tnl_info_t * tnl_list, uint32_t *tnl_num) {$/;"	f
+__lib_asmega_adm_set	src/asmega_adm/lib_asmega_adm.c	/^int __lib_asmega_adm_set(am_tnl_info_t * tnl_list, uint32_t tnl_num) {$/;"	f
+__read_mostly	src/knl/core.c	/^static struct nf_hook_ops as_ops_filter[] __read_mostly = {$/;"	v	typeref:struct:as_ops_filter	file:
+__read_mostly	src/knl/manage.c	/^static struct nf_sockopt_ops conf_sockops __read_mostly = {$/;"	v	typeref:struct:conf_sockops	file:
+__this_module	src/knl/asmega.mod.c	/^struct module __this_module$/;"	v	typeref:struct:module
+__tnl_info_list_add	src/knl/pvt_tnl_db.c	/^static void __tnl_info_list_add(uint32_t tnl_id, uint16_t view_id) {$/;"	f	file:
+__tnl_info_list_del	src/knl/pvt_tnl_db.c	/^static void __tnl_info_list_del(uint32_t tnl_id) {$/;"	f	file:
+__tnl_info_list_set	src/knl/pvt_tnl_db.c	/^static void __tnl_info_list_set(uint32_t tnl_id, uint16_t view_id) {$/;"	f	file:
+__used	src/knl/asmega.mod.c	/^__used$/;"	v	file:
+__used	src/knl/asmega.mod.c	/^__used$/;"	v	typeref:struct:____versions	file:
+__used	src/knl/asmega.mod.c	/^static const struct rheldata _rheldata __used$/;"	v	typeref:struct:_rheldata	file:
+aa	src/knl/dns.h	/^    __u16 qr:1, opcode:4, aa:1, tc:1, rd:1, ra:1, z:1, ad:1, cd:1, rcode:4;$/;"	m	struct:as_dnshdr
+aa	src/knl/dns.h	/^    __u16 rd:1, tc:1, aa:1, opcode:4, qr:1, rcode:4, z:1, ad:1, cd:1, ra:1;$/;"	m	struct:as_dnshdr
+ad	src/knl/dns.h	/^    __u16 qr:1, opcode:4, aa:1, tc:1, rd:1, ra:1, z:1, ad:1, cd:1, rcode:4;$/;"	m	struct:as_dnshdr
+ad	src/knl/dns.h	/^    __u16 rd:1, tc:1, aa:1, opcode:4, qr:1, rcode:4, z:1, ad:1, cd:1, ra:1;$/;"	m	struct:as_dnshdr
+additional_rrs	src/knl/dns.h	/^    __u16 additional_rrs;$/;"	m	struct:as_dnshdr
+addr	src/knl/edns.h	/^    } addr;$/;"	m	struct:adns_opt_ecs	typeref:union:adns_opt_ecs::__anon3
+addr_len	src/knl/edns.h	/^    uint8_t  addr_len;		\/* address lenth *\/$/;"	m	struct:adns_opt_ecs
+adm_operate_errcode	src/include/errcode.h	/^enum adm_operate_errcode {$/;"	g
+adns_dnssec_algorithm_t	src/knl/consts.h	/^} adns_dnssec_algorithm_t;$/;"	t	typeref:enum:__anon10
+adns_ds_algorithm_len	src/knl/consts.h	/^enum adns_ds_algorithm_len$/;"	g
+adns_ds_algorithm_t	src/knl/consts.h	/^} adns_ds_algorithm_t;$/;"	t	typeref:enum:__anon11
+adns_edns_add_option	src/knl/edns.c	/^int adns_edns_add_option(adns_opt_rr_t *opt_rr, uint16_t code,$/;"	f
+adns_edns_const	src/knl/edns.h	/^enum adns_edns_const {$/;"	g
+adns_edns_consts	src/knl/edns.c	/^enum adns_edns_consts {$/;"	g	file:
+adns_edns_free	src/knl/edns.c	/^void adns_edns_free(adns_opt_rr_t *opt_rr)$/;"	f
+adns_edns_new	src/knl/edns.c	/^adns_opt_rr_t *adns_edns_new(void)$/;"	f
+adns_edns_to_wire	src/knl/edns.c	/^int adns_edns_to_wire(const adns_opt_rr_t *opt_rr, uint8_t *wire,$/;"	f
+adns_map_errno	src/include/errcode.h	6;"	d
+adns_opcode_t	src/knl/consts.h	/^} adns_opcode_t;$/;"	t	typeref:enum:__anon5
+adns_opt_cookie	src/knl/edns.h	/^struct adns_opt_cookie {$/;"	s
+adns_opt_cookie_t	src/knl/edns.h	/^typedef struct adns_opt_cookie adns_opt_cookie_t;$/;"	t	typeref:struct:adns_opt_cookie
+adns_opt_ecs	src/knl/edns.h	/^struct adns_opt_ecs {$/;"	s
+adns_opt_ecs_t	src/knl/edns.h	/^typedef struct adns_opt_ecs adns_opt_ecs_t;$/;"	t	typeref:struct:adns_opt_ecs
+adns_opt_option	src/knl/edns.h	/^struct adns_opt_option {$/;"	s
+adns_opt_option_t	src/knl/edns.h	/^typedef struct adns_opt_option adns_opt_option_t;$/;"	t	typeref:struct:adns_opt_option
+adns_opt_rr	src/knl/edns.h	/^struct adns_opt_rr {$/;"	s
+adns_opt_rr_t	src/knl/edns.h	/^typedef struct adns_opt_rr adns_opt_rr_t;$/;"	t	typeref:struct:adns_opt_rr
+adns_packet_type_t	src/knl/consts.h	/^} adns_packet_type_t;$/;"	t	typeref:enum:__anon7
+adns_rcode_t	src/knl/consts.h	/^} adns_rcode_t;$/;"	t	typeref:enum:__anon6
+adns_tsig_algorithm_digest_length_t	src/knl/consts.h	/^} adns_tsig_algorithm_digest_length_t;$/;"	t	typeref:enum:__anon9
+adns_tsig_algorithm_t	src/knl/consts.h	/^} adns_tsig_algorithm_t;$/;"	t	typeref:enum:__anon8
+adns_view_id_to_edns_option	src/knl/edns.c	/^int adns_view_id_to_edns_option(adns_opt_rr_t *opt_rr, uint8_t *opt_len, uint8_t *wire)$/;"	f
+adns_wire_flags1_consts	src/knl/consts.h	/^enum adns_wire_flags1_consts {$/;"	g
+adns_wire_flags2_consts	src/knl/consts.h	/^enum adns_wire_flags2_consts {$/;"	g
+adns_wire_offsets	src/knl/consts.h	/^enum adns_wire_offsets {$/;"	g
+am_tnl_info	src/include/lib_asmega.h	/^typedef struct am_tnl_info {$/;"	s
+am_tnl_info_t	src/include/lib_asmega.h	/^}am_tnl_info_t;$/;"	t	typeref:struct:am_tnl_info
+answer_rrs	src/knl/dns.h	/^    __u16 answer_rrs;$/;"	m	struct:as_dnshdr
+as_config	src/knl/control.h	/^struct as_config {$/;"	s
+as_control_exit	src/knl/control.c	/^void as_control_exit(void)$/;"	f
+as_control_init	src/knl/control.c	/^int as_control_init(void)$/;"	f
+as_counters_show	src/knl/stats.c	/^int as_counters_show(struct seq_file *m, void *v)$/;"	f
+as_dns_in	src/knl/dataplane.c	/^as_dns_in(struct iphdr *iph, struct udphdr *uh, struct sk_buff *skb,$/;"	f	file:
+as_dns_out	src/knl/dataplane.c	/^unsigned int as_dns_out(const struct iphdr *iph, const struct udphdr *uh,$/;"	f
+as_dnsans	src/knl/dns.h	/^struct as_dnsans {$/;"	s
+as_dnshdr	src/knl/dns.h	/^struct as_dnshdr {$/;"	s
+as_dnsques	src/knl/dns.h	/^struct as_dnsques {$/;"	s
+as_esmib	src/knl/stats.c	/^struct as_estats_mib *as_esmib;$/;"	v	typeref:struct:as_estats_mib
+as_estats_clear	src/knl/stats.c	/^void as_estats_clear(struct as_estats_mib *mib, int stats_entry)$/;"	f
+as_estats_mib	src/knl/stats.h	/^struct as_estats_mib {$/;"	s
+as_expand_skb	src/knl/dataplane.c	/^int as_expand_skb(struct sk_buff **skb, int size, struct as_dnshdr **dnshdr, uint16_t *dns_len, int is_vxlan)$/;"	f
+as_ipv4_in	src/knl/dataplane.c	/^as_ipv4_in(struct iphdr *iph, struct sk_buff *skb, struct vxlan_info *vxinfo, int skb_len)$/;"	f	file:
+as_ipv4_out	src/knl/dataplane.c	/^static unsigned int as_ipv4_out(struct sk_buff *skb)$/;"	f	file:
+as_local_in	src/knl/dataplane.c	/^as_local_in(unsigned int hook, struct sk_buff *skb, const struct net_device *in,$/;"	f
+as_local_out	src/knl/dataplane.c	/^as_local_out(unsigned int hook, struct sk_buff *skb,$/;"	f
+as_manage_exit	src/knl/manage.c	/^void as_manage_exit(void)$/;"	f
+as_manage_init	src/knl/manage.c	/^int as_manage_init(void)$/;"	f
+as_mib	src/knl/stats.h	/^struct as_mib {$/;"	s
+as_pvt_tnl_add	src/knl/pvt_tnl_db.c	/^int as_pvt_tnl_add(struct pvt_tnl_db *tnl_db, uint32_t tnl_id, uint16_t view_id) {$/;"	f
+as_pvt_tnl_add_batch	src/knl/pvt_tnl_db.c	/^int as_pvt_tnl_add_batch(struct pvt_tnl_db *tnl_db, struct am_tnl_info *list, uint32_t list_len) {$/;"	f
+as_pvt_tnl_clean	src/knl/pvt_tnl_db.c	/^int as_pvt_tnl_clean(struct pvt_tnl_db *tnl_db) {$/;"	f
+as_pvt_tnl_del	src/knl/pvt_tnl_db.c	/^int as_pvt_tnl_del(struct pvt_tnl_db *tnl_db, uint32_t tnl_id) {$/;"	f
+as_pvt_tnl_del_batch	src/knl/pvt_tnl_db.c	/^int as_pvt_tnl_del_batch(struct pvt_tnl_db *tnl_db, struct am_tnl_info *list, uint32_t list_len) {$/;"	f
+as_pvt_tnl_exit	src/knl/pvt_tnl_db.c	/^void as_pvt_tnl_exit(void) {$/;"	f
+as_pvt_tnl_get_all_to_usr	src/knl/pvt_tnl_db.c	/^int as_pvt_tnl_get_all_to_usr(struct pvt_tnl_db *tnl_db, void __user * user, int *len) {$/;"	f
+as_pvt_tnl_get_tnl_id	src/knl/pvt_tnl_db.h	/^as_pvt_tnl_get_tnl_id(struct pvt_tnl_db *tnl_db, uint16_t view_id) {$/;"	f
+as_pvt_tnl_get_view_id	src/knl/pvt_tnl_db.h	/^as_pvt_tnl_get_view_id(struct pvt_tnl_db *tnl_db, uint32_t tnl_id) {$/;"	f
+as_pvt_tnl_init	src/knl/pvt_tnl_db.c	/^int as_pvt_tnl_init(void) {$/;"	f
+as_pvt_tnl_set_all	src/knl/pvt_tnl_db.c	/^int as_pvt_tnl_set_all(struct pvt_tnl_db *tnl_db, struct am_tnl_info *list,$/;"	f
+as_pvt_tnl_set_all_from_usr	src/knl/pvt_tnl_db.c	/^int as_pvt_tnl_set_all_from_usr(struct pvt_tnl_db *tnl_db, void __user * user, uint32_t len) {$/;"	f
+as_stats_exit	src/knl/stats.c	/^void as_stats_exit(void)$/;"	f
+as_stats_init	src/knl/stats.c	/^int as_stats_init(void)$/;"	f
+as_udp_in	src/knl/dataplane.c	/^as_udp_in(struct iphdr *iph, struct sk_buff *skb, struct vxlan_info *vxinfo, int skb_len)$/;"	f
+as_udp_out	src/knl/dataplane.c	/^unsigned int as_udp_out(const struct iphdr *iph, struct sk_buff *skb)$/;"	f
+as_vxlan_in	src/knl/dataplane.c	/^static unsigned int as_vxlan_in(struct sk_buff *skb, struct vxlan_info *vxinfo, struct iphdr **inner_iph)$/;"	f	file:
+asmega_adm_log_write	src/asmega_adm/asmega_adm.c	/^static void asmega_adm_log_write(int argc, char **argv, int ret, int op_msec)$/;"	f	file:
+asmega_exit	src/knl/core.c	/^module_exit(asmega_exit);$/;"	v
+asmega_exit	src/knl/core.c	/^static void __exit asmega_exit(void)$/;"	f	file:
+asmega_init	src/knl/core.c	/^module_init(asmega_init);$/;"	v
+asmega_init	src/knl/core.c	/^static int __init asmega_init(void)$/;"	f	file:
+authority_rrs	src/knl/dns.h	/^    __u16 authority_rrs;$/;"	m	struct:as_dnshdr
+cal_stats	target/scripts/dns_mega_counters.py	/^def cal_stats(d1, d2, t1, t2):$/;"	f
+cd	src/knl/dns.h	/^    __u16 qr:1, opcode:4, aa:1, tc:1, rd:1, ra:1, z:1, ad:1, cd:1, rcode:4;$/;"	m	struct:as_dnshdr
+cd	src/knl/dns.h	/^    __u16 rd:1, tc:1, aa:1, opcode:4, qr:1, rcode:4, z:1, ad:1, cd:1, ra:1;$/;"	m	struct:as_dnshdr
+check_counter	target/scripts/stress.sh	/^function check_counter$/;"	f
+check_module	target/scripts/dnsmega	/^function check_module$/;"	f
+clear_counters_write	src/knl/control.c	/^clear_counters_write(struct file *file, const char __user * buffer,$/;"	f	file:
+client_cookie	src/knl/edns.h	/^    uint8_t client_cookie[8]; \/* client cookie, 8 bytes *\/$/;"	m	struct:adns_opt_cookie
+code	src/knl/edns.h	/^    uint16_t code;            \/* opcode, 10 for cookie *\/$/;"	m	struct:adns_opt_cookie
+code	src/knl/edns.h	/^    uint16_t code;$/;"	m	struct:adns_opt_ecs
+code	src/knl/edns.h	/^    uint16_t code;$/;"	m	struct:adns_opt_option
+daddr	src/knl/vxlan.h	/^        __be32 daddr;   \/* vxlan dst address *\/$/;"	m	struct:vxlan_info
+data	src/knl/dns.h	/^    uint8_t data[0];$/;"	m	struct:as_dnshdr
+data	src/knl/dns.h	/^    }data;$/;"	m	struct:as_dnsans	typeref:union:as_dnsans::__anon4
+data	src/knl/edns.h	/^    uint32_t data;$/;"	m	struct:adns_opt_option
+debug	src/knl/vxlan.h	/^                debug:1,$/;"	m	struct:vxlanhdr
+dig_check_result	target/scripts/digtest.sh	/^function dig_check_result$/;"	f
+dm_launch	target/scripts/dnsmega	/^function dm_launch$/;"	f
+dm_start	target/scripts/dnsmega	/^function dm_start$/;"	f
+dm_stop	target/scripts/dnsmega	/^function dm_stop$/;"	f
+do_list	target/scripts/network_irq.sh	/^do_list(){$/;"	f
+do_off_rps	target/scripts/network_irq.sh	/^do_off_rps(){$/;"	f
+do_on_rps	target/scripts/network_irq.sh	/^do_on_rps(){$/;"	f
+do_set	target/scripts/network_irq.sh	/^do_set(){$/;"	f
+dot_num	src/knl/dns.h	/^    uint8_t dot_num;$/;"	m	struct:as_dnsques
+dport	src/knl/vxlan.h	/^        __be16 dport;$/;"	m	struct:vxlan_info
+dump_mega_counters	target/scripts/dns_mega_counters.py	/^def dump_mega_counters(named_stats):$/;"	f
+entry	src/knl/stats.h	/^    int entry;$/;"	m	struct:as_mib
+err2code	src/include/errcode.h	5;"	d
+ext	src/knl/vxlan.h	/^                ext:1,$/;"	m	struct:vxlanhdr
+ext_rcode	src/knl/edns.h	/^    uint8_t ext_rcode;	\/* Extended RCODE *\/$/;"	m	struct:adns_opt_rr
+fail	src/asmega_adm/asmega_adm.c	/^static void fail(int err, char *msg, ...)$/;"	f	file:
+family	src/knl/edns.h	/^    uint16_t family;		\/* address family, 1:IPv4, 2:IPv6 *\/$/;"	m	struct:adns_opt_ecs
+file_exist	target/scripts/dns_mega_counters.py	/^def file_exist(fn):$/;"	f
+flags	src/knl/edns.h	/^    uint16_t flags;	\/* EDNS flags *\/$/;"	m	struct:adns_opt_rr
+flags	src/knl/vxlan.h	/^        __u8    flags;$/;"	m	struct:vxlanhdr
+fold_field	src/knl/stats.c	/^long fold_field(const struct as_estats_mib *mib, int stats_num)$/;"	f
+fwd_tbl	src/knl/pvt_tnl_db.h	/^    uint32_t fwd_tbl[MAX_VIEW_ID + 1];$/;"	m	struct:pvt_tnl_db
+g_adm_log_file	src/asmega_adm/asmega_adm.c	/^static char *g_adm_log_file = "\/home\/asmega\/var\/log\/asmega_adm.log";$/;"	v	file:
+g_adm_sock_fd	src/asmega_adm/lib_asmega_adm.c	/^static __thread int g_adm_sock_fd = -1;$/;"	v	file:
+g_lib_log_file	src/asmega_adm/lib_asmega_adm.c	/^static char *g_lib_log_file = "\/home\/mega\/var\/log\/mega_adm.log";$/;"	v	file:
+g_log_fd	src/asmega_adm/asmega_adm.c	/^static int g_log_fd;$/;"	v	file:
+g_op_start_tm	src/asmega_adm/lib_asmega_adm.c	/^static struct timeval g_op_start_tm;$/;"	v	typeref:struct:timeval	file:
+g_tnl_db	src/knl/pvt_tnl_db.c	/^struct pvt_tnl_db *g_tnl_db;$/;"	v	typeref:struct:pvt_tnl_db
+g_tnl_info_list	src/knl/pvt_tnl_db.c	/^static struct am_tnl_info g_tnl_info_list[2][MAX_VIEW_ID + 1];$/;"	v	typeref:struct:am_tnl_info	file:
+g_tnl_list_index	src/knl/pvt_tnl_db.c	/^static int g_tnl_list_index; \/\/ 0 or 1$/;"	v	file:
+g_tnl_list_len	src/knl/pvt_tnl_db.c	/^static int g_tnl_list_len;$/;"	v	file:
+get_cpu_array	target/scripts/network_irq.sh	/^get_cpu_array(){$/;"	f
+get_data	src/knl/control.c	/^static int get_data(char *realdata, const char __user * buffer,$/;"	f	file:
+get_domain_name	src/knl/dataplane.c	/^int get_domain_name(struct as_dnshdr *dnshdr, int dns_len, uint16_t *datagram_len, uint8_t **p)$/;"	f
+get_irq_array	target/scripts/network_irq.sh	/^get_irq_array(){$/;"	f
+get_opt	src/knl/control.c	/^static int get_opt(void)$/;"	f	file:
+get_up_nic	target/scripts/network_irq.sh	/^get_up_nic(){$/;"	f
+help	target/scripts/network_irq.sh	/^help(){$/;"	f
+id	src/knl/dns.h	/^    __u16 id;$/;"	m	struct:as_dnshdr
+ip	src/knl/dns.h	/^        char ip[4];$/;"	m	union:as_dnsans::__anon4
+ip_s2i	src/knl/manage.c	/^unsigned int ip_s2i(char *ip) {$/;"	f
+is_pointer	src/knl/dataplane.c	/^inline static int is_pointer(uint8_t in)$/;"	f	file:
+json	target/scripts/dns_mega_counters.py	/^    import json$/;"	i
+json	target/scripts/dns_mega_counters.py	/^    import simplejson as json$/;"	i
+length	src/knl/edns.h	/^    uint16_t length;          \/* cookie length, could include both client cookie and server cookie, 8 or [16,40] *\/$/;"	m	struct:adns_opt_cookie
+length	src/knl/edns.h	/^    uint16_t length;$/;"	m	struct:adns_opt_ecs
+length	src/knl/edns.h	/^    uint16_t length;$/;"	m	struct:adns_opt_option
+lib_asmega_adm_cleanup	src/asmega_adm/lib_asmega_adm.c	/^static void lib_asmega_adm_cleanup()$/;"	f	file:
+lib_asmega_adm_get	src/asmega_adm/lib_asmega_adm.c	/^int lib_asmega_adm_get(am_tnl_info_t * tnl_list, uint32_t *tnl_num) {$/;"	f
+lib_asmega_adm_init	src/asmega_adm/lib_asmega_adm.c	/^static int lib_asmega_adm_init()$/;"	f	file:
+lib_asmega_adm_log_write	src/asmega_adm/lib_asmega_adm.c	/^static void lib_asmega_adm_log_write(int ret, const char *fmt, ...)$/;"	f	file:
+lib_asmega_adm_set	src/asmega_adm/lib_asmega_adm.c	/^int lib_asmega_adm_set(am_tnl_info_t * tnl_list, uint32_t tnl_num) {$/;"	f
+locate_named_stats	target/scripts/dns_mega_counters.py	/^def locate_named_stats():$/;"	f
+log_dump	target/scripts/digtest.sh	/^function log_dump { printf "[DUMP]: Dump of $1:\\n">>$LOG; cat $1>>$LOG ; printf "\\n" >>$LOG;}$/;"	f
+log_dump	target/scripts/stress.sh	/^function log_dump { printf "[DUMP]: Dump of $1:\\n">>$LOG; cat $1>>$LOG ; printf "\\n" >>$LOG;}$/;"	f
+log_dump	target/scripts/testletty.sh	/^function log_dump { printf "[DUMP]: Dump of $1:\\n">>$LOG; cat $1>>$LOG ; printf "\\n" >>$LOG;}$/;"	f
+log_err	target/scripts/digtest.sh	/^function log_err  { printf "[ERR ]: $@ \\n">>$LOG ; }$/;"	f
+log_err	target/scripts/stress.sh	/^function log_err  { printf "[ERR ]: $@\\n">>$LOG ; }$/;"	f
+log_err	target/scripts/testletty.sh	/^function log_err  { printf "[ERR ]: $@\\n">>$LOG ; }$/;"	f
+log_fail	target/scripts/digtest.sh	/^function log_fail { printf "[FAIL]: $@ \\n">>$LOG ; }$/;"	f
+log_fail	target/scripts/stress.sh	/^function log_fail { printf "[FAIL]: $@\\n">>$LOG ; }$/;"	f
+log_fail	target/scripts/testletty.sh	/^function log_fail { printf "[FAIL]: $@\\n">>$LOG ; }$/;"	f
+log_info	target/scripts/digtest.sh	/^function log_info { printf "[INFO]: $@ \\n">>$LOG ; } $/;"	f
+log_info	target/scripts/stress.sh	/^function log_info { printf "[INFO]: $@\\n">>$LOG ; } $/;"	f
+log_info	target/scripts/testletty.sh	/^function log_info { printf "[INFO]: $@\\n">>$LOG ; } $/;"	f
+log_pass	target/scripts/digtest.sh	/^function log_pass { printf "[PASS]: $@ \\n">>$LOG ; }$/;"	f
+log_pass	target/scripts/stress.sh	/^function log_pass { printf "[PASS]: $@\\n">>$LOG ; }$/;"	f
+log_pass	target/scripts/testletty.sh	/^function log_pass { printf "[PASS]: $@\\n">>$LOG ; }$/;"	f
+long_options	src/asmega_adm/asmega_adm.c	/^const struct option long_options[] = {$/;"	v	typeref:struct:option
+main	src/asmega_adm/asmega_adm.c	/^int main(int argc, char **argv)$/;"	f
+main	target/scripts/dns_mega_counters.py	/^def main():$/;"	f
+main_test	target/scripts/digtest.sh	/^function main_test {$/;"	f
+main_test	target/scripts/testletty.sh	/^function main_test {$/;"	f
+mega_dir	src/knl/control.c	/^struct proc_dir_entry *mega_dir;$/;"	v	typeref:struct:proc_dir_entry
+mib_stats	src/knl/stats.c	/^static struct as_mib mib_stats[] = {$/;"	v	typeref:struct:as_mib	file:
+mibs	src/knl/stats.h	/^    long mibs[__AS_STAT_MAX];$/;"	m	struct:as_estats_mib
+name	src/knl/control.h	/^    char name[64];                       \/* proc file name *\/$/;"	m	struct:as_config
+name	src/knl/dns.h	/^        char name[255];$/;"	m	union:as_dnsans::__anon4
+name	src/knl/stats.h	/^    char *name;$/;"	m	struct:as_mib
+nic_irq_bind	target/scripts/network_irq.sh	/^nic_irq_bind(){$/;"	f
+nlen	src/knl/dns.h	/^    uint32_t nlen;$/;"	m	struct:as_dnsans
+offset	src/knl/dns.h	/^    uint32_t offset;$/;"	m	struct:as_dnsans
+opcode	src/knl/dns.h	/^    __u16 qr:1, opcode:4, aa:1, tc:1, rd:1, ra:1, z:1, ad:1, cd:1, rcode:4;$/;"	m	struct:as_dnshdr
+opcode	src/knl/dns.h	/^    __u16 rd:1, tc:1, aa:1, opcode:4, qr:1, rcode:4, z:1, ad:1, cd:1, ra:1;$/;"	m	struct:as_dnshdr
+opt2name	src/asmega_adm/asmega_adm.c	/^static inline const char *opt2name(int option)$/;"	f	file:
+opt_ecs	src/knl/edns.h	/^    struct adns_opt_ecs opt_ecs;$/;"	m	struct:adns_opt_rr	typeref:struct:adns_opt_rr::adns_opt_ecs
+options	src/knl/edns.h	/^    struct adns_opt_option options;	\/* EDNS options *\/$/;"	m	struct:adns_opt_rr	typeref:struct:adns_opt_rr::adns_opt_option
+options_check	src/asmega_adm/asmega_adm.c	/^static int options_check(uint32_t options, int cmd)$/;"	f	file:
+optnames	src/asmega_adm/asmega_adm.c	/^static const char *optnames[] = {$/;"	v	file:
+os	target/scripts/dns_mega_counters.py	/^import os$/;"	i
+parse_dns_additional	src/knl/edns.c	/^parse_dns_additional(struct as_dnshdr *dnshdr, uint8_t **wire, uint8_t **opt_len_pos, uint16_t edns_len)$/;"	f
+parse_dns_message	src/knl/dataplane.c	/^int parse_dns_message(struct as_dnshdr *dnshdr, uint16_t dns_len,$/;"	f
+parse_opt	src/asmega_adm/asmega_adm.c	/^static int parse_opt(int argc, char **argv) {$/;"	f	file:
+parse_tnl_id	src/asmega_adm/asmega_adm.c	/^int32_t parse_tnl_id(const char *id_str, uint32_t *id_val) {$/;"	f
+parse_view_id	src/asmega_adm/asmega_adm.c	/^int32_t parse_view_id(const char *id_str, uint16_t *id_val) {$/;"	f
+payload	src/knl/edns.h	/^    uint16_t payload;	\/* UDP payload *\/$/;"	m	struct:adns_opt_rr
+proc_cfg	src/knl/control.c	/^struct as_config proc_cfg[] = {$/;"	v	typeref:struct:as_config
+proc_fops	src/knl/control.h	/^    const struct file_operations proc_fops; \/* proc interface file operations *\/$/;"	m	struct:as_config	typeref:struct:as_config::file_operations
+proc_open	src/knl/control.c	/^static int proc_open(struct inode *inode, struct file *file)  $/;"	f	file:
+proc_read	src/knl/control.c	/^int proc_read(struct seq_file *m, void *v)$/;"	f
+proc_show	src/knl/control.h	/^    int (*proc_show)(struct seq_file *m, void *v);$/;"	m	struct:as_config
+proc_write	src/knl/control.c	/^static ssize_t proc_write(struct file *file, const char __user *buffer,$/;"	f	file:
+pvt_tnl_db	src/knl/pvt_tnl_db.h	/^struct pvt_tnl_db {$/;"	s
+qclass	src/knl/dns.h	/^    uint16_t qclass;$/;"	m	struct:as_dnsques
+qname	src/knl/dns.h	/^    char qname[255];$/;"	m	struct:as_dnsques
+qr	src/knl/dns.h	/^    __u16 qr:1, opcode:4, aa:1, tc:1, rd:1, ra:1, z:1, ad:1, cd:1, rcode:4;$/;"	m	struct:as_dnshdr
+qr	src/knl/dns.h	/^    __u16 rd:1, tc:1, aa:1, opcode:4, qr:1, rcode:4, z:1, ad:1, cd:1, ra:1;$/;"	m	struct:as_dnshdr
+qsize	src/knl/dns.h	/^    uint16_t qsize;$/;"	m	struct:as_dnsques
+qtype	src/knl/dns.h	/^    uint16_t qtype;$/;"	m	struct:as_dnsques
+query	src/knl/dns.h	/^    char query[255];$/;"	m	struct:as_dnsans
+queryperf_traffic	target/scripts/stress.sh	/^function queryperf_traffic$/;"	f
+questions	src/knl/dns.h	/^    __u16 questions;$/;"	m	struct:as_dnshdr
+ra	src/knl/dns.h	/^    __u16 qr:1, opcode:4, aa:1, tc:1, rd:1, ra:1, z:1, ad:1, cd:1, rcode:4;$/;"	m	struct:as_dnshdr
+ra	src/knl/dns.h	/^    __u16 rd:1, tc:1, aa:1, opcode:4, qr:1, rcode:4, z:1, ad:1, cd:1, ra:1;$/;"	m	struct:as_dnshdr
+rcode	src/knl/dns.h	/^    __u16 qr:1, opcode:4, aa:1, tc:1, rd:1, ra:1, z:1, ad:1, cd:1, rcode:4;$/;"	m	struct:as_dnshdr
+rcode	src/knl/dns.h	/^    __u16 rd:1, tc:1, aa:1, opcode:4, qr:1, rcode:4, z:1, ad:1, cd:1, ra:1;$/;"	m	struct:as_dnshdr
+rd	src/knl/dns.h	/^    __u16 qr:1, opcode:4, aa:1, tc:1, rd:1, ra:1, z:1, ad:1, cd:1, rcode:4;$/;"	m	struct:as_dnshdr
+rd	src/knl/dns.h	/^    __u16 rd:1, tc:1, aa:1, opcode:4, qr:1, rcode:4, z:1, ad:1, cd:1, ra:1;$/;"	m	struct:as_dnshdr
+rdlength	src/knl/dns.h	/^    uint16_t rdlength;$/;"	m	struct:as_dnsans
+read_stats	target/scripts/dns_mega_counters.py	/^def read_stats():$/;"	f
+recv_conf	src/knl/manage.c	/^static int recv_conf(struct sock *sk, int cmd, void __user * user,$/;"	f	file:
+res1	src/knl/vxlan.h	/^                res1:1;$/;"	m	struct:vxlanhdr
+res1	src/knl/vxlan.h	/^        __u8    res1:1,$/;"	m	struct:vxlanhdr
+res2	src/knl/vxlan.h	/^                res2:2;$/;"	m	struct:vxlanhdr
+res2	src/knl/vxlan.h	/^        __u8    res2:2,$/;"	m	struct:vxlanhdr
+res3	src/knl/vxlan.h	/^        __u8    res3;$/;"	m	struct:vxlanhdr
+runcmd	target/scripts/dns_mega_counters.py	/^def runcmd(command):$/;"	f
+saddr	src/knl/vxlan.h	/^        __be32 saddr;   \/* vxlan src address *\/$/;"	m	struct:vxlan_info
+scope_mask	src/knl/edns.h	/^    uint8_t  scope_mask;	\/* scope netmask *\/$/;"	m	struct:adns_opt_ecs
+send_conf	src/knl/manage.c	/^static int send_conf(struct sock *sk, int cmd, void __user * user, int *len)$/;"	f	file:
+server_cookie	src/knl/edns.h	/^    uint8_t server_cookie[0]; \/* server cookie, varial size, 0 or [8, 32] *\/$/;"	m	struct:adns_opt_cookie
+set_option	src/asmega_adm/asmega_adm.c	/^static void set_option(unsigned int *options, unsigned int option)$/;"	f	file:
+short_options	src/asmega_adm/asmega_adm.c	/^const char *const short_options = "hvSBUt:w:a";$/;"	v
+show	src/knl/stats.c	/^static void show(int start, int end, struct seq_file *m, int *len)$/;"	f	file:
+size	src/knl/edns.h	/^    uint16_t size;			\/* Total size of the OPT RR in wire format *\/$/;"	m	struct:adns_opt_rr
+slb_type	src/knl/vxlan.h	/^                slb_type:3,$/;"	m	struct:vxlanhdr
+socket_cleanup	src/asmega_adm/lib_asmega_adm.c	/^void socket_cleanup()$/;"	f
+socket_init	src/asmega_adm/lib_asmega_adm.c	/^int socket_init()$/;"	f
+src_mask	src/knl/edns.h	/^    uint8_t  src_mask;		\/* source netmask *\/$/;"	m	struct:adns_opt_ecs
+subprocess	target/scripts/dns_mega_counters.py	/^import subprocess$/;"	i
+sys	target/scripts/dns_mega_counters.py	/^import sys$/;"	i
+sysctl_as_dns_port	src/knl/control.c	/^int sysctl_as_dns_port = DNS_PORT;$/;"	v
+sysctl_as_edns_code	src/knl/control.c	/^uint16_t sysctl_as_edns_code = 65535;$/;"	v
+sysctl_as_edns_len	src/knl/control.c	/^uint16_t sysctl_as_edns_len = 4;$/;"	v
+sysctl_as_on	src/knl/control.c	/^int sysctl_as_on = AS_ON;$/;"	v
+sysctl_vctk_vxlan_another_dport	src/knl/control.c	/^int sysctl_vctk_vxlan_another_dport = AS_VCTK_VXLAN_ANOTHER_DPORT;$/;"	v
+tc	src/knl/dns.h	/^    __u16 qr:1, opcode:4, aa:1, tc:1, rd:1, ra:1, z:1, ad:1, cd:1, rcode:4;$/;"	m	struct:as_dnshdr
+tc	src/knl/dns.h	/^    __u16 rd:1, tc:1, aa:1, opcode:4, qr:1, rcode:4, z:1, ad:1, cd:1, ra:1;$/;"	m	struct:as_dnshdr
+tcpreplay_traffic	target/scripts/stress.sh	/^function tcpreplay_traffic$/;"	f
+test1	target/scripts/stress.sh	/^function test1 $/;"	f
+test2	target/scripts/stress.sh	/^function test2$/;"	f
+test3	target/scripts/stress.sh	/^function test3$/;"	f
+test4	target/scripts/stress.sh	/^function test4$/;"	f
+test5	target/scripts/stress.sh	/^function test5$/;"	f
+test6	target/scripts/stress.sh	/^function test6$/;"	f
+test7	target/scripts/stress.sh	/^function test7$/;"	f
+test8	target/scripts/stress.sh	/^function test8$/;"	f
+test9	target/scripts/stress.sh	/^function test9$/;"	f
+test_cleanup	target/scripts/stress.sh	/^function test_cleanup$/;"	f
+test_startup	target/scripts/stress.sh	/^function test_startup$/;"	f
+tnl_count	src/knl/pvt_tnl_db.h	/^    uint32_t tnl_count;$/;"	m	struct:pvt_tnl_db
+tnl_id	src/include/lib_asmega.h	/^    uint32_t tnl_id;$/;"	m	struct:am_tnl_info
+tnl_tbl	src/knl/pvt_tnl_db.h	/^    uint16_t tnl_tbl[MAX_TNL_NUM];$/;"	m	struct:pvt_tnl_db
+tos	src/knl/vxlan.h	/^                tos:3;$/;"	m	struct:vxlanhdr
+tos	src/knl/vxlan.h	/^        __u8    tos:3,$/;"	m	struct:vxlanhdr
+ttl	src/knl/dns.h	/^    uint32_t ttl;$/;"	m	struct:as_dnsans
+type	src/knl/dns.h	/^    uint16_t type;$/;"	m	struct:as_dnsans
+type	src/knl/vxlan.h	/^                type:1,$/;"	m	struct:vxlanhdr
+usage	target/scripts/digtest.sh	/^function usage $/;"	f
+usage	target/scripts/dnsmega	/^function usage$/;"	f
+usage	target/scripts/stress.sh	/^function usage$/;"	f
+usage_exit	src/asmega_adm/asmega_adm.c	/^static void usage_exit(const int exit_status)$/;"	f	file:
+v4	src/knl/edns.h	/^        uint32_t        v4;         \/* IPv4 address *\/$/;"	m	union:adns_opt_ecs::__anon3
+v61	src/knl/edns.h	/^        uint8_t         v61[16];    \/* IPv6 address of uint8_t *\/$/;"	m	union:adns_opt_ecs::__anon3
+v62	src/knl/edns.h	/^        uint16_t        v62[8];     \/* IPv6 address of uint16_t *\/$/;"	m	union:adns_opt_ecs::__anon3
+v63	src/knl/edns.h	/^        uint32_t        v63[4];     \/* IPv6 address of uint32_t *\/$/;"	m	union:adns_opt_ecs::__anon3
+v64	src/knl/edns.h	/^        uint64_t        v64[2];     \/* IPv6 address of uint64_t *\/$/;"	m	union:adns_opt_ecs::__anon3
+value	src/knl/control.h	/^    int *value;$/;"	m	struct:as_config
+version	src/knl/edns.h	/^    uint8_t version;$/;"	m	struct:adns_opt_rr
+version	src/knl/vxlan.h	/^                version:4;$/;"	m	struct:vxlanhdr
+version	src/knl/vxlan.h	/^        __u8    version:4,$/;"	m	struct:vxlanhdr
+version_read	src/knl/control.c	/^static int version_read(struct seq_file *m, void *v)$/;"	f	file:
+vid	src/knl/vxlan.h	/^        __be32  vid;$/;"	m	struct:vxlanhdr
+vid	src/knl/vxlan.h	/^        u32 vid;$/;"	m	struct:vxlan_info
+view_id	src/include/lib_asmega.h	/^    uint16_t view_id;$/;"	m	struct:am_tnl_info
+vxlan_id	src/knl/vxlan.h	51;"	d
+vxlan_info	src/knl/vxlan.h	/^struct vxlan_info {$/;"	s
+vxlanhdr	src/knl/vxlan.h	/^struct vxlanhdr {$/;"	s
+write_stats	target/scripts/dns_mega_counters.py	/^def write_stats(dataset):$/;"	f
+z	src/knl/dns.h	/^    __u16 qr:1, opcode:4, aa:1, tc:1, rd:1, ra:1, z:1, ad:1, cd:1, rcode:4;$/;"	m	struct:as_dnshdr
+z	src/knl/dns.h	/^    __u16 rd:1, tc:1, aa:1, opcode:4, qr:1, rcode:4, z:1, ad:1, cd:1, ra:1;$/;"	m	struct:as_dnshdr

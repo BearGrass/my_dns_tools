@@ -1,0 +1,1615 @@
+{
+    "answer_log_level": "info", 
+    "attack_log_level": "info", 
+    "control": "127.0.0.1:6666", 
+    "query_log_level": "info", 
+    "server_log_level": "info", 
+    "vEth0_ip": "182.92.19.1", 
+    "vEth1_ip": "182.92.19.5", 
+    "vip": "223.5.5.5", 
+    "vip_0": "223.5.5.5", 
+    "vip_1": "223.6.6.6",
+    "vip_auth_0": "223.5.5.8",
+    "vip_auth_1": "223.6.6.8",
+    "vip_sec_0": "223.5.5.9",
+    "vip_sec_1": "223.6.6.9",
+    "vip6_0": "2400:3200::1", 
+    "vip6_1": "2400:3200:baba::1",
+    "vip6_auth_0": "2400:3200::8",
+    "vip6_auth_1": "2400:3200:baba::8",
+    "vip6_sec_0": "2400:3200::9",
+    "vip6_sec_1": "2400:3200:baba::9"
+}
+[
+    {
+        "iplist": [
+            "119.84.104.215", 
+            "119.84.104.217", 
+            "119.84.104.218", 
+            "121.207.229.215", 
+            "121.207.229.216", 
+            "121.207.229.217", 
+            "121.207.229.218", 
+            "112.67.242.176", 
+            "175.6.3.171", 
+            "175.6.3.172", 
+            "58.220.1.79", 
+            "58.220.1.80", 
+            "58.220.1.81", 
+            "58.220.1.82", 
+            "118.112.13.218", 
+            "118.112.13.216", 
+            "118.112.13.215", 
+            "118.112.13.217", 
+            "61.155.167.50", 
+            "61.155.167.59", 
+            "61.155.167.60", 
+            "61.155.167.61", 
+            "61.155.167.33", 
+            "61.155.167.41"
+        ], 
+        "name": "\"default\""
+    }, 
+    {
+        "backup": "\"CN_CHINANET_JIANGSU\"", 
+        "iplist": [
+            "66.231.239.79", 
+            "66.231.239.80", 
+            "66.231.239.81", 
+            "66.231.239.82"
+        ], 
+        "name": "\"__OVERSEA__\""
+    }, 
+    {
+        "backup": "\"CN_CHINANET_JIANGSU\"", 
+        "iplist": [
+            "66.231.239.79", 
+            "66.231.239.80", 
+            "66.231.239.81", 
+            "66.231.239.82"
+        ], 
+        "name": "\"OTHER_OVERSEA\"", 
+        "vgroup": "OTHER_OVERSEA"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_SHANGHAI\"", 
+        "iplist": [
+            "61.155.167.50", 
+            "61.155.167.59", 
+            "61.155.167.60", 
+            "61.155.167.61", 
+            "61.155.167.33", 
+            "61.155.167.41"
+        ], 
+        "name": "\"CN_CHINANET_ANHUI\"", 
+        "vgroup": "CN_CHINANET_ANHUI"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_SHANGHAI\"", 
+        "iplist": [
+            "59.83.222.2", 
+            "59.83.222.3"
+        ], 
+        "name": "\"CN_UNICOM_ANHUI\"", 
+        "vgroup": "CN_UNICOM_ANHUI"
+    }, 
+    {
+        "backup": "\"CN_CMNET_JIANGSU\"", 
+        "iplist": [
+            "36.155.10.68", 
+            "36.155.10.69"
+        ], 
+        "name": "\"CN_CMNET_ANHUI\"", 
+        "vgroup": "CN_CMNET_ANHUI"
+    }, 
+    {
+        "backup": "\"CN_CERNET_HUBEI\"", 
+        "iplist": [
+            "222.192.186.18", 
+            "222.192.186.17", 
+            "222.192.186.16", 
+            "222.192.186.15"
+        ], 
+        "name": "\"CN_CERNET_ANHUI\"", 
+        "vgroup": "CN_CERNET_ANHUI"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_SHANGHAI\"", 
+        "iplist": [
+            "61.155.167.50", 
+            "61.155.167.59", 
+            "61.155.167.60", 
+            "61.155.167.61", 
+            "61.155.167.33", 
+            "61.155.167.41"
+        ], 
+        "name": "\"CN_OTHER_ANHUI\"", 
+        "vgroup": "CN_OTHER_ANHUI"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_TIANJIN\"", 
+        "iplist": [
+            "42.81.4.82", 
+            "42.81.4.81", 
+            "42.81.4.80", 
+            "42.81.4.79"
+        ], 
+        "name": "\"CN_CHINANET_BEIJING\"", 
+        "vgroup": "CN_CHINANET_BEIJING"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_SHANXI\"", 
+        "iplist": [
+            "125.39.11.92", 
+            "125.39.11.96"
+        ], 
+        "name": "\"CN_UNICOM_BEIJING\"", 
+        "vgroup": "CN_UNICOM_BEIJING"
+    }, 
+    {
+        "backup": "\"CN_CMNET_SHANDONG\"", 
+        "iplist": [
+            "111.62.68.56", 
+            "111.62.68.57"
+        ], 
+        "name": "\"CN_CMNET_BEIJING\"", 
+        "vgroup": "CN_CMNET_BEIJING"
+    }, 
+    {
+        "backup": "\"CN_CERNET_JIANGSU\"", 
+        "iplist": [
+            "58.205.221.218", 
+            "58.205.221.217", 
+            "58.205.221.216", 
+            "58.205.221.215"
+        ], 
+        "name": "\"CN_CERNET_BEIJING\"", 
+        "vgroup": "CN_CERNET_BEIJING"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_SHANXI\"", 
+        "iplist": [
+            "42.81.4.82", 
+            "42.81.4.81", 
+            "42.81.4.80", 
+            "42.81.4.79"
+        ], 
+        "name": "\"CN_OTHER_BEIJING\"", 
+        "vgroup": "CN_OTHER_BEIJING"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_HUBEI\"", 
+        "iplist": [
+            "119.84.104.218", 
+            "119.84.104.217", 
+            "119.84.104.216", 
+            "119.84.104.215"
+        ], 
+        "name": "\"CN_CHINANET_ZHONGQING\"", 
+        "vgroup": "CN_CHINANET_ZHONGQING"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_HUBEI\"", 
+        "iplist": [
+            "58.144.251.42", 
+            "58.144.251.43"
+        ], 
+        "name": "\"CN_UNICOM_ZHONGQING\"", 
+        "vgroup": "CN_UNICOM_ZHONGQING"
+    }, 
+    {
+        "backup": "\"CN_CMNET_HUNAN\"", 
+        "iplist": [
+            "117.174.150.124", 
+            "117.174.150.125"
+        ], 
+        "name": "\"CN_CMNET_ZHONGQING\"", 
+        "vgroup": "CN_CMNET_ZHONGQING"
+    }, 
+    {
+        "backup": "\"CN_CERNET_JIANGSU\"", 
+        "iplist": [
+            "58.205.221.218", 
+            "58.205.221.217", 
+            "58.205.221.216", 
+            "58.205.221.215"
+        ], 
+        "name": "\"CN_CERNET_ZHONGQING\"", 
+        "vgroup": "CN_CERNET_ZHONGQING"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_YUNNAN\"", 
+        "iplist": [
+            "119.84.104.218", 
+            "119.84.104.217", 
+            "119.84.104.216", 
+            "119.84.104.215"
+        ], 
+        "name": "\"CN_OTHER_ZHONGQING\"", 
+        "vgroup": "CN_OTHER_ZHONGQING"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_SHANGHAI\"", 
+        "iplist": [
+            "27.159.72.57", 
+            "27.159.72.58"
+        ], 
+        "name": "\"CN_CHINANET_FUJIAN\"", 
+        "vgroup": "CN_CHINANET_FUJIAN"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_ZHEJIANG\"", 
+        "iplist": [
+            "59.83.222.2", 
+            "59.83.222.3"
+        ], 
+        "name": "\"CN_UNICOM_FUJIAN\"", 
+        "vgroup": "CN_UNICOM_FUJIAN"
+    }, 
+    {
+        "backup": "\"CN_CMNET_JIANGSU\"", 
+        "iplist": [
+            "211.138.122.218", 
+            "211.138.122.217", 
+            "211.138.122.216", 
+            "211.138.122.215"
+        ], 
+        "name": "\"CN_CMNET_FUJIAN\"", 
+        "vgroup": "CN_CMNET_FUJIAN"
+    }, 
+    {
+        "backup": "\"CN_CERNET_JIANGSU\"", 
+        "iplist": [
+            "222.192.186.82", 
+            "222.192.186.81", 
+            "222.192.186.80", 
+            "222.192.186.79"
+        ], 
+        "name": "\"CN_CERNET_FUJIAN\"", 
+        "vgroup": "CN_CERNET_FUJIAN"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_ZHEJIANG\"", 
+        "iplist": [
+            "59.83.222.2", 
+            "59.83.222.3"
+        ], 
+        "name": "\"CN_OTHER_FUJIAN\"", 
+        "vgroup": "CN_OTHER_FUJIAN"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_SHAANXI\"", 
+        "iplist": [
+            "125.74.24.35", 
+            "125.74.24.36", 
+            "202.100.74.218", 
+            "202.100.74.217", 
+            "202.100.74.216", 
+            "202.100.74.215"
+        ], 
+        "name": "\"CN_CHINANET_GANSU\"", 
+        "vgroup": "CN_CHINANET_GANSU"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_SHANXI\"", 
+        "iplist": [
+            "180.95.130.69", 
+            "180.95.130.68"
+        ], 
+        "name": "\"CN_UNICOM_GANSU\"", 
+        "vgroup": "CN_UNICOM_GANSU"
+    }, 
+    {
+        "backup": "\"CN_CMNET_SHANXI\"", 
+        "iplist": [
+            "111.19.239.31", 
+            "111.19.239.32"
+        ], 
+        "name": "\"CN_CMNET_GANSU\"", 
+        "vgroup": "CN_CMNET_GANSU"
+    }, 
+    {
+        "backup": "\"CN_CERNET_JIANGSU\"", 
+        "iplist": [
+            "58.205.221.218", 
+            "58.205.221.217", 
+            "58.205.221.216", 
+            "58.205.221.215"
+        ], 
+        "name": "\"CN_CERNET_GANSU\"", 
+        "vgroup": "CN_CERNET_GANSU"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_GANSU\"", 
+        "iplist": [
+            "58.144.251.42", 
+            "58.144.251.43"
+        ], 
+        "name": "\"CN_OTHER_GANSU\"", 
+        "vgroup": "CN_OTHER_GANSU"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_GUANGXI\"", 
+        "iplist": [
+            "14.152.40.70", 
+            "14.152.40.69"
+        ], 
+        "name": "\"CN_CHINANET_GUANGDONG\"", 
+        "vgroup": "CN_CHINANET_GUANGDONG"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_FUJIAN\"", 
+        "iplist": [
+            "112.90.32.82", 
+            "112.90.32.81", 
+            "112.90.32.80", 
+            "112.90.32.79"
+        ], 
+        "name": "\"CN_UNICOM_GUANGDONG\"", 
+        "vgroup": "CN_UNICOM_GUANGDONG"
+    }, 
+    {
+        "backup": "\"CN_CMNET_HUNAN\"", 
+        "iplist": [
+            "183.232.48.164", 
+            "183.240.143.42", 
+            "183.240.143.43"
+        ], 
+        "name": "\"CN_CMNET_GUANGDONG\"", 
+        "vgroup": "CN_CMNET_GUANGDONG"
+    }, 
+    {
+        "backup": "\"CN_CERNET_JIANGSU\"", 
+        "iplist": [
+            "222.192.186.82", 
+            "222.192.186.81", 
+            "222.192.186.80", 
+            "222.192.186.79"
+        ], 
+        "name": "\"CN_CERNET_GUANGDONG\"", 
+        "vgroup": "CN_CERNET_GUANGDONG"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_HAINAN\"", 
+        "iplist": [
+            "175.6.51.50", 
+            "175.6.51.51"
+        ], 
+        "name": "\"CN_OTHER_GUANGDONG\"", 
+        "vgroup": "CN_OTHER_GUANGDONG"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_GUANGDONG\"", 
+        "iplist": [
+            "175.6.51.50", 
+            "175.6.51.51"
+        ], 
+        "name": "\"CN_CHINANET_GUANGXI\"", 
+        "vgroup": "CN_CHINANET_GUANGXI"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_FUJIAN\"", 
+        "iplist": [
+            "121.31.19.28", 
+            "121.31.19.29"
+        ], 
+        "name": "\"CN_UNICOM_GUANGXI\"", 
+        "vgroup": "CN_UNICOM_GUANGXI"
+    }, 
+    {
+        "backup": "\"CN_CMNET_HUNAN\"", 
+        "iplist": [
+            "211.138.122.218", 
+            "211.138.122.217", 
+            "211.138.122.216", 
+            "211.138.122.215"
+        ], 
+        "name": "\"CN_CMNET_GUANGXI\"", 
+        "vgroup": "CN_CMNET_GUANGXI"
+    }, 
+    {
+        "backup": "\"CN_CERNET_JIANGSU\"", 
+        "iplist": [
+            "222.192.186.82", 
+            "222.192.186.81", 
+            "222.192.186.80", 
+            "222.192.186.79"
+        ], 
+        "name": "\"CN_CERNET_GUANGXI\"", 
+        "vgroup": "CN_CERNET_GUANGXI"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_HAINAN\"", 
+        "iplist": [
+            "175.6.51.50", 
+            "175.6.51.51"
+        ], 
+        "name": "\"CN_OTHER_GUANGXI\"", 
+        "vgroup": "CN_OTHER_GUANGXI"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_YUNNAN\"", 
+        "iplist": [
+            "42.123.118.43", 
+            "42.123.118.42"
+        ], 
+        "name": "\"CN_CHINANET_GUIZHOU\"", 
+        "vgroup": "CN_CHINANET_GUIZHOU"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_HUBEI\"", 
+        "iplist": [
+            "58.16.232.30", 
+            "58.16.232.29"
+        ], 
+        "name": "\"CN_UNICOM_GUIZHOU\"", 
+        "vgroup": "CN_UNICOM_GUIZHOU"
+    }, 
+    {
+        "backup": "\"CN_CMNET_HUNAN\"", 
+        "iplist": [
+            "117.174.150.124", 
+            "117.174.150.125"
+        ], 
+        "name": "\"CN_CMNET_GUIZHOU\"", 
+        "vgroup": "CN_CMNET_GUIZHOU"
+    }, 
+    {
+        "backup": "\"CN_CERNET_JIANGSU\"", 
+        "iplist": [
+            "58.205.221.218", 
+            "58.205.221.217", 
+            "58.205.221.216", 
+            "58.205.221.215"
+        ], 
+        "name": "\"CN_CERNET_GUIZHOU\"", 
+        "vgroup": "CN_CERNET_GUIZHOU"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_YUNNAN\"", 
+        "iplist": [
+            "119.84.104.218", 
+            "119.84.104.217", 
+            "119.84.104.216", 
+            "119.84.104.215"
+        ], 
+        "name": "\"CN_OTHER_GUIZHOU\"", 
+        "vgroup": "CN_OTHER_GUIZHOU"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_GUANGDONG\"", 
+        "iplist": [
+            "27.159.72.57", 
+            "27.159.72.58"
+        ], 
+        "name": "\"CN_CHINANET_HAINAN\"", 
+        "vgroup": "CN_CHINANET_HAINAN"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_FUJIAN\"", 
+        "iplist": [
+            "112.90.32.82", 
+            "112.90.32.81", 
+            "112.90.32.80", 
+            "112.90.32.79"
+        ], 
+        "name": "\"CN_UNICOM_HAINAN\"", 
+        "vgroup": "CN_UNICOM_HAINAN"
+    }, 
+    {
+        "backup": "\"CN_CMNET_HUNAN\"", 
+        "iplist": [
+            "211.138.122.218", 
+            "211.138.122.217", 
+            "211.138.122.216", 
+            "211.138.122.215"
+        ], 
+        "name": "\"CN_CMNET_HAINAN\"", 
+        "vgroup": "CN_CMNET_HAINAN"
+    }, 
+    {
+        "backup": "\"CN_CERNET_JIANGSU\"", 
+        "iplist": [
+            "222.192.186.82", 
+            "222.192.186.81", 
+            "222.192.186.80", 
+            "222.192.186.79"
+        ], 
+        "name": "\"CN_CERNET_HAINAN\"", 
+        "vgroup": "CN_CERNET_HAINAN"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_GUANGDONG\"", 
+        "iplist": [
+            "27.159.72.57", 
+            "27.159.72.58"
+        ], 
+        "name": "\"CN_OTHER_HAINAN\"", 
+        "vgroup": "CN_OTHER_HAINAN"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_TIANJIN\"", 
+        "iplist": [
+            "42.81.4.82", 
+            "42.81.4.81", 
+            "42.81.4.80", 
+            "42.81.4.79"
+        ], 
+        "name": "\"CN_CHINANET_HEBEI\"", 
+        "vgroup": "CN_CHINANET_HEBEI"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_SHANDONG\"", 
+        "iplist": [
+            "121.29.9.218", 
+            "121.29.9.217", 
+            "121.29.9.216", 
+            "121.29.9.215"
+        ], 
+        "name": "\"CN_UNICOM_HEBEI\"", 
+        "vgroup": "CN_UNICOM_HEBEI"
+    }, 
+    {
+        "backup": "\"CN_CMNET_SHANDONG\"", 
+        "iplist": [
+            "111.62.68.56", 
+            "111.62.68.57"
+        ], 
+        "name": "\"CN_CMNET_HEBEI\"", 
+        "vgroup": "CN_CMNET_HEBEI"
+    }, 
+    {
+        "backup": "\"CN_CERNET_JIANGSU\"", 
+        "iplist": [
+            "58.205.221.218", 
+            "58.205.221.217", 
+            "58.205.221.216", 
+            "58.205.221.215"
+        ], 
+        "name": "\"CN_CERNET_HEBEI\"", 
+        "vgroup": "CN_CERNET_HEBEI"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_SHANDONG\"", 
+        "iplist": [
+            "121.29.9.218", 
+            "121.29.9.217", 
+            "121.29.9.216", 
+            "121.29.9.215"
+        ], 
+        "name": "\"CN_OTHER_HEBEI\"", 
+        "vgroup": "CN_OTHER_HEBEI"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_TIANJIN\"", 
+        "iplist": [
+            "219.147.74.33", 
+            "219.147.74.32"
+        ], 
+        "name": "\"CN_CHINANET_HEILONGJIANG\"", 
+        "vgroup": "CN_CHINANET_HEILONGJIANG"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_LIAONING\"", 
+        "iplist": [
+            "113.7.211.1", 
+            "113.7.211.22"
+        ], 
+        "name": "\"CN_UNICOM_HEILONGJIANG\"", 
+        "vgroup": "CN_UNICOM_HEILONGJIANG"
+    }, 
+    {
+        "backup": "\"CN_CMNET_SHANXI\"", 
+        "iplist": [
+            "120.192.82.218", 
+            "120.192.82.217", 
+            "120.192.82.216", 
+            "120.192.82.215"
+        ], 
+        "name": "\"CN_CMNET_HEILONGJIANG\"", 
+        "vgroup": "CN_CMNET_HEILONGJIANG"
+    }, 
+    {
+        "backup": "\"CN_CERNET_JIANGSU\"", 
+        "iplist": [
+            "58.205.221.218", 
+            "58.205.221.217", 
+            "58.205.221.216", 
+            "58.205.221.215"
+        ], 
+        "name": "\"CN_CERNET_HEILONGJIANG\"", 
+        "vgroup": "CN_CERNET_HEILONGJIANG"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_LIAONING\"", 
+        "iplist": [
+            "139.209.202.42", 
+            "139.209.202.43"
+        ], 
+        "name": "\"CN_OTHER_HEILONGJIANG\"", 
+        "vgroup": "CN_OTHER_HEILONGJIANG"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_HUBEI\"", 
+        "iplist": [
+            "123.161.62.177", 
+            "123.161.62.178"
+        ], 
+        "name": "\"CN_CHINANET_HENAN\"", 
+        "vgroup": "CN_CHINANET_HENAN"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_HUBEI\"", 
+        "iplist": [
+            "123.6.27.90", 
+            "123.6.27.94"
+        ], 
+        "name": "\"CN_UNICOM_HENAN\"", 
+        "vgroup": "CN_UNICOM_HENAN"
+    }, 
+    {
+        "backup": "\"CN_CMNET_SHANDONG\"", 
+        "iplist": [
+            "111.6.229.47", 
+            "111.6.229.46"
+        ], 
+        "name": "\"CN_CMNET_HENAN\"", 
+        "vgroup": "CN_CMNET_HENAN"
+    }, 
+    {
+        "backup": "\"CN_CERNET_JIANGSU\"", 
+        "iplist": [
+            "58.205.221.218", 
+            "58.205.221.217", 
+            "58.205.221.216", 
+            "58.205.221.215"
+        ], 
+        "name": "\"CN_CERNET_HENAN\"", 
+        "vgroup": "CN_CERNET_HENAN"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_HUBEI\"", 
+        "iplist": [
+            "123.6.27.90", 
+            "123.6.27.94"
+        ], 
+        "name": "\"CN_OTHER_HENAN\"", 
+        "vgroup": "CN_OTHER_HENAN"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_HUNAN\"", 
+        "iplist": [
+            "116.207.97.29", 
+            "116.207.97.30"
+        ], 
+        "name": "\"CN_CHINANET_HUBEI\"", 
+        "vgroup": "CN_CHINANET_HUBEI"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_JIANGSU\"", 
+        "iplist": [
+            "211.91.166.44", 
+            "211.91.166.16"
+        ], 
+        "name": "\"CN_UNICOM_HUBEI\"", 
+        "vgroup": "CN_UNICOM_HUBEI"
+    }, 
+    {
+        "backup": "\"CN_CMNET_JIANGSU\"", 
+        "iplist": [
+            "111.48.30.172", 
+            "111.48.30.173"
+        ], 
+        "name": "\"CN_CMNET_HUBEI\"", 
+        "vgroup": "CN_CMNET_HUBEI"
+    }, 
+    {
+        "backup": "\"CN_CERNET_JIANGSU\"", 
+        "iplist": [
+            "58.205.221.218", 
+            "58.205.221.217", 
+            "58.205.221.216", 
+            "58.205.221.215"
+        ], 
+        "name": "\"CN_CERNET_HUBEI\"", 
+        "vgroup": "CN_CERNET_HUBEI"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_HUNAN\"", 
+        "iplist": [
+            "111.48.30.172", 
+            "111.48.30.173"
+        ], 
+        "name": "\"CN_OTHER_HUBEI\"", 
+        "vgroup": "CN_OTHER_HUBEI"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_HUBEI\"", 
+        "iplist": [
+            "175.6.51.50", 
+            "175.6.51.51"
+        ], 
+        "name": "\"CN_CHINANET_HUNAN\"", 
+        "vgroup": "CN_CHINANET_HUNAN"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_JIANGSU\"", 
+        "iplist": [
+            "211.91.242.45", 
+            "211.91.242.44"
+        ], 
+        "name": "\"CN_UNICOM_HUNAN\"", 
+        "vgroup": "CN_UNICOM_HUNAN"
+    }, 
+    {
+        "backup": "\"CN_CMNET_GUANGDONG\"", 
+        "iplist": [
+            "111.48.30.172", 
+            "111.48.30.173"
+        ], 
+        "name": "\"CN_CMNET_HUNAN\"", 
+        "vgroup": "CN_CMNET_HUNAN"
+    }, 
+    {
+        "backup": "\"CN_CERNET_JIANGSU\"", 
+        "iplist": [
+            "58.205.221.218", 
+            "58.205.221.217", 
+            "58.205.221.216", 
+            "58.205.221.215"
+        ], 
+        "name": "\"CN_CERNET_HUNAN\"", 
+        "vgroup": "CN_CERNET_HUNAN"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_HUNAN\"", 
+        "iplist": [
+            "175.6.51.50", 
+            "175.6.51.51"
+        ], 
+        "name": "\"CN_OTHER_HUNAN\"", 
+        "vgroup": "CN_OTHER_HUNAN"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_SHANGHAI\"", 
+        "iplist": [
+            "61.155.167.50", 
+            "61.155.167.59", 
+            "61.155.167.60", 
+            "61.155.167.61", 
+            "61.155.167.33", 
+            "61.155.167.41"
+        ], 
+        "name": "\"CN_CHINANET_JIANGSU\"", 
+        "vgroup": "CN_CHINANET_JIANGSU"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_SHANGHAI\"", 
+        "iplist": [
+            "59.83.222.2", 
+            "59.83.222.3"
+        ], 
+        "name": "\"CN_UNICOM_JIANGSU\"", 
+        "vgroup": "CN_UNICOM_JIANGSU"
+    }, 
+    {
+        "backup": "\"CN_CMNET_ZHEJIANG\"", 
+        "iplist": [
+            "36.155.10.68", 
+            "36.155.10.69"
+        ], 
+        "name": "\"CN_CMNET_JIANGSU\"", 
+        "vgroup": "CN_CMNET_JIANGSU"
+    }, 
+    {
+        "backup": "\"CN_CERNET_GUANGDONG\"", 
+        "iplist": [
+            "222.192.186.18", 
+            "222.192.186.17", 
+            "222.192.186.16", 
+            "222.192.186.15"
+        ], 
+        "name": "\"CN_CERNET_JIANGSU\"", 
+        "vgroup": "CN_CERNET_JIANGSU"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_SHANGHAI\"", 
+        "iplist": [
+            "61.155.167.50", 
+            "61.155.167.59", 
+            "61.155.167.60", 
+            "61.155.167.61", 
+            "61.155.167.33", 
+            "61.155.167.41"
+        ], 
+        "name": "\"CN_OTHER_JIANGSU\"", 
+        "vgroup": "CN_OTHER_JIANGSU"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_HUBEI\"", 
+        "iplist": [
+            "59.63.230.103", 
+            "59.63.230.104"
+        ], 
+        "name": "\"CN_CHINANET_JIANGXI\"", 
+        "vgroup": "CN_CHINANET_JIANGXI"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_JIANGSU\"", 
+        "iplist": [
+            "118.212.146.68", 
+            "118.212.146.69"
+        ], 
+        "name": "\"CN_UNICOM_JIANGXI\"", 
+        "vgroup": "CN_UNICOM_JIANGXI"
+    }, 
+    {
+        "backup": "\"CN_CMNET_ZHEJIANG\"", 
+        "iplist": [
+            "36.155.10.68", 
+            "36.155.10.69"
+        ], 
+        "name": "\"CN_CMNET_JIANGXI\"", 
+        "vgroup": "CN_CMNET_JIANGXI"
+    }, 
+    {
+        "backup": "\"CN_CERNET_JIANGSU\"", 
+        "iplist": [
+            "58.205.221.218", 
+            "58.205.221.217", 
+            "58.205.221.216", 
+            "58.205.221.215"
+        ], 
+        "name": "\"CN_CERNET_JIANGXI\"", 
+        "vgroup": "CN_CERNET_JIANGXI"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_HUBEI\"", 
+        "iplist": [
+            "59.63.230.103", 
+            "59.63.230.104"
+        ], 
+        "name": "\"CN_OTHER_JIANGXI\"", 
+        "vgroup": "CN_OTHER_JIANGXI"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_TIANJIN\"", 
+        "iplist": [
+            "42.202.158.48", 
+            "42.202.158.47"
+        ], 
+        "name": "\"CN_CHINANET_JILIN\"", 
+        "vgroup": "CN_CHINANET_JILIN"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_LIAONING\"", 
+        "iplist": [
+            "139.209.202.42", 
+            "139.209.202.43"
+        ], 
+        "name": "\"CN_UNICOM_JILIN\"", 
+        "vgroup": "CN_UNICOM_JILIN"
+    }, 
+    {
+        "backup": "\"CN_CMNET_SHANXI\"", 
+        "iplist": [
+            "120.192.82.218", 
+            "120.192.82.217", 
+            "120.192.82.216", 
+            "120.192.82.215"
+        ], 
+        "name": "\"CN_CMNET_JILIN\"", 
+        "vgroup": "CN_CMNET_JILIN"
+    }, 
+    {
+        "backup": "\"CN_CERNET_JIANGSU\"", 
+        "iplist": [
+            "58.205.221.218", 
+            "58.205.221.217", 
+            "58.205.221.216", 
+            "58.205.221.215"
+        ], 
+        "name": "\"CN_CERNET_JILIN\"", 
+        "vgroup": "CN_CERNET_JILIN"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_LIAONING\"", 
+        "iplist": [
+            "139.209.202.42", 
+            "139.209.202.43"
+        ], 
+        "name": "\"CN_OTHER_JILIN\"", 
+        "vgroup": "CN_OTHER_JILIN"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_TIANJIN\"", 
+        "iplist": [
+            "42.202.158.48", 
+            "42.202.158.47"
+        ], 
+        "name": "\"CN_CHINANET_LIAONING\"", 
+        "vgroup": "CN_CHINANET_LIAONING"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_JILIN\"", 
+        "iplist": [
+            "218.60.104.63", 
+            "218.60.104.64"
+        ], 
+        "name": "\"CN_UNICOM_LIAONING\"", 
+        "vgroup": "CN_UNICOM_LIAONING"
+    }, 
+    {
+        "backup": "\"CN_CMNET_SHANXI\"", 
+        "iplist": [
+            "120.201.250.34", 
+            "120.201.250.33"
+        ], 
+        "name": "\"CN_CMNET_LIAONING\"", 
+        "vgroup": "CN_CMNET_LIAONING"
+    }, 
+    {
+        "backup": "\"CN_CERNET_JIANGSU\"", 
+        "iplist": [
+            "58.205.221.218", 
+            "58.205.221.217", 
+            "58.205.221.216", 
+            "58.205.221.215"
+        ], 
+        "name": "\"CN_CERNET_LIAONING\"", 
+        "vgroup": "CN_CERNET_LIAONING"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_JILIN\"", 
+        "iplist": [
+            "218.60.104.63", 
+            "218.60.104.64"
+        ], 
+        "name": "\"CN_OTHER_LIAONING\"", 
+        "vgroup": "CN_OTHER_LIAONING"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_TIANJIN\"", 
+        "iplist": [
+            "42.81.4.82", 
+            "42.81.4.81", 
+            "42.81.4.80", 
+            "42.81.4.79"
+        ], 
+        "name": "\"CN_CHINANET_NEIMENGGU\"", 
+        "vgroup": "CN_CHINANET_NEIMENGGU"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_HEILONGJIANG\"", 
+        "iplist": [
+            "42.81.4.82", 
+            "42.81.4.81", 
+            "42.81.4.80", 
+            "42.81.4.79"
+        ], 
+        "name": "\"CN_UNICOM_NEIMENGGU\"", 
+        "vgroup": "CN_UNICOM_NEIMENGGU"
+    }, 
+    {
+        "backup": "\"CN_CMNET_SHANDONG\"", 
+        "iplist": [
+            "120.192.82.218", 
+            "120.192.82.217", 
+            "120.192.82.216", 
+            "120.192.82.215"
+        ], 
+        "name": "\"CN_CMNET_NEIMENGGU\"", 
+        "vgroup": "CN_CMNET_NEIMENGGU"
+    }, 
+    {
+        "backup": "\"CN_CERNET_JIANGSU\"", 
+        "iplist": [
+            "58.205.221.218", 
+            "58.205.221.217", 
+            "58.205.221.216", 
+            "58.205.221.215"
+        ], 
+        "name": "\"CN_CERNET_NEIMENGGU\"", 
+        "vgroup": "CN_CERNET_NEIMENGGU"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_HEILONGJIANG\"", 
+        "iplist": [
+            "42.81.4.82", 
+            "42.81.4.81", 
+            "42.81.4.80", 
+            "42.81.4.79"
+        ], 
+        "name": "\"CN_OTHER_NEIMENGGU\"", 
+        "vgroup": "CN_OTHER_NEIMENGGU"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_SHAANXI\"", 
+        "iplist": [
+            "125.74.24.35", 
+            "125.74.24.36"
+        ], 
+        "name": "\"CN_CHINANET_NINGXIA\"", 
+        "vgroup": "CN_CHINANET_NINGXIA"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_SHANXI\"", 
+        "iplist": [
+            "58.144.251.42", 
+            "58.144.251.43"
+        ], 
+        "name": "\"CN_UNICOM_NINGXIA\"", 
+        "vgroup": "CN_UNICOM_NINGXIA"
+    }, 
+    {
+        "backup": "\"CN_CMNET_SHANXI\"", 
+        "iplist": [
+            "111.19.239.31", 
+            "111.19.239.32"
+        ], 
+        "name": "\"CN_CMNET_NINGXIA\"", 
+        "vgroup": "CN_CMNET_NINGXIA"
+    }, 
+    {
+        "backup": "\"CN_CERNET_HUBEI\"", 
+        "iplist": [
+            "58.205.221.218", 
+            "58.205.221.217", 
+            "58.205.221.216", 
+            "58.205.221.215"
+        ], 
+        "name": "\"CN_CERNET_NINGXIA\"", 
+        "vgroup": "CN_CERNET_NINGXIA"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_HENAN\"", 
+        "iplist": [
+            "58.144.251.42", 
+            "58.144.251.43"
+        ], 
+        "name": "\"CN_OTHER_NINGXIA\"", 
+        "vgroup": "CN_OTHER_NINGXIA"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_SHAANXI\"", 
+        "iplist": [
+            "125.74.24.35", 
+            "125.74.24.36"
+        ], 
+        "name": "\"CN_CHINANET_QINGHAI\"", 
+        "vgroup": "CN_CHINANET_QINGHAI"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_SHANXI\"", 
+        "iplist": [
+            "58.144.251.42", 
+            "58.144.251.43"
+        ], 
+        "name": "\"CN_UNICOM_QINGHAI\"", 
+        "vgroup": "CN_UNICOM_QINGHAI"
+    }, 
+    {
+        "backup": "\"CN_CMNET_SHANXI\"", 
+        "iplist": [
+            "111.19.239.31", 
+            "111.19.239.32"
+        ], 
+        "name": "\"CN_CMNET_QINGHAI\"", 
+        "vgroup": "CN_CMNET_QINGHAI"
+    }, 
+    {
+        "backup": "\"CN_CERNET_HUBEI\"", 
+        "iplist": [
+            "58.205.221.218", 
+            "58.205.221.217", 
+            "58.205.221.216", 
+            "58.205.221.215"
+        ], 
+        "name": "\"CN_CERNET_QINGHAI\"", 
+        "vgroup": "CN_CERNET_QINGHAI"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_HENAN\"", 
+        "iplist": [
+            "58.144.251.42", 
+            "58.144.251.43"
+        ], 
+        "name": "\"CN_OTHER_QINGHAI\"", 
+        "vgroup": "CN_OTHER_QINGHAI"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_GANSU\"", 
+        "iplist": [
+            "117.34.20.60", 
+            "117.34.20.61"
+        ], 
+        "name": "\"CN_CHINANET_SHAANXI\"", 
+        "vgroup": "CN_CHINANET_SHAANXI"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_HENAN\"", 
+        "iplist": [
+            "113.200.112.24", 
+            "113.200.112.14"
+        ], 
+        "name": "\"CN_UNICOM_SHAANXI\"", 
+        "vgroup": "CN_UNICOM_SHAANXI"
+    }, 
+    {
+        "backup": "\"CN_CMNET_SHANXI\"", 
+        "iplist": [
+            "111.19.239.31", 
+            "111.19.239.32"
+        ], 
+        "name": "\"CN_CMNET_SHAANXI\"", 
+        "vgroup": "CN_CMNET_SHAANXI"
+    }, 
+    {
+        "backup": "\"CN_CERNET_HUBEI\"", 
+        "iplist": [
+            "58.205.221.218", 
+            "58.205.221.217", 
+            "58.205.221.216", 
+            "58.205.221.215"
+        ], 
+        "name": "\"CN_CERNET_SHAANXI\"", 
+        "vgroup": "CN_CERNET_SHAANXI"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_HENAN\"", 
+        "iplist": [
+            "113.200.112.24", 
+            "113.200.112.14"
+        ], 
+        "name": "\"CN_OTHER_SHAANXI\"", 
+        "vgroup": "CN_OTHER_SHAANXI"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_ANHUI\"", 
+        "iplist": [
+            "150.138.178.42", 
+            "150.138.178.43"
+        ], 
+        "name": "\"CN_CHINANET_SHANDONG\"", 
+        "vgroup": "CN_CHINANET_SHANDONG"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_LIAONING\"", 
+        "iplist": [
+            "119.167.219.176", 
+            "119.167.219.177"
+        ], 
+        "name": "\"CN_UNICOM_SHANDONG\"", 
+        "vgroup": "CN_UNICOM_SHANDONG"
+    }, 
+    {
+        "backup": "\"CN_CMNET_LIAONING\"", 
+        "iplist": [
+            "120.192.82.218", 
+            "120.192.82.217", 
+            "120.192.82.216", 
+            "120.192.82.215"
+        ], 
+        "name": "\"CN_CMNET_SHANDONG\"", 
+        "vgroup": "CN_CMNET_SHANDONG"
+    }, 
+    {
+        "backup": "\"CN_CERNET_HUBEI\"", 
+        "iplist": [
+            "222.192.186.18", 
+            "222.192.186.17", 
+            "222.192.186.16", 
+            "222.192.186.15"
+        ], 
+        "name": "\"CN_CERNET_SHANDONG\"", 
+        "vgroup": "CN_CERNET_SHANDONG"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_SHANDONG\"", 
+        "iplist": [
+            "121.29.9.218", 
+            "121.29.9.217", 
+            "121.29.9.216", 
+            "121.29.9.215"
+        ], 
+        "name": "\"CN_OTHER_SHANDONG\"", 
+        "vgroup": "CN_OTHER_SHANDONG"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_JIANGSU\"", 
+        "iplist": [
+            "101.227.5.70", 
+            "101.227.5.46", 
+            "180.153.91.55"
+        ], 
+        "name": "\"CN_CHINANET_SHANGHAI\"", 
+        "vgroup": "CN_CHINANET_SHANGHAI"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_ZHEJIANG\"", 
+        "iplist": [
+            "59.83.222.2", 
+            "59.83.222.3"
+        ], 
+        "name": "\"CN_UNICOM_SHANGHAI\"", 
+        "vgroup": "CN_UNICOM_SHANGHAI"
+    }, 
+    {
+        "backup": "\"CN_CMNET_JIANGSU\"", 
+        "iplist": [
+            "117.135.168.218", 
+            "117.135.168.217", 
+            "117.135.168.216", 
+            "117.135.168.215"
+        ], 
+        "name": "\"CN_CMNET_SHANGHAI\"", 
+        "vgroup": "CN_CMNET_SHANGHAI"
+    }, 
+    {
+        "backup": "\"CN_CERNET_HUBEI\"", 
+        "iplist": [
+            "222.192.186.18", 
+            "222.192.186.17", 
+            "222.192.186.16", 
+            "222.192.186.15"
+        ], 
+        "name": "\"CN_CERNET_SHANGHAI\"", 
+        "vgroup": "CN_CERNET_SHANGHAI"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_ANHUI\"", 
+        "iplist": [
+            "117.135.168.218", 
+            "117.135.168.217", 
+            "117.135.168.216", 
+            "117.135.168.215"
+        ], 
+        "name": "\"CN_OTHER_SHANGHAI\"", 
+        "vgroup": "CN_OTHER_SHANGHAI"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_TIANJIN\"", 
+        "iplist": [
+            "42.81.4.82", 
+            "42.81.4.81", 
+            "42.81.4.80", 
+            "42.81.4.79"
+        ], 
+        "name": "\"CN_CHINANET_SHANXI\"", 
+        "vgroup": "CN_CHINANET_SHANXI"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_SHANDONG\"", 
+        "iplist": [
+            "221.204.186.215", 
+            "221.204.186.216", 
+            "221.204.186.218"
+        ], 
+        "name": "\"CN_UNICOM_SHANXI\"", 
+        "vgroup": "CN_UNICOM_SHANXI"
+    }, 
+    {
+        "backup": "\"CN_CMNET_SHANDONG\"", 
+        "iplist": [
+            "111.19.239.31", 
+            "111.19.239.32"
+        ], 
+        "name": "\"CN_CMNET_SHANXI\"", 
+        "vgroup": "CN_CMNET_SHANXI"
+    }, 
+    {
+        "backup": "\"CN_CERNET_HUBEI\"", 
+        "iplist": [
+            "58.205.221.218", 
+            "58.205.221.217", 
+            "58.205.221.216", 
+            "58.205.221.215"
+        ], 
+        "name": "\"CN_CERNET_SHANXI\"", 
+        "vgroup": "CN_CERNET_SHANXI"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_SHANDONG\"", 
+        "iplist": [
+            "221.204.186.215", 
+            "221.204.186.216", 
+            "221.204.186.218"
+        ], 
+        "name": "\"CN_OTHER_SHANXI\"", 
+        "vgroup": "CN_OTHER_SHANXI"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_YUNNAN\"", 
+        "iplist": [
+            "182.131.28.57", 
+            "182.131.28.58"
+        ], 
+        "name": "\"CN_CHINANET_SICHUAN\"", 
+        "vgroup": "CN_CHINANET_SICHUAN"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_HUBEI\"", 
+        "iplist": [
+            "175.153.56.20", 
+            "175.153.56.19"
+        ], 
+        "name": "\"CN_UNICOM_SICHUAN\"", 
+        "vgroup": "CN_UNICOM_SICHUAN"
+    }, 
+    {
+        "backup": "\"CN_CMNET_HUNAN\"", 
+        "iplist": [
+            "117.174.150.124", 
+            "117.174.150.125"
+        ], 
+        "name": "\"CN_CMNET_SICHUAN\"", 
+        "vgroup": "CN_CMNET_SICHUAN"
+    }, 
+    {
+        "backup": "\"CN_CERNET_GUANGDONG\"", 
+        "iplist": [
+            "58.205.221.218", 
+            "58.205.221.217", 
+            "58.205.221.216", 
+            "58.205.221.215"
+        ], 
+        "name": "\"CN_CERNET_SICHUAN\"", 
+        "vgroup": "CN_CERNET_SICHUAN"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_YUNNAN\"", 
+        "iplist": [
+            "182.131.28.57", 
+            "182.131.28.58"
+        ], 
+        "name": "\"CN_OTHER_SICHUAN\"", 
+        "vgroup": "CN_OTHER_SICHUAN"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_SHANDONG\"", 
+        "iplist": [
+            "42.81.4.82", 
+            "42.81.4.81", 
+            "42.81.4.80", 
+            "42.81.4.79"
+        ], 
+        "name": "\"CN_CHINANET_TIANJIN\"", 
+        "vgroup": "CN_CHINANET_TIANJIN"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_SHANDONG\"", 
+        "iplist": [
+            "125.39.11.92", 
+            "125.39.11.96"
+        ], 
+        "name": "\"CN_UNICOM_TIANJIN\"", 
+        "vgroup": "CN_UNICOM_TIANJIN"
+    }, 
+    {
+        "backup": "\"CN_CMNET_SHANDONG\"", 
+        "iplist": [
+            "120.192.82.218", 
+            "120.192.82.217", 
+            "120.192.82.216", 
+            "120.192.82.215"
+        ], 
+        "name": "\"CN_CMNET_TIANJIN\"", 
+        "vgroup": "CN_CMNET_TIANJIN"
+    }, 
+    {
+        "backup": "\"CN_CERNET_JIANGSU\"", 
+        "iplist": [
+            "58.205.221.218", 
+            "58.205.221.217", 
+            "58.205.221.216", 
+            "58.205.221.215"
+        ], 
+        "name": "\"CN_CERNET_TIANJIN\"", 
+        "vgroup": "CN_CERNET_TIANJIN"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_SHANDONG\"", 
+        "iplist": [
+            "125.39.11.92", 
+            "125.39.11.96"
+        ], 
+        "name": "\"CN_OTHER_TIANJIN\"", 
+        "vgroup": "CN_OTHER_TIANJIN"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_GANSU\"", 
+        "iplist": [
+            "125.74.24.35", 
+            "125.74.24.36"
+        ], 
+        "name": "\"CN_CHINANET_XINJIANG\"", 
+        "vgroup": "CN_CHINANET_XINJIANG"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_SHANDONG\"", 
+        "iplist": [
+            "58.144.251.42", 
+            "58.144.251.43"
+        ], 
+        "name": "\"CN_UNICOM_XINJIANG\"", 
+        "vgroup": "CN_UNICOM_XINJIANG"
+    }, 
+    {
+        "backup": "\"CN_CMNET_SHANXI\"", 
+        "iplist": [
+            "111.19.239.31", 
+            "111.19.239.32"
+        ], 
+        "name": "\"CN_CMNET_XINJIANG\"", 
+        "vgroup": "CN_CMNET_XINJIANG"
+    }, 
+    {
+        "backup": "\"CN_CERNET_JIANGSU\"", 
+        "iplist": [
+            "58.205.221.218", 
+            "58.205.221.217", 
+            "58.205.221.216", 
+            "58.205.221.215"
+        ], 
+        "name": "\"CN_CERNET_XINJIANG\"", 
+        "vgroup": "CN_CERNET_XINJIANG"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_SHANDONG\"", 
+        "iplist": [
+            "58.144.251.42", 
+            "58.144.251.43"
+        ], 
+        "name": "\"CN_OTHER_XINJIANG\"", 
+        "vgroup": "CN_OTHER_XINJIANG"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_YUNNAN\"", 
+        "iplist": [
+            "182.131.28.57", 
+            "182.131.28.58"
+        ], 
+        "name": "\"CN_CHINANET_XICANG\"", 
+        "vgroup": "CN_CHINANET_XICANG"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_HUBEI\"", 
+        "iplist": [
+            "58.144.251.42", 
+            "58.144.251.43"
+        ], 
+        "name": "\"CN_UNICOM_XICANG\"", 
+        "vgroup": "CN_UNICOM_XICANG"
+    }, 
+    {
+        "backup": "\"CN_CMNET_SHANXI\"", 
+        "iplist": [
+            "111.19.239.31", 
+            "111.19.239.32"
+        ], 
+        "name": "\"CN_CMNET_XICANG\"", 
+        "vgroup": "CN_CMNET_XICANG"
+    }, 
+    {
+        "backup": "\"CN_CERNET_JIANGSU\"", 
+        "iplist": [
+            "58.205.221.218", 
+            "58.205.221.217", 
+            "58.205.221.216", 
+            "58.205.221.215"
+        ], 
+        "name": "\"CN_CERNET_XICANG\"", 
+        "vgroup": "CN_CERNET_XICANG"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_YUNNAN\"", 
+        "iplist": [
+            "182.131.28.57", 
+            "182.131.28.58"
+        ], 
+        "name": "\"CN_OTHER_XICANG\"", 
+        "vgroup": "CN_OTHER_XICANG"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_GUANGXI\"", 
+        "iplist": [
+            "182.242.140.61", 
+            "182.242.140.60"
+        ], 
+        "name": "\"CN_CHINANET_YUNNAN\"", 
+        "vgroup": "CN_CHINANET_YUNNAN"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_GUANGDONG\"", 
+        "iplist": [
+            "58.144.251.42", 
+            "58.144.251.43"
+        ], 
+        "name": "\"CN_UNICOM_YUNNAN\"", 
+        "vgroup": "CN_UNICOM_YUNNAN"
+    }, 
+    {
+        "backup": "\"CN_CMNET_GUANGDONG\"", 
+        "iplist": [
+            "183.224.38.9", 
+            "183.224.38.7"
+        ], 
+        "name": "\"CN_CMNET_YUNNAN\"", 
+        "vgroup": "CN_CMNET_YUNNAN"
+    }, 
+    {
+        "backup": "\"CN_CERNET_JIANGSU\"", 
+        "iplist": [
+            "222.192.186.82", 
+            "222.192.186.81", 
+            "222.192.186.80", 
+            "222.192.186.79"
+        ], 
+        "name": "\"CN_CERNET_YUNNAN\"", 
+        "vgroup": "CN_CERNET_YUNNAN"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_ZHONGQING\"", 
+        "iplist": [
+            "182.131.28.57", 
+            "182.131.28.58"
+        ], 
+        "name": "\"CN_OTHER_YUNNAN\"", 
+        "vgroup": "CN_OTHER_YUNNAN"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_JIANGSU\"", 
+        "iplist": [
+            "61.155.167.50", 
+            "61.155.167.59", 
+            "61.155.167.60", 
+            "61.155.167.61", 
+            "61.155.167.33", 
+            "61.155.167.41"
+        ], 
+        "name": "\"CN_CHINANET_ZHEJIANG\"", 
+        "vgroup": "CN_CHINANET_ZHEJIANG"
+    }, 
+    {
+        "backup": "\"CN_UNICOM_SHANGHAI\"", 
+        "iplist": [
+            "59.83.222.2", 
+            "59.83.222.3"
+        ], 
+        "name": "\"CN_UNICOM_ZHEJIANG\"", 
+        "vgroup": "CN_UNICOM_ZHEJIANG"
+    }, 
+    {
+        "backup": "\"CN_CMNET_JIANGSU\"", 
+        "iplist": [
+            "211.138.122.218", 
+            "211.138.122.217", 
+            "211.138.122.216", 
+            "211.138.122.215"
+        ], 
+        "name": "\"CN_CMNET_ZHEJIANG\"", 
+        "vgroup": "CN_CMNET_ZHEJIANG"
+    }, 
+    {
+        "backup": "\"CN_CERNET_GUANGDONG\"", 
+        "iplist": [
+            "222.192.186.18", 
+            "222.192.186.17", 
+            "222.192.186.16", 
+            "222.192.186.15"
+        ], 
+        "name": "\"CN_CERNET_ZHEJIANG\"", 
+        "vgroup": "CN_CERNET_ZHEJIANG"
+    }, 
+    {
+        "backup": "\"CN_CHINANET_SHANGHAI\"", 
+        "iplist": [
+            "211.138.122.218", 
+            "211.138.122.217", 
+            "211.138.122.216", 
+            "211.138.122.215"
+        ], 
+        "name": "\"CN_OTHER_ZHEJIANG\"", 
+        "vgroup": "CN_OTHER_ZHEJIANG"
+    }
+]

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if [ -e /lib/modules/`uname -r`/dns/dnsmega.ko ] ; then
+  /usr/bin/dnsmega start > /dev/null 2>&1
+  /usr/bin/dnsmega on > /dev/null 2>&1
+fi

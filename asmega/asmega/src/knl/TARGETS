@@ -1,0 +1,17 @@
+targets = {
+    'asmega': kernel_module (
+        incs = [
+            '../include',
+        ],
+        srcs = [
+            'cache.c',
+            'control.c',
+            'core.c',
+            'dataplane.c',
+            'lock.c',
+            'manage.c',
+            'stats.c',
+            'timer.c',
+        ],
+    ),
+}

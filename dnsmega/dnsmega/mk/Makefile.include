@@ -1,0 +1,3 @@
+
+
+INCLUDE+=-I$(DNS_TRUNK)/src/include/

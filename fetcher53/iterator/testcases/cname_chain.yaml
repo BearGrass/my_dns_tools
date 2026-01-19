@@ -1,0 +1,101 @@
+qname: people.com.cn.
+qtype: A
+expect_response:
+  answer:
+  - "people.com.cn.       7200    IN  CNAME   www.people.chinacache.net."
+  - "www.people.chinacache.net. 3600 IN CNAME www.people.chinacache.com."
+  - "www.people.chinacache.com. 3600 IN A 111.111.111.111"
+  authority:
+  - "people.chinacache.com 86400	IN	NS	ns1.people.chinacache.com"
+  additional:
+  - "ns1.people.chinacache.com 3600 IN A 5.5.5.5"
+servers:
+- ip: 1.1.1.1
+  zones: [.]
+  request_and_responses:
+  - qname: .
+    qtype: NS 
+    response:
+      answer:
+      - ". 3600 IN NS a.root-servers.net"
+      additional:
+      - "a.root-servers.net 3600 IN A 1.1.1.1"
+  - qname: people.com.cn.
+    qtype: A
+    response:
+      authority:
+      - "cn. 3600 IN NS a.dns.cn."
+      additional:
+      - "a.dns.cn 3600 IN A 2.2.2.2"
+  - qname: www.people.chinacache.net.
+    qtype: A
+    response:
+      authority:
+      - "net. 3600 IN NS a.dns.net."
+      additional:
+      - "a.dns.net 3600 IN A 4.4.4.4"
+  - qname: www.people.chinacache.com.
+    qtype: A
+    response:
+      authority:
+      - "com. 3600 IN NS a.dns.com."
+      additional:
+      - "a.dns.com 3600 IN A 5.5.5.5"
+
+- ip: 2.2.2.2
+  zones: [cn.]
+  request_and_responses:
+  - qname: people.com.cn.
+    qtype: A
+    response:
+      authority:
+      - "people.com.cn.		86400	IN	NS	ns1.people.cn."
+
+  - qname: ns1.people.cn.
+    qtype: A
+    response:
+      authority:
+      - "people.cn.		86400	IN	NS	ns1.people.cn"
+      additional:
+      - "ns1.people.cn.		86400	IN	A	3.3.3.3"
+
+- ip: 4.4.4.4
+  zones: [net.]
+  request_and_responses:
+  - qname: www.people.chinacache.net.
+    qtype: A
+    response:
+      answer:
+      - "www.people.chinacache.net. 3600 IN CNAME www.people.chinacache.com."
+
+- ip: 5.5.5.5
+  zones: [com.]
+  request_and_responses:
+  - qname: www.people.chinacache.com.
+    qtype: A
+    response:
+      answer:
+      - "www.people.chinacache.com. 3600 IN A 111.111.111.111"
+      authority:
+      - "people.chinacache.com 86400	IN	NS	ns1.people.chinacache.com"
+      additional:
+      - "ns1.people.chinacache.com 3600 IN A 5.5.5.5"
+
+- ip: 3.3.3.3
+  zones: [people.cn., people.com.cn.]
+  request_and_responses:
+  - qname: ns1.people.cn.
+    qtype: A
+    response:
+      answer:
+      - "ns1.people.cn.		7200	IN	A	3.3.3.3"
+      authority:
+      - "people.cn.		259200	IN	NS	ns2.people.cn."
+      - "people.cn.		259200	IN	NS	ns1.people.cn."
+      additional:
+      - "ns2.people.cn.		7200	IN	A	219.141.222.237"
+  - qname: people.com.cn.
+    qtype: A
+    response:
+      answer:
+      - "people.com.cn.       7200    IN  CNAME   www.people.chinacache.net."

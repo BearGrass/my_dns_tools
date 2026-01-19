@@ -1,0 +1,7 @@
+MySQL-python==1.2.3c1
+dj-scaffold==1.0.6
+simplejson==3.3.2
+APScheduler==2.1.1
+requests==2.4.3
+flask==0.10.1
+flask-restful==0.2.12

@@ -1,0 +1,1 @@
+#0 * * * * /bin/sh /home/ming.tang/fdns/fwd_dns/src/fwd_dns_bin/crontab/get_topn_data.sh

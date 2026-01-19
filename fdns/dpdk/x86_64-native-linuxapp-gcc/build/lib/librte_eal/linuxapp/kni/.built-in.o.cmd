@@ -1,0 +1,1 @@
+cmd_/home/mayong.my/fdns/dpdk/x86_64-native-linuxapp-gcc/build/lib/librte_eal/linuxapp/kni/built-in.o :=  rm -f /home/mayong.my/fdns/dpdk/x86_64-native-linuxapp-gcc/build/lib/librte_eal/linuxapp/kni/built-in.o; ar rcsD /home/mayong.my/fdns/dpdk/x86_64-native-linuxapp-gcc/build/lib/librte_eal/linuxapp/kni/built-in.o

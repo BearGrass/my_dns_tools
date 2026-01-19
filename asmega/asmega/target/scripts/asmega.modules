@@ -1,0 +1,6 @@
+#!/bin/bash
+
+ret=$(lsmod|grep asmega)
+if [[ $? -ne 0 ]] ; then
+    insmod /var/dns/asmega/kmod/asmega.ko
+fi

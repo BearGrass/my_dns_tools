@@ -1,0 +1,316 @@
+{% extends "layout/default.html" %}
+<script type="text/javascript" src="/static/content/portal/portal.js"></script>
+{% block content %}
+    <script language="javascript" type="text/javascript">
+    Ext.require([
+        'Ext.ux.DataTip',
+        'Ext.layout.container.Column'
+    ]);
+    Ext.onReady(function () {
+        var global_param_store = Ext.create('Ext.data.Store', {
+            model: 'global_param',
+            storeId: 'global-param-store',
+            pageSize: 15,
+            autoLoad: true,
+            proxy: {
+                type: 'ajax',
+                url: '/global_param/global_param_list/',
+                reader: {
+                    type: 'json',
+                    root: 'result'
+                }
+            }
+        });
+        var global_param_grid = Ext.create('Ext.grid.Panel', {
+            store: global_param_store,
+            id: 'global-param-grid',
+            columns: [
+                {text: "ID", width: 20, dataIndex: 'id', sortable: true},
+                {text: "name", width: 40, dataIndex: 'name'},
+                {text: "value", width: 20, dataIndex: 'value'},
+                {text: "ttl（秒）", width: 20, dataIndex: 'ttl'},
+                {text: "comment", width: 60, dataIndex: 'comment'},
+                {text: "gmt_created", width: 40, dataIndex: 'gmt_created', renderer: Ext.util.Format.dateRenderer('Y-m-d H:i')},
+                {text: "gmt_modified", width: 40, dataIndex: 'gmt_modified', renderer: Ext.util.Format.dateRenderer('Y-m-d H:i')}
+            ],
+            viewConfig: {
+                enableTextSelection: true
+            },
+            forceFit: true,
+            height: "100%",
+            split: true,
+            region: 'north',
+            bbar: Ext.create('Ext.PagingToolbar', {
+                store: global_param_store,
+                displayInfo: true,
+                displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
+                emptyMsg: "没有数据",
+                plugins : [
+                    Ext.create('Ext.ux.PagingToolbarResizer',{options : [15,30,50,100,200]})
+                ],
+                listeners: {
+                    beforechange: function (obj, page_count) {
+                        global_param_store.proxy.extraParams.global_param_name = Ext.getCmp('global-param-search-name').value || "";
+                    }
+                }
+            })
+        });
+        Ext.create('Ext.Panel', {
+            renderTo: 'server-template-pannel',
+            width: '100%',
+            height: document.documentElement.clientHeight,
+            loadMask: true,
+            layout: 'border',
+            tbar: [
+                {
+                    xtype: 'textfield',
+                    emptyText: '输入name名称搜索，支持模糊',
+                    id: "global-param-search-name",
+                    width: 200
+                },
+                {
+                    xtype: 'button',
+                    text: '搜索',
+                    iconCls: 'icon-search',
+                    handler: pdns.refresh_grid
+                },
+                '-',
+                {
+                    xtype: 'button',
+                    text: '添加',
+                    iconCls: 'icon-add',
+                    handler: pdns.create_global_param_edit_window
+                },
+                '-',
+                {
+                    xtype: 'button',
+                    text: '更新',
+                    iconCls: 'icon-edit',
+                    handler: pdns.open_edit_server
+                },
+                '-',
+                {
+                    xtype: 'button',
+                    text: '删除',
+                    iconCls: 'icon-delete',
+                    handler: function () {
+                        var global_param_grid = Ext.getCmp('global-param-grid');
+                        var selected = global_param_grid.getSelectionModel().getSelection();
+                        Ext.MessageBox.confirm("确认删除", "是否确认删除<b>ID为&nbsp;" + selected[0].data.id + "</b>的记录?", function (click_button) {
+                            if (click_button == "yes") {
+                                var global_param_id = selected[0].data.id;
+                                Ext.Ajax.request({
+                                    url: "/global_param/delete_global_param/",
+                                    method: "post",
+                                    params: {"global_param": JSON.stringify({id: global_param_id})},
+                                    success: function (response) {
+                                        var resopnse_info = JSON.parse(response.responseText);
+                                        if (resopnse_info.result == "success") {
+                                            alert("记录删除成功！");
+                                        } else {
+                                            alert(resopnse_info["message"] || "记录删除失败！");
+                                        }
+                                        pdns.refresh_grid();
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                },
+                '-',
+                {
+                    xtype: 'button',
+                    text: '刷新',
+                    iconCls: 'icon-refresh',
+                    handler: pdns.refresh_grid
+                }
+            ],
+            items: [
+                global_param_grid, {
+                    columnWidth: 0.35,
+                    margin: '0 0 0 10',
+                    xtype: 'fieldset',
+                    title: 'Company details'}
+            ]
+        });
+    });
+
+
+    pdns.create_global_param_edit_window = function () {
+        var global_param_edit_window = Ext.getCmp('global-param-window');
+        if (global_param_edit_window) {
+            global_param_edit_window.show();
+        } else {
+            Ext.create('Ext.window.Window', {
+                title: '添加全局控制',
+                autoShow: true,
+                id: 'global-param-window',
+                width: 300,
+                height: 350,
+                minWidth: 300,
+                minHeight: 200,
+                layout: 'fit',
+                plain: true,
+                items: pdns.edit_server_form_panel(),
+                buttons: [
+                    {
+                        text: '保存配置',
+                        handler: function () {
+                            var form = Ext.getCmp('edit-global-param-form-panel').getForm();
+                            var form_value = form.getFieldValues();
+                            console.log(form_value);
+                            if (!pdns.validate_from_params(form_value)) {
+                                return;
+                            }
+                            var commit_info = {};
+                            commit_info["name"] = Ext.util.Format.trim(form_value.global_param_name);
+                            commit_info["id"] = Ext.util.Format.trim(form_value.global_param_id);
+                            commit_info["value"] = Ext.util.Format.trim(form_value.global_param_value);
+                            if (form_value.global_param_ttl){
+                                commit_info["ttl"] = form_value.global_param_ttl
+                            }else{
+                                commit_info["ttl"] = 0
+                            }
+                            commit_info["comment"] = Ext.util.Format.trim(form_value.global_param_comment);
+                            var request_url = form_value.global_param_id ? "/global_param/update_global_param/" : "/global_param/add_global_param/";
+                            var action_mssage = form_value.global_param_id ? "更新" : "新建";
+                            Ext.Ajax.request({
+                                url: request_url,
+                                method: "post",
+                                params: {"global_param": JSON.stringify(commit_info)},
+                                success: function (response) {
+                                    var resopnse_info = JSON.parse(response.responseText);
+                                    if (resopnse_info.result == "success") {
+                                        alert("记录" + action_mssage + "成功！", null, function () {
+                                            Ext.getCmp('global-param-window').close();
+                                        });
+                                    } else {
+                                        alert(resopnse_info["message"] || "记录" + action_mssage + "失败！");
+                                    }
+                                    pdns.refresh_grid();
+                                },
+                                failure: function (response) {
+                                    pdns.plugin.response_exception(response);
+                                }
+                            });
+                        }
+                    },
+                    {
+                        text: '取消',
+                        handler: function () {
+                            Ext.getCmp('global-param-window').close();
+                        }
+                    }
+                ]
+            });
+        }
+    };
+
+    pdns.edit_server_form_panel = function () {
+        return Ext.create('Ext.form.Panel', {
+            autoScroll: true,
+            autoShow: true,
+            id: 'edit-global-param-form-panel',
+            defaultType: 'textfield',
+            bodyStyle: 'padding:5px 5px 0',
+            defaults: {
+                labelWidth: 100,
+                labelStyle: 'color:green',
+                labelAlign: 'top',
+                labelSeparator: '',
+                layout: 'anchor',
+                msgTarget: 'side'
+            },
+            items: [
+                {
+                    xtype: 'textfield',
+                    fieldLabel: 'NAME',
+                    id: 'global-param-name',
+                    width: 280,
+                    name: 'global_param_name',
+                    emptyText:'必填',
+                    allowBlank: false
+                },
+                {
+                    xtype: 'textfield',
+                    fieldLabel: 'VALUE',
+                    id: 'global-param-value',
+                    width: 280,
+                    name: 'global_param_value',
+                    emptyText:'必填',
+                    allowBlank: false
+                },
+                {
+                    xtype: 'numberfield',
+                    fieldLabel: 'TTL',
+                    id: 'global-param-ttl',
+                    width: 280,
+                    name: 'global_param_ttl',
+                    minValue: 0,
+                    emptyText:'默认为0'
+                },
+                {
+                    xtype: 'textfield',
+                    fieldLabel: 'COMMENT',
+                    id: 'global-param-comment',
+                    width: 280,
+                    name: 'global_param_comment',
+                    emptyText:'必填',
+                    allowBlank: false
+                },
+                {
+                    xtype: 'hiddenfield',
+                    fieldLabel: 'id',
+                    id: 'global-param-id',
+                    width: 280,
+                    name: 'global_param_id'
+                }
+            ]
+        });
+    };
+    /**
+     *打开更新界面
+     */
+    pdns.open_edit_server = function () {
+        var global_param_grid = Ext.getCmp('global-param-grid');
+        var selected = global_param_grid.getSelectionModel().getSelection();
+        var selected_line = selected[0].data;
+        console.log(selected_line);
+        pdns.create_global_param_edit_window();
+        Ext.getCmp("global-param-name").setValue(selected_line.name);
+        Ext.getCmp("global-param-value").setValue(selected_line.value);
+        Ext.getCmp("global-param-ttl").setValue(selected_line.ttl);
+        Ext.getCmp("global-param-comment").setValue(selected_line.comment);
+        Ext.getCmp("global-param-id").setValue(selected_line.id);
+    };
+    /**
+     *
+     * @param form
+     * @returns {boolean}
+     */
+    pdns.validate_from_params = function (form_value) {
+        if (!form_value.global_param_name) {
+            alert("请输入NAME！");
+            return false;
+        }
+        if (!form_value.global_param_value) {
+            alert("请输入VALUE！");
+            return false;
+        }
+        if (!form_value.global_param_comment) {
+            alert("请输入COMMENT！");
+            return false;
+        }
+        return true;
+    };
+    /**
+     * 刷新data center 表格的数据信息
+     */
+    pdns.refresh_grid = function () {
+        Ext.data.StoreManager.lookup('global-param-store').reload({params: {"global_param_name": Ext.getCmp('global-param-search-name').value || ""}});
+    }
+    </script>
+    <div id="server-template-pannel">
+    </div>
+{% endblock %}

@@ -1,0 +1,72 @@
+2014-12-16_16:39:23 - start domain protect for [bb.com]
+2014-12-16_16:39:23 - active regex [(.*\.|^)bb\.com\./*]
+2014-12-16_16:39:23 - end domain protect for [bb.com]
+2014-12-16_16:42:58 - start domain protect for [bb.com]
+2014-12-16_16:42:58 - active regex [(.*\.|^)bb\.com\./*]
+2014-12-16_16:42:58 - end domain protect for [bb.com]
+2014-12-16_16:43:16 - start domain protect for [bb.com]
+2014-12-16_16:43:16 - active regex [(.*\.|^)bb\.com\./*]
+2014-12-16_16:43:28 - end domain protect for [bb.com]
+2014-12-16_16:43:57 - start domain protect for [bb.com]
+2014-12-16_16:43:57 - active regex [(.*\.|^)bb\.com\./*]
+2014-12-16_16:43:59 - end domain protect for [bb.com]
+2014-12-16_16:48:19 - start domain protect for [bb.com]
+2014-12-16_16:48:19 - active regex [(.*\.|^)bb\.com\./*]
+2014-12-16_16:48:19 - end domain protect for [bb.com]
+2014-12-16_16:48:46 - start domain protect for [bb.com]
+2014-12-16_16:48:46 - active regex [(.*\.|^)bb\.com\./*]
+2014-12-16_16:48:46 - end domain protect for [bb.com]
+2014-12-16_16:50:14 - start domain protect for [abc.com]
+2014-12-16_16:50:14 - active regex [(.*\.|^)abc\.com\./*]
+2014-12-16_16:50:14 - end domain protect for [abc.com]
+2014-12-16_17:05:09 - start domain protect for [bb.com]
+2014-12-16_17:05:09 - active regex [(.*\.|^)bb\.com\./*]
+2014-12-16_17:05:09 - active last fwdctl string [*:(.*\.|^)bb\.com\./*]
+2014-12-16_17:05:09 - end domain protect for [bb.com]
+2014-12-16_17:11:06 - /home/ming.tang/fdns/fwd_dns/src/fwd_dns_bin/bin/fwdctl  -s 127.0.0.1 -p 6666 protect_stop
+2014-12-16_17:25:54 - start domain protect for [bb.com]
+2014-12-16_17:25:54 - active regex [(.*\.|^)bb\.com\./*]
+2014-12-16_17:25:54 - active last fwdctl string [2014-12-16_17:25:54 - active regex [(.*\.|^)bb\.com\./*]
+*:(.*\.|^)bb\.com\./*]
+2014-12-16_17:25:54 - /home/ming.tang/fdns/fwd_dns/src/fwd_dns_bin/bin/fwdctl  -s 127.0.0.1 -p 6666 protect_start "2014-12-16_17:25:54 - active regex [(.*\.|^)bb\.com\./*]
+*:(.*\.|^)bb\.com\./*"
+2014-12-16_17:25:54 - /home/ming.tang/fdns/fwd_dns/src/fwd_dns_bin/bin/fwdctl  -s 127.0.0.1 -p 6666 delreg "2014-12-16_17:25:54 - active regex [(.*\.|^)bb\.com\./*]
+*:(.*\.|^)bb\.com\./*"
+2014-12-16_17:25:54 - end domain protect for [bb.com]
+2014-12-16_17:27:17 - start domain protect for [bb.com]
+2014-12-16_17:27:17 - active last fwdctl string [*:(.*\.|^)bb\.com\./*]
+2014-12-16_17:27:17 - /home/ming.tang/fdns/fwd_dns/src/fwd_dns_bin/bin/fwdctl  -s 127.0.0.1 -p 6666 protect_start "*:(.*\.|^)bb\.com\./*"
+2014-12-16_17:27:17 - /home/ming.tang/fdns/fwd_dns/src/fwd_dns_bin/bin/fwdctl  -s 127.0.0.1 -p 6666 delreg "*:(.*\.|^)bb\.com\./*"
+2014-12-16_17:27:17 - end domain protect for [bb.com]
+2014-12-16_17:33:11 - start domain protect for [bb.com]
+2014-12-16_17:33:11 - active last fwdctl string [*:(.*\.|^)bb\.com\./*]
+2014-12-16_17:33:11 - /home/ming.tang/fdns/fwd_dns/src/fwd_dns_bin/bin/fwdctl  -s 127.0.0.1 -p 6666 protect_start "*:(.*\.|^)bb\.com\./*"
+2014-12-16_17:33:11 - /home/ming.tang/fdns/fwd_dns/src/fwd_dns_bin/bin/fwdctl  -s 127.0.0.1 -p 6666 delreg "*:(.*\.|^)bb\.com\./*"
+2014-12-16_17:33:11 - end domain protect for [bb.com]
+2014-12-16_17:33:42 - start domain protect for [bb.com]
+2014-12-16_17:33:42 - active last fwdctl string [*:(.*\.|^)bb\.com\./*]
+2014-12-16_17:33:42 - /home/ming.tang/fdns/fwd_dns/src/fwd_dns_bin/bin/fwdctl  -s 127.0.0.1 -p 6666 protect_start "*:(.*\.|^)bb\.com\./*"
+2014-12-16_17:33:42 - /home/ming.tang/fdns/fwd_dns/src/fwd_dns_bin/bin/fwdctl  -s 127.0.0.1 -p 6666 delreg "*:(.*\.|^)bb\.com\./*"
+2014-12-16_17:33:42 - end domain protect for [bb.com]
+2014-12-16_17:34:10 - /home/ming.tang/fdns/fwd_dns/src/fwd_dns_bin/bin/fwdctl  -s 127.0.0.1 -p 6666 protect_stop
+2014-12-16_17:41:59 - start domain protect for [alibaba.com]
+2014-12-16_17:41:59 - active last fwdctl string [*:(.*\.|^)alibaba\.com\./*]
+2014-12-16_17:41:59 - /home/ming.tang/fdns/fwd_dns/src/fwd_dns_bin/bin/fwdctl  -s 127.0.0.1 -p 6666 protect_start "*:(.*\.|^)alibaba\.com\./*"
+2014-12-16_17:41:59 - /home/ming.tang/fdns/fwd_dns/src/fwd_dns_bin/bin/fwdctl  -s 127.0.0.1 -p 6666 delreg "*:(.*\.|^)alibaba\.com\./*"
+2014-12-16_17:41:59 - end domain protect for [alibaba.com]
+2014-12-16_17:54:27 - /home/ming.tang/fdns/fwd_dns/src/fwd_dns_bin/bin/fwdctl  -s 127.0.0.1 -p 6666 protect_stop
+2014-12-16_20:42:42 - start view domain protect for [default:baidu.com]
+2014-12-16_20:42:42 - active last fwdctl string [baidu.com:(.*\.|^)default\./*]
+2014-12-16_20:42:42 - /home/ming.tang/fdns/fwd_dns/src/fwd_dns_bin/bin/fwdctl  -s 127.0.0.1 -p 6666 protect_start "baidu.com:(.*\.|^)default\./*"
+2014-12-16_20:42:42 - /home/ming.tang/fdns/fwd_dns/src/fwd_dns_bin/bin/fwdctl  -s 127.0.0.1 -p 6666 delreg "baidu.com:(.*\.|^)default\./*"
+2014-12-16_20:42:42 - end domain protect for [default:baidu.com]
+2014-12-16_20:43:49 - start view domain protect for [default:baidu.com]
+2014-12-16_20:43:49 - active last fwdctl string [default:(.*\.|^)baidu\.com\./*]
+2014-12-16_20:43:49 - /home/ming.tang/fdns/fwd_dns/src/fwd_dns_bin/bin/fwdctl  -s 127.0.0.1 -p 6666 protect_start "default:(.*\.|^)baidu\.com\./*"
+2014-12-16_20:43:49 - /home/ming.tang/fdns/fwd_dns/src/fwd_dns_bin/bin/fwdctl  -s 127.0.0.1 -p 6666 delreg "default:(.*\.|^)baidu\.com\./*"
+2014-12-16_20:43:49 - end domain protect for [default:baidu.com]
+2014-12-16_20:45:01 - start view domain protect for [v1:baidu.com]
+2014-12-16_20:45:01 - active last fwdctl string [v1:(.*\.|^)baidu\.com\./*]
+2014-12-16_20:45:01 - /home/ming.tang/fdns/fwd_dns/src/fwd_dns_bin/bin/fwdctl  -s 127.0.0.1 -p 6666 protect_start "v1:(.*\.|^)baidu\.com\./*"
+2014-12-16_20:45:01 - /home/ming.tang/fdns/fwd_dns/src/fwd_dns_bin/bin/fwdctl  -s 127.0.0.1 -p 6666 delreg "v1:(.*\.|^)baidu\.com\./*"
+2014-12-16_20:45:01 - end domain protect for [v1:baidu.com]

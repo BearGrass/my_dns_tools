@@ -1,0 +1,279 @@
+{% extends "layout/default.html" %}
+<script type="text/javascript" src="/static/content/portal/portal.js"></script>
+{% block content %}
+    <script language="javascript" type="text/javascript">
+    Ext.require([
+        'Ext.ux.DataTip',
+        'Ext.layout.container.Column'
+    ]);
+    //全局变量，记录protal版本和用户信息
+    var portal_version_config ={
+        current_user_name : '{{ user.username }}',
+        current_user_password : '{{ user.password }}'
+    };
+    Ext.onReady(function () {
+        var view_store = Ext.create('Ext.data.Store', {
+            model: 'view',
+            storeId: 'view-store',
+            pageSize: 15,
+            autoLoad: true,
+            proxy: {
+                type: 'ajax',
+                url: '/view/view_list/',
+                reader: {
+                    type: 'json',
+                    root: 'result'
+                }
+            }
+        });
+        var view_grid = Ext.create('Ext.grid.Panel', {
+            store: view_store,
+            id: 'view-grid',
+            columns: [
+                {text: "ID", width: 20, dataIndex: 'id', sortable: true},
+                {text: "NAME", width: 40, dataIndex: 'name'},
+                {text: "CN_NAME", width: 40, dataIndex: 'cn_name'},
+                {text: "ISP_SIMULATE", width: 40, dataIndex: 'isp_simulate', hidden: true},
+                {text: "FALLBACK_ID", width: 40, dataIndex: 'fallback_id'},
+                {text: "CDN列表", width: 40, dataIndex: 'cdn_ids'},
+            ],
+            viewConfig: {
+                enableTextSelection: true
+            },
+            forceFit: true,
+            height: "100%",
+            split: true,
+            region: 'north',
+            bbar: Ext.create('Ext.PagingToolbar', {
+                store: view_store,
+                displayInfo: true,
+                id: 'PagingToolbarId',
+                displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
+                emptyMsg: "没有数据",
+                plugins : [
+                    Ext.create('Ext.ux.PagingToolbarResizer',{options : [15,30,50,100,200]})
+                ],
+                listeners: {
+                    beforechange: function (obj, page_count) {
+                        view_store.proxy.extraParams.view_name = Ext.getCmp('view-search-name').value || "";
+                    }
+                }
+            })
+        });
+        Ext.create('Ext.Panel', {
+            renderTo: 'view-template-pannel',
+            width: '100%',
+            height: document.documentElement.clientHeight,
+            loadMask: true,
+            layout: 'border',
+            tbar: [
+                {
+                    xtype: 'textfield',
+                    emptyText: '输入名称搜索',
+                    id: "view-search-name"
+                },
+                {
+                    xtype: 'button',
+                    text: '搜索',
+                    iconCls: 'icon-search',
+                    handler: pdns.refresh_grid
+                },
+                '-',
+                {
+                    xtype: 'button',
+                    text: '添加',
+                    iconCls: 'icon-add',
+                    handler: pdns.create_view_edit_window
+                },
+                '-',
+                {
+                    xtype: 'button',
+                    text: '更新',
+                    iconCls: 'icon-edit',
+                    handler: pdns.open_edit_view
+                },
+                '-',
+                {
+                    text: '删除',
+                    tooltip: '修改所选中的域名',
+                    iconCls: 'icon-delete',
+                    handler: function () {
+                        var view_grid = Ext.getCmp('view-grid');
+                        var selected = view_grid.getSelectionModel().getSelection();
+                        Ext.MessageBox.confirm("确认删除", "是否确认删除<b>&nbsp;" + selected[0].data.name + "</b>?", function (click_button) {
+                            if (click_button == "yes") {
+                                var view_id = selected[0].data.id;
+                                Ext.Ajax.request({
+                                    url: "/view/delete_view/",
+                                    params: {"view_info": JSON.stringify({id: view_id})},
+                                    success: function (response) {
+                                        var resopnse_info = JSON.parse(response.responseText);
+                                        if (resopnse_info.result == "success") {
+                                            alert("VIEW删除成功", null, function () {
+                                                Ext.getCmp('view-edit-window').close();
+                                            });
+                                        } else {
+                                            alert(resopnse_info["message"] || "VIEW删除失败");
+                                        }
+                                        pdns.refresh_grid();
+                                    },
+                                    method: "post"
+                                });
+                            }
+                        });
+                    }
+                }
+            ],
+            items: [
+                view_grid, {
+                    columnWidth: 0.35,
+                    margin: '0 0 0 10',
+                    xtype: 'fieldset',
+                    title: 'Company details'}
+            ]
+        });
+
+    });
+
+    pdns.create_view_edit_window = function () {
+        var view_edit_window = Ext.getCmp('view-edit-window');
+        if (view_edit_window) {
+            view_edit_window.show();
+        } else {
+            Ext.create('Ext.window.Window', {
+                title: '添加VIEW',
+                autoShow: true,
+                id: 'view-edit-window',
+                width: 300,
+                height: 350,
+                minWidth: 300,
+                minHeight: 200,
+                layout: 'fit',
+                plain: true,
+                items: pdns.edit_view_form_panel(),
+                buttons: [
+                    {
+                        text: '保存配置',
+                        handler: function () {
+                            var form = Ext.getCmp('edit-view-form-panel').getForm();
+                            var form_value = form.getFieldValues();
+                            var commit_info = {};
+                            commit_info["id"] = form_value.view_id;
+                            commit_info["name"] = form_value.view_name;
+                            commit_info["fallback_name"] = form_value.view_fallback_name;
+                            var request_url = form_value.view_id ? "/view/update_view/" : "/view/add_view/";
+                            var action_mssage = form_value.view_id ? "更新" : "新建";
+                            Ext.Ajax.request({
+                                url: request_url,
+                                params: {"view_info": JSON.stringify(commit_info)},
+                                success: function (response) {
+                                    var resopnse_info = JSON.parse(response.responseText);
+                                    if (resopnse_info.result == "success") {
+                                        alert("VIEW" + action_mssage + "成功", null, function () {
+                                            Ext.getCmp('view-edit-window').close();
+                                        });
+                                    } else {
+                                        alert(resopnse_info["message"] || "VIEW" + action_mssage + "失败");
+                                    }
+                                    pdns.refresh_grid();
+                                },
+                                method: "post",
+                                failure: function (response) {
+                                    pdns.plugin.response_exception(response);
+                                }
+                            });
+                        }
+                    },
+                    {
+                        text: '取消',
+                        handler: function () {
+                            Ext.getCmp('view-edit-window').close();
+                        }
+                    }
+                ]
+            });
+        }
+    };
+
+    pdns.edit_view_form_panel = function () {
+        return Ext.create('Ext.form.Panel', {
+            autoScroll: true,
+            autoShow: true,
+            id: 'edit-view-form-panel',
+            defaultType: 'textfield',
+            bodyStyle: 'padding:5px 5px 0',
+            defaults: {
+                labelWidth: 100,
+                labelStyle: 'color:green',
+                labelAlign: 'top',
+                labelSeparator: '',
+                layout: 'anchor',
+                msgTarget: 'side'
+            },
+            items: [
+                {
+                    xtype: 'textfield',
+                    fieldLabel: 'NAME',
+                    id: 'view-name',
+                    width: 280,
+                    name: 'view_name'
+                },
+                {
+                    xtype: 'textfield',
+                    fieldLabel: 'FALLBACK_NAME',
+                    id: 'view-fallback-name',
+                    width: 280,
+                    name: 'view_fallback_name'
+                },{
+                    xtype: 'hiddenfield',
+                    fieldLabel: 'id',
+                    id: 'view-id',
+                    width: 280,
+                    name: 'view_id'
+                }
+            ]
+        });
+    };
+
+    /**
+     *打开更新界面
+    **/
+    pdns.open_edit_view = function () {
+        var view_grid = Ext.getCmp('view-grid');
+        var selected = view_grid.getSelectionModel().getSelection();
+        var view_id = selected[0].data.id;
+        Ext.Ajax.request({
+            url: "/view/view_info/",
+            params: {"id": view_id },
+            success: function (response) {
+                var resopnse_info = JSON.parse(response.responseText);
+                if (resopnse_info.result != "error") {
+                    var view = resopnse_info.result;
+                    var is_update = true;
+                    pdns.create_view_edit_window(is_update, view_id);
+                    Ext.getCmp("view-name").setValue(view.name);
+                    Ext.getCmp("view-fallback-name").setValue(view.fallback_name);
+                    Ext.getCmp("view-id").setValue(view.id);
+                } else {
+                    alert(resopnse_info.message);
+                }
+            },
+            method: "post"
+        });
+        var is_update = true;
+        pdns.create_view_edit_window(is_update);
+
+    };
+
+    /**
+     * 刷新表格的数据信息
+     */
+    pdns.refresh_grid = function () {
+        // 回到第一页，触发beforechange的listener发送请求
+        var recover_pannel = Ext.getCmp('PagingToolbarId');
+        recover_pannel.moveFirst();
+    }
+    </script>
+    <div id="view-template-pannel">
+    </div>
+{% endblock %}

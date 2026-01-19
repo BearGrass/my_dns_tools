@@ -1,0 +1,2 @@
+#!/bin/sh
+$LOG_BASE/bin/cronolog -S $LOG_BASE/attack_log/attack_log $LOG_BASE/attack_log/attack_log.%Y%m%d%H< $LOG_BASE/pipe/fwd_attack.log

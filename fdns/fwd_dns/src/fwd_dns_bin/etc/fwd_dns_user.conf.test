@@ -1,0 +1,67 @@
+
+options{
+	vEth0_ip 		192.168.1.110
+
+	vEth1_ip 		192.168.1.114
+
+	control 		127.0.0.1:6666 
+	
+	query_log_level 	info  #error,warn,info,none
+	
+	answer_log_level 	none
+	
+	server_log_level 	info
+}
+
+
+	
+view "default" {
+	
+	backup "default"
+	
+	forwarders {
+		182.182.182.182:53
+		182.182.182.182:34
+		182.182.182.182:35
+	}
+}
+
+view "chinanet" {
+
+	backup "unicom"
+	
+	aclfile chinanet.acl
+
+	forwarders {
+		189.189.189.189:53
+		182.182.182.182:53
+	}
+
+}
+
+view "unicom" {
+
+	backup "chinanet"
+	
+	aclfile unicom.acl
+	
+	forwarders{
+		182.182.182.182:53
+		189.189.189.189:53
+	}
+}
+
+
+view "zhejiang" {
+
+	backup "chinanet"
+	
+	aclfile zhejiang.acl
+	
+	forwarders{
+		182.182.182.182:53
+		189.189.189.189:53
+	}
+}
+
+

@@ -1,0 +1,268 @@
+{% extends "layout/default.html" %}
+<script type="text/javascript" src="/static/portal/js/portal.js"></script>
+{% block content %}
+    <script language="javascript" type="text/javascript">
+    Ext.require([
+        'Ext.ux.DataTip',
+        'Ext.layout.container.Column'
+    ]);
+
+    //全局变量，记录protal版本和用户信息
+    var global_para = {
+        yAxis_name_list_str: '{{ SERIES_NAME }}',
+        view_detail_store: Ext.create('Ext.data.Store', {
+            model: pdns.models.view_detail,
+            storeId: 'view-detail-store',
+            pageSize: 200,
+            autoLoad: true,
+            proxy: {
+                type: 'ajax',
+                url: '/data_display/get_view_detail_datas',
+                reader: {
+                    type: 'json',
+                    root: 'result'
+                }
+            }
+        }),
+        server_name_store: Ext.create('Ext.data.Store', {
+            autoLoad: false,
+            storeId: 'server-name-store',
+            fields: ['name'],
+            proxy: {
+                pageParam: false,
+                limitParam: false,
+                startParam: false,
+                type: 'ajax',
+                url: '/data_display/get_forward_data_list',
+                reader: {
+                    type: 'json',
+                    root: 'result'
+                }
+            }
+        })
+    };
+
+    Ext.onReady(function () {
+        var yAxis_name_list = global_para.yAxis_name_list_str.split("_");
+        var store_list = get_store_list(yAxis_name_list.length);
+        var series_name_list = get_series_name_list(yAxis_name_list);
+        var view_detail_grid = Ext.create('Ext.grid.Panel', {
+            store: global_para.view_detail_store,
+            id: 'view-detail-grid',
+            columns: [
+                {text: " 时间", width: 15, dataIndex: 'time'},
+                {text: "view_name", width: 15, dataIndex: 'view_name'},
+                {text: " backup_view", width: 15, dataIndex: 'backup_view'},
+                {text: " 总请求数", width: 8, dataIndex: 'in_req'},
+                {text: " 请求中热点域名数", width: 10, dataIndex: 'top_in_req'},
+                {text: " 热点域名命中数", width: 10, dataIndex: 'top_hit_req'},
+                {text: " 作为备份接收请求数", width: 10, dataIndex: 'backup_in_req'},
+                {text: " 向备份发送请求数", width: 10, dataIndex: 'backup_out_req'},
+                {text: " 命中请求数", width: 10, dataIndex: 'hit_req'},
+                {text: " 原生请求转发数", width: 10, dataIndex: 'fwd_req'},
+                {text: " 原生请求超时数", width: 10, dataIndex: 'fwd_timeout'}
+            ],
+            viewConfig: {
+                enableTextSelection: true
+            },
+            forceFit: true,
+            height: "100%",
+            split: true,
+            region: 'north',
+            bbar: Ext.create('Ext.PagingToolbar', {
+//                pageSize:limit,
+                store: global_para.view_detail_store,
+                id: 'PagingToolbarId',
+                displayInfo: true,
+                displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
+                emptyMsg: "没有数据",
+                listeners: {
+                    beforechange: function (obj, page_count) {
+                        var domain_server_name = Ext.getCmp('dns-server-name-combo').getValue();
+                        global_para.view_detail_store.proxy.extraParams.server_name = domain_server_name;
+                    }
+                }
+            })
+        });
+        Ext.create('Ext.Panel', {
+            renderTo: 'server-template-panel',
+            width: '100%',
+            height: document.documentElement.clientHeight,
+            layout: 'border',
+            tbar: [
+                {
+                    xtype: 'combo',
+                    editable: false,
+                    forceSelection: false,
+                    store: global_para.server_name_store,
+                    labelWidth: 75,
+                    width: 250,
+                    fieldLabel: '域名服务器',
+                    displayField: 'name',
+                    valueField: 'name',
+                    value: "all",
+                    id: "dns-server-name-combo",
+                    allowBlank:false,
+                    listeners: {
+                        change: function (combox, selected, index) {
+                            refresh_grid();
+                        }
+                    }
+                },{
+                    text : '刷新',
+                    handler : function() {
+                        refresh_grid();
+                    }
+                },{
+                    text : '查看历史趋势图',
+                    handler : function() {
+                        var line_data = select_line_in_page('view-detail-grid');
+                        check_history_graph(store_list, series_name_list,line_data.view_name);
+                    }
+                }
+            ],
+            items: [
+                view_detail_grid
+            ]
+        });
+        refresh_grid();
+    });
+
+    check_history_graph = function(store_list, series_name_list, view_name){
+        // make a highstock
+        var high_stock = Ext.create('Chart.ux.HighStock', {
+            series : series_name_list,
+            stores: store_list,
+            chartConfig : {
+                chart : {
+                },
+                credits : {
+                    href : '',
+                    text : ''
+                },
+                rangeSelector : {
+                    buttons: [
+                        {type: 'minute', count: 60, text: '1h'},
+                        {type: 'minute', count: 5*60, text: '5h'},
+                        {type: 'day', count: 1, text: '1d'},
+                        {type: 'week', count: 1, text: '1w'},
+                        {type: 'month', count: 1, text: '1m'},
+                        {type: 'year', count: 1, text: '1y'},
+                        {type: 'all', text: 'All'}
+                    ],
+                    allButtonsEnabled: true,
+                    selected : 0
+                },
+                title : {
+                    text : "view_name：" + view_name
+                },
+                subtitle:{
+                    text: "域名服务器：" + Ext.getCmp('dns-server-name-combo').getValue()
+                },
+                yAxis: {
+                    title: {
+                        align: 'middle',
+                        style:{"color": "#707070", "fontWeight": "bold"},
+                        text: 'COUNT( 个 )'
+                    }
+                },
+                legend: {
+                    enabled: true,
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom',
+                    borderWidth: 0
+                },
+                tooltip: {
+                    valueDecimals: 0    //保留小数点后位数
+                },
+                plotOptions: {
+                    line: {
+                        animation: true,      //有动画为true
+                        marker: {
+                            enabled: true,      //有小圆点标记为true
+                            symbol: 'circle',
+                            radius: 1
+                        }
+                    }
+                }
+            }
+        });
+        // make a window
+        var win = Ext.create('Ext.Window', {
+            minHeight : 500,
+            minWidth : 800,
+            hidden : false,
+            shadow : false,
+            maximizable : true,
+            title : 'view 曲线',
+            renderTo : Ext.getBody(),
+            layout : 'fit',
+            items : [
+                high_stock
+            ]
+        });
+        win.show();
+        get_datas_and_refresh(store_list, view_name);
+    };
+
+
+    get_datas_and_refresh = function(store_list, server_isp){
+        var province_name = '';
+        var isp_name = '';
+        if (server_isp in ['alibaba_cdn', 'alibaba_office_bj', 'alibaba_office_hz', 'oversea', 'default']){
+            province_name = server_isp;
+        }else{
+            var server_isp_list = server_isp.split('_');
+            province_name = server_isp_list[0];
+            isp_name = server_isp_list[1];
+        }
+        var para = {
+            server: Ext.getCmp('dns-server-name-combo').getValue(),
+            province: province_name,
+            isp: isp_name
+        };
+        console.log(para);
+        Ext.Ajax.request({
+            method: 'POST',
+            async:false,
+            url: "/data_display/get_view_datas",
+            params: JSON.stringify(para),
+            success: function (json_data) {
+                var response_info = JSON.parse(json_data.responseText);
+                var response_list = response_info['result'];
+                for(var i=0; i<response_list.length;i++){
+                    store_list[i].loadData(response_list[i]);
+                }
+//                Ext.getCmp('highstock_id').refresh();
+            },
+            failure: function (response) {
+                console.log("error in ajax !");
+            }
+        });
+    };
+
+    /**
+     * 刷新表格的数据信息
+     */
+    refresh_grid = function () {
+        // 回到第一页，触发beforechange的listener发送请求
+        var recover_pannel = Ext.getCmp('PagingToolbarId');
+        recover_pannel.moveFirst();
+    };
+
+
+    select_line_in_page = function(grid_id){
+        var first_page_line = Ext.getCmp(grid_id);
+        var selected = first_page_line.getSelectionModel().getSelection();   //取得选中的项
+        if(selected.length < 1){
+            alert("请先选择一行！");
+            die;
+        }
+        return selected[0].data;
+    };
+
+    </script>
+    <div id="server-template-panel">
+    </div>
+{% endblock %}

@@ -1,0 +1,59 @@
+[system]
+log_path = @base/runlog/pipe/
+
+;retry 1,means total 2 times
+;retry will first try the healthy forwarder in the view;if none,will try the backup view if the backup is health,then any other health view
+forwarder_retry = 1
+
+;second
+forwarder_retry_interval = 2
+
+;forwarder down after continus forwarder_fail_down times
+forwarder_fail_down = 10
+
+;forwarder try to be up after forwarder_up_after_down seconds
+forwarder_up_after_down = 120
+
+;s
+charge_topn_interval = 10
+
+;us
+timer_exec_interval = 10
+
+;us
+ttl_expire_clean_exec_interval = 1
+
+ttl_expire_clean_hash_size = 5
+;every time check 50 hash bucket to find expire nodes and free them
+
+;1<<22 = 4194304 about 400w
+;lcore_node_max = 4194304
+;1600w
+;lcore_node_max =  5194304
+;lcore_node_max = 8388608
+lcore_node_max = 12582912
+;lcore_node_max = 16777216
+obj_len64 = 48
+obj_len128 = 48
+obj_len256 = 16
+obj_len512 = 4
+obj_len1024 = 2
+
+;1<<19 = 524288 about 50w
+view_hash_table_size = 524288
+;view_hash_table_size = 2000000
+
+;in develop,not ready. edns_on ,every packet will has edns-client-subnet on
+edns_on = 0
+whitelist_on = 1
+man_whitelist_on = 1
+man_blacklist_on = 1
+blacklist_on = 1
+oversealist_on = 1
+share_lcore_data_on = 1
+;TXT,PTR do not need forwarder to all view
+clean_view_fwd_qtype = 16,12
+
+;error,warn,info,none
+oversealist_on = 1
+httpdns_on = 0

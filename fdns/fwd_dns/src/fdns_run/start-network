@@ -1,0 +1,39 @@
+#!/bin/sh
+
+vEth0_ipaddr=$(grep IPADDR /etc/sysconfig/network-scripts/ifcfg-eth4|cut -d\= -f2)
+vEth0_netmask=$(grep NETMASK /etc/sysconfig/network-scripts/ifcfg-eth4|cut -d\= -f2)
+vEth0_gateway=$(awk '{print $3}' /etc/sysconfig/network-scripts/route-eth4)
+
+vEth1_ipaddr=$(grep IPADDR /etc/sysconfig/network-scripts/ifcfg-eth5|cut -d\= -f2)
+vEth1_netmask=$(grep NETMASK /etc/sysconfig/network-scripts/ifcfg-eth5|cut -d\= -f2)
+vEth1_gateway=$(awk '{print $3}' /etc/sysconfig/network-scripts/route-eth5)
+
+flag=0
+while [ ${flag} -ne 2 ];do
+        ip a |grep -q vEth0
+        if [ $? -eq 0 ];then
+                i=1
+                ifconfig vEth0 ${vEth0_ipaddr} netmask ${vEth0_netmask} up
+                route add default gw ${vEth0_gateway} metric 1
+        else 
+                i=0
+        fi
+
+        ip a|grep -q vEth1
+        if [ $? -eq 0 ];then
+                ifconfig vEth1 ${vEth1_ipaddr} netmask ${vEth1_netmask} up
+                route add default gw ${vEth1_gateway} metric 2
+                j=1
+        else
+                j=0
+        fi
+
+        flag=`expr ${j} + ${i}` 
+        sleep 1
+                 
+done
+
+#/root/bin/dpdk_ospfd_ctl restart
+
+#End
+

@@ -1,0 +1,69 @@
+qname: www.dnstool.net.
+qtype: A
+expect_response:
+  answer:
+  - "www.dnstool.net. 3600 IN A 111.111.111.111"
+  authority:
+  - "dnstool.net 86400	IN	NS	dns3.dnstool.com"
+  - "dnstool.net 86400	IN	NS	dns4.dnstool.com"
+servers:
+- ip: 1.1.1.1
+  zones: [.]
+  request_and_responses:
+  - qname: .
+    qtype: NS 
+    response:
+      answer:
+      - ". 3600 IN NS a.root-servers.net"
+      additional:
+      - "a.root-servers.net 3600 IN A 1.1.1.1"
+  - qname: www.dnstool.net.
+    qtype: A
+    response:
+      authority:
+      - "net. 3600 IN NS a.dns.net."
+      additional:
+      - "a.dns.net 3600 IN A 2.2.2.2"
+  - qname: dns3.dnstool.com.
+    qtype: A
+    response:
+      authority:
+      - "dnstool.com. 3600 IN NS a.dnstool.com."
+      additional:
+      - "a.dnstool.com. 3600 IN A 4.4.4.4"
+
+- ip: 2.2.2.2
+  zones: [net., cn.]
+  request_and_responses:
+  - qname: www.dnstool.net.
+    qtype: A
+    response:
+      authority:
+      - "dnstool.net.		86400	IN	NS	dns3.dnstool.com"
+      - "dnstool.net.		86400	IN	NS	dns4.dnstool.com"
+
+- ip: 4.4.4.4
+  zones: [dnstool.com.]
+  request_and_responses:
+  - qname: dns3.dnstool.com. 
+    qtype: A
+    response:
+      answer:
+      - "dns3.dnstool.com 3600 IN CNAME dns.dnstool.cn"
+  - qname: dns4.dnstool.com. 
+    qtype: A
+    response:
+      answer:
+      - "dns4.dnstool.com 3600 IN A 5.5.5.5"
+
+- ip: 5.5.5.5
+  zones: [dnstool.net.]
+  request_and_responses:
+  - qname: www.dnstool.net.
+    qtype: A
+    response:
+      answer:
+      - "www.dnstool.net. 3600 IN A 111.111.111.111"
+      authority:
+      - "dnstool.net 86400	IN	NS	dns3.dnstool.com"
+      - "dnstool.net 86400	IN	NS	dns4.dnstool.com"

@@ -1,0 +1,8 @@
+targets = {
+    'dnsmega': cpp_project (
+        modules = [
+            'knl/dnsmega',
+            'util/dnsmega_adm',
+        ],
+    ),
+}

@@ -1,0 +1,287 @@
+{% extends "layout/default.html" %}
+{% block content %}
+    <script language="javascript" type="text/javascript">
+    Ext.require([
+        'Ext.chart.*',
+        'Ext.Window',
+        'Ext.fx.target.Sprite',
+        'Ext.layout.container.Fit',
+        'Ext.window.MessageBox'
+    ]);
+
+    var global_para = {
+        yAxis_name_list_str: '{{ SERIES_NAME }}',
+        merge_algorithm_store: Ext.create('Ext.data.Store', {
+            autoLoad: true,
+            storeId: 'merge-algorithm-store',
+            fields: ['name','value'],
+            data:[
+                {name:'SUM',value:'0'},
+                {name:'MAX',value:'1'},
+                {name:'MIN',value:'2'}
+            ]
+        }),
+        isp_store: Ext.create('Ext.data.Store', {
+            autoLoad: true,
+            storeId: 'merge-algorithm-store',
+            fields: ['name','value'],
+            data:[
+                {name:'电信',value:'telecom'},
+                {name:'联通',value:'unicom'},
+                {name:'移动',value:'mobile'},
+                {name:'教育网',value:'edu'}
+            ]
+        }),
+        server_name_store: Ext.create('Ext.data.Store', {
+            autoLoad: true,
+            storeId: 'server-name-store',
+            fields: ['name'],
+            proxy: {
+                pageParam: false,
+                limitParam: false,
+                startParam: false,
+                type: 'ajax',
+                url: '/data_display/get_forward_data_list',
+                reader: {
+                    type: 'json',
+                    root: 'result'
+                }
+            }
+        }),
+        view_list_store: Ext.create('Ext.data.Store', {
+            autoLoad: true,
+            storeId: 'province-name-store',
+            fields: ['name', 'value'],
+            proxy: {
+                pageParam: false,
+                limitParam: false,
+                startParam: false,
+                type: 'ajax',
+                url: '/data_display/get_view_list',
+                reader: {
+                    type: 'json',
+                    root: 'result'
+                }
+            }
+        })
+    };
+
+    Ext.onReady(function () {
+        var yAxis_name_list = global_para.yAxis_name_list_str.split("_");
+        var store_list = get_store_list(yAxis_name_list.length);
+        var series_name_list = get_series_name_list(yAxis_name_list);
+        // make a highstock
+        var high_stock = Ext.create('Chart.ux.HighStock', {
+            id : 'highstock_id',
+            series : series_name_list,
+            stores:store_list,
+            chartConfig : {
+                chart : {
+                },
+                credits : {
+                    href : '',
+                    text : ''
+                },
+                rangeSelector : {
+                    buttons: [
+                        {type: 'minute', count: 60, text: '1h'},
+                        {type: 'minute', count: 5*60, text: '5h'},
+                        {type: 'day', count: 1, text: '1d'},
+                        {type: 'week', count: 1, text: '1w'},
+                        {type: 'month', count: 1, text: '1m'},
+                        {type: 'year', count: 1, text: '1y'},
+                        {type: 'all', text: 'All'}
+                    ],
+                    allButtonsEnabled: true,
+                    selected : 0
+                },
+                title : {
+                    text : 'VIEW维度曲线'
+                },
+                subtitle:{
+                    text: ""
+                },
+                yAxis: {
+                    title: {
+                        align: 'middle',
+                        style:{"color": "#707070", "fontWeight": "bold"},
+                        text: 'COUNT( 个 )'
+                    }
+                },
+                legend: {
+                    enabled: true,
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                tooltip: {
+                    valueDecimals: 0    //保留小数点后位数
+                },
+                plotOptions: {
+                    line: {
+                        animation: true,      //有动画为true
+                        marker: {
+                            enabled: true,      //有小圆点标记为true
+                            symbol: 'circle',
+                            radius: 1
+                        }
+                    }
+                }
+            }
+        });
+        // make two toolbar
+        var toolbar_one = Ext.create('Ext.toolbar.Toolbar', {
+            items:[
+                {
+                    xtype:'datetimefield',
+                    width : 230,
+                    labelWidth : 60,
+                    fieldLabel: '起始时间',
+                    format: 'Y-m-d H:i:s',
+                    id:'stime',
+                    editable:false
+                },{
+                    xtype:'datetimefield',
+                    width : 230,
+                    labelWidth : 60,
+                    fieldLabel: '终止时间',
+                    format: 'Y-m-d H:i:s',
+                    id:'etime',
+                    editable:false
+                },'-',
+                {
+                    xtype: 'combo',
+                    editable: false,
+                    forceSelection: false,
+                    store: global_para.view_list_store,
+                    labelWidth: 30,
+                    width: 200,
+                    fieldLabel: '解析线路',
+                    displayField: 'name',
+                    valueField: 'value',
+                    value: "default",
+                    id: "view-list-combo",
+                    allowBlank:false,
+                    listeners: {
+                        change: function (combox, selected, index) {
+                            get_datas_and_refresh(store_list);
+                        }
+                    }
+                }
+            ]
+        });
+        var toolbar_two = Ext.create('Ext.toolbar.Toolbar', {
+            items:[
+                {
+                    xtype: 'combo',
+                    editable: false,
+                    forceSelection: false,
+                    store: global_para.server_name_store,
+                    labelWidth: 75,
+                    width: 250,
+                    fieldLabel: '域名服务器',
+                    displayField: 'name',
+                    valueField: 'name',
+                    value: "all",
+                    id: "dns-server-name-combo",
+                    allowBlank:false,
+                    listeners: {
+                        change: function (combox, selected, index) {
+                            get_datas_and_refresh(store_list);
+                        }
+                    }
+                },
+                {
+                    xtype: 'combo',
+                    editable: false,
+                    forceSelection: false,
+                    store: global_para.merge_algorithm_store,
+                    labelWidth: 60,
+                    width: 200,
+                    fieldLabel: '归档算法',
+                    displayField: 'name',
+                    valueField: 'name',
+                    value:"SUM",
+                    id: "merge-algorithm-combo",
+                    allowBlank:false,
+                    listeners: {
+                        change: function (combox, selected, index) {
+                            get_datas_and_refresh(store_list);
+                        }
+                    }
+                },'-',
+                {
+                    text : '查询',
+                    handler : function() {
+                        get_datas_and_refresh(store_list);
+                    }
+                },
+                {
+                    text : '刷新',
+                    handler : function() {
+                        var now = new Date();
+                        Ext.getCmp('etime').setValue(now);
+                        Ext.getCmp('stime').setValue(new Date(now.getTime()-6*3600*1000));
+                        get_datas_and_refresh(store_list);
+                    }
+                }
+            ]
+        });
+        // make a window
+        var win = Ext.create('Ext.Window', {
+            minHeight : 400,
+            minWidth : 800,
+            hidden : false,
+            shadow : false,
+            maximizable : true,
+            title : 'view 曲线',
+            renderTo : Ext.getBody(),
+            layout : 'fit',
+            dockedItems: [toolbar_one, toolbar_two],
+            items : [
+                high_stock
+            ]
+        });
+        var now = new Date();
+        Ext.getCmp('etime').setValue(now);
+        Ext.getCmp('stime').setValue(new Date(now.getTime()-6*3600*1000));
+
+        win.show();
+        win.maximize();
+        get_datas_and_refresh(store_list);
+    });
+
+    get_datas_and_refresh = function(store_list){
+        var stime = Ext.getCmp('stime').getValue();
+        var etime = Ext.getCmp('etime').getValue();
+        var s_e_time = time_data_validate(stime, etime);
+        var para = {
+            start_time: s_e_time.stime,
+            end_time: s_e_time.etime,
+            server: Ext.getCmp('dns-server-name-combo').getValue(),
+            merge_algorithm: Ext.getCmp('merge-algorithm-combo').getValue(),
+            view_name: Ext.getCmp('view-list-combo').getValue()
+        };
+        console.log(para);
+        Ext.Ajax.request({
+            method: 'POST',
+            async:false,
+            url: "/data_display/get_view_datas",
+            params: JSON.stringify(para),
+            success: function (json_data) {
+                var response_info = JSON.parse(json_data.responseText);
+                var response_list = response_info['result'];
+                for(var i=0; i<response_list.length;i++){
+                    store_list[i].loadData(response_list[i]);
+                }
+                Ext.getCmp('highstock_id').refresh();
+            },
+            failure: function (response) {
+                console.log("error in ajax !");
+            }
+        });
+    };
+
+    </script>
+{% endblock %}

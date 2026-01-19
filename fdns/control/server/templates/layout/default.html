@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!--<script src="http://code.highcharts.com/highcharts.js"></script>-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Cache-control" content="no-cache">
+    <title>{{ title_info_bar }}</title>
+    {% include 'block/extjs_css.html' %}
+    {% include 'block/extjs_js.html' %}
+    <script type="text/javascript">
+        var pdns = {};
+        pdns.main_page_height = document.documentElement.clientHeight;
+        Ext.require([
+            'Ext.layout.container.*',
+            'Ext.resizer.Splitter',
+            'Ext.fx.target.Element',
+            'Ext.fx.target.Component',
+            'Ext.window.Window',
+            'Ext.app.Portlet',
+            'Ext.app.PortalColumn',
+            'Ext.app.PortalPanel',
+            'Ext.app.PortalDropZone',
+            'Ext.app.GridPortlet',
+            'Ext.app.ChartPortlet'
+        ]);
+        Ext.onReady(function () {
+            Ext.create('Ext.app.Portal');
+        });
+    </script>
+    <script type="text/javascript" src="/static/content/pdns/plugins.js"></script>
+    <script type="text/javascript" src="/static/content/pdns/models.js"></script>
+    <script type="text/javascript" src="/static/ext-component.js"></script>
+</head>
+<body>
+{% csrf_token %}
+{% block content %}
+
+{% endblock %}
+</body>
+</html>

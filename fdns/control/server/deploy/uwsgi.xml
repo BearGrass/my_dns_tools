@@ -1,0 +1,15 @@
+<uwsgi>
+    <socket>0.0.0.0:8001</socket>
+    <listen>20</listen>
+    <master>true</master>
+	<pidfile>/home/pdns-web/deploy/uwsgi.pid</pidfile>
+    <processes>20</processes>
+    <module>wsgi</module>
+    <wsgi-file>/home/pdns-web/pdns/wsgi.py</wsgi-file>
+	<pythonpath>/home/pdns-web</pythonpath>
+    <profiler>true</profiler>
+    <memory-report>true</memory-report>
+    <enable-threads>true</enable-threads>
+    <logdate>true</logdate>
+    <limit-as>6048</limit-as>
+</uwsgi>

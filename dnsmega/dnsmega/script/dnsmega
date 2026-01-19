@@ -1,0 +1,135 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides: dnsmega
+# Short-Description: start and stop dnsmega recovery service.
+# Description:  The dnsmega init script provides the support necessary for
+#       loading a module named dnsmega.ko into kernel at system bootup time,
+#       and for making cache for DNS.
+### END INIT INFO
+#
+#  Author:  Weiping Long<mogu.lwp@alibaba-inc.com>
+
+# Source function library.
+. /etc/init.d/functions
+
+# Global variables.
+KERNEL=$(uname -a | awk '{print $3}')
+
+# check uid
+if [ "$EUID" -ne 0 ]; then
+    echo "must run as root"
+    exit 1
+fi
+
+# check module
+function check_module
+{
+    if [ ! -f "/lib/modules/$KERNEL/dns/dnsmega.ko" ]; then
+        echo "/lib/modules/$KERNEL/dns/dnsmega.ko doesn't exist."
+        return 1
+    fi
+    return 0
+}
+
+function usage
+{
+    echo "Usage: $0 {on|off|start|stop|restart|status|help}"
+}
+
+# flag 1 means on
+# flag 0 means off
+function dm_launch
+{
+    flag=$1
+    sw="On"
+    if (( $flag == 0 )); then
+        sw="Off"
+    fi
+    check_module
+    if (( $? != 0 )); then
+        return 1
+    fi
+    if [ ! -d /proc/dnsmega ]; then
+        echo -n "dnsmega has not been started."; failure; echo
+        exit 1
+    fi
+    echo $flag > /proc/dnsmega/on
+    st=$(cat /proc/dnsmega/on)
+    if (( $st != $flag )); then
+        echo -n "$sw dnsmega"; failure; echo
+    else
+        echo -n "$sw dnsmega"; success; echo
+    fi
+}
+
+function dm_start
+{
+    depmod
+    modprobe dnsmega
+    chmod +x /etc/sysconfig/modules/dnsmega.modules
+    echo "*/1 * * * * root /usr/bin/dnsmega_adm -I > /var/log/dnsmega.log" > /etc/cron.d/megacron
+    if [ -f /proc/dnsmega/version ]; then
+        echo -n "Start dnsmega:"; success; echo
+    else
+        echo -n "Start dnsmega:"; failure; echo
+        return 1
+    fi
+    return 0
+}
+
+function dm_stop
+{
+    if [ ! -d /proc/dnsmega ]; then
+        echo -n "dnsmega has not been started"; failure; echo
+        return 1
+    fi
+    dm_launch 0
+    chmod -x /etc/sysconfig/modules/dnsmega.modules
+    rm -f /etc/cron.d/megacron
+    modprobe -r dnsmega
+    if [ $? -eq 0 ]; then
+        echo -n "Stop dnsmega:"; success; echo
+    else
+        echo -n "Stop dnsmega:"; failure; echo
+        return 1
+    fi
+    return 0
+}
+
+case "$1" in
+    start)
+        if [ -d /proc/dnsmega ]; then
+            echo -n "Dnsmega is runing..."; echo
+            exit 1
+        fi
+        dm_start
+        exit $?
+        ;;
+    stop)
+        dm_stop
+        exit $?
+        ;;
+    restart)
+        dm_stop
+        dm_start
+        exit $?
+        ;;
+    status)
+        if [ -f /proc/dnsmega/version ]; then
+            echo -n "Dnsmega is runing..."; echo
+        else
+            echo -n "Dnsmega is not runing..."; echo
+        fi
+        ;;
+    on)
+        dm_launch 1
+        exit $?
+        ;;
+    off)
+        dm_launch 0
+        exit $?
+        ;;
+    *)
+        usage
+        ;;
+esac

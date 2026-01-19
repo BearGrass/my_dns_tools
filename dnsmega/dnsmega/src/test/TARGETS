@@ -1,0 +1,18 @@
+targets = {
+    'dnsmegatest' : kernel_module (
+        incs = [
+            '../include/',
+        ],
+        srcs = [
+            'test.c',
+            'testcase.c',
+            '../knl/cache.c',
+            '../knl/lock.c',
+            '../knl/control.c',
+            '../knl/manage.c',
+            '../knl/stats.c',
+            '../knl/timer.c',
+            '../knl/dataplane.c',
+        ],
+    ),
+}

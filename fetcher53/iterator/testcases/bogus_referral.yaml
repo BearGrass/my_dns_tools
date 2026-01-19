@@ -1,0 +1,21 @@
+qname: aliyun.cn.
+qtype: A
+expect_rcode: SERVFAIL
+servers:
+- ip: 1.1.1.1
+  zones: [.]
+  request_and_responses:
+  - qname: .
+    qtype: NS 
+    response:
+      answer:
+      - ". 3600 IN NS a.root-servers.net"
+      additional:
+      - "a.root-servers.net 3600 IN A 1.1.1.1"
+  - qname: aliyun.cn.
+    qtype: A
+    response:
+      authority:
+      - "below.aliyun.cn. 3600 IN NS ns.below.aliyun.cn."
+      additional:
+      - "ns.below.aliyun.cn.cn. 3600 IN A 2.2.2.2"

@@ -1,0 +1,30 @@
+include $(LDNS_TRUNK)/mk/Makefile.config
+include $(LDNS_TRUNK)/mk/Makefile.include
+
+all: $(LIB) $(DLL)
+
+.c.o:
+	gcc -c -fPIC $(C_FLAGS) $(INCLUDE) $< -o $(dirname $<)$(subst .c,.o,$<)
+
+$(LIB):$(OBJ)
+	ar rcv $(LIB) $(OBJ)
+#cp $(LIB) $(LDNS_TRUNK)/target/lib/
+
+$(DLL):$(OBJ)
+	gcc -shared -fPIC -o $(DLL) $(OBJ)
+
+ifndef USE_SPEC_INSTALL
+install:$(LIB) $(DLL)
+	@cp -f $(LIB) $(LDNS_TRUNK)/target/lib/
+ifdef DLL    
+	@cp -f $(DLL) $(LDNS_TRUNK)/target/lib/
+endif
+endif
+
+clean:
+	@rm -rf $(OBJ)
+	@rm -f $(LIB)
+	@rm -f $(DLL)
+
+configure:
+

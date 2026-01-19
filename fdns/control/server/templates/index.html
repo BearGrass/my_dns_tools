@@ -1,0 +1,16 @@
+{% extends "layout/default.html" %}
+
+{% block content %}
+
+<script type="text/javascript" src="/static/content/portal/portal.js"></script>
+
+<script type="text/javascript">
+var ADMS_version = '{{ ADMS_version }}';
+var title_info_bar = '{{ title_info_bar }}';
+{% if user.is_authenticated %}
+	var current_username = '{{ user.username }}';
+	var current_user_last_name = '{{ user.last_name }}';
+{% endif %}
+</script>
+
+{% endblock %}

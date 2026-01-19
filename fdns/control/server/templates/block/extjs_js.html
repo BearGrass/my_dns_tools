@@ -1,0 +1,40 @@
+<!-- <x-bootstrap> -->
+<script type="text/javascript" src="/static/content/shared/include-ext.js"></script>
+<script type="text/javascript" src="/static/content/shared/options-toolbar.js"></script>
+<!-- </x-bootstrap> -->
+<!-- shared example code -->
+<script type="text/javascript" src="/static/content/shared/examples.js"></script>
+<script type="text/javascript">
+    Ext.Loader.setPath('Ext.app', '/static/content/portal/classes');
+</script>
+<script type="text/javascript" src="/static/ext-my-component.js"></script>
+<script type="text/javascript" src="/static/PagingToolbarResizer.js"></script>
+<script type="text/javascript" src="/static/DataTip.js"></script>
+
+<script type="text/javascript" src="/static/locale/jquery-1.10.2.js"></script>
+
+{#highstock.js要放在highcharts.js的前面，不然highstock的东西加载不出来。#}
+<script type="text/javascript" src="/static/lib/Highstock-2.0.1/js/highstock.js"></script>
+<script type="text/javascript" src="/static/lib/Highcharts-4.0.1/js/modules/exporting.js"></script>
+<script type="text/javascript" src="/static/lib/Highcharts-4.0.1/js/highcharts.js"></script>
+<script type="text/javascript" src="/static/lib/Highcharts-4.0.1/js/highcharts-more.js"></script>
+<script type="text/javascript" src="/static/lib/Highcharts-4.0.1/js/highcharts-3d.js"></script>
+<script type="text/javascript" src="/static/lib/Highcharts-4.0.1/js/highcharts-all.js"></script>
+
+<script type="text/javascript" src="/static/lib/HighStock.js"></script>
+<script type="text/javascript" src="/static/lib/HighStockSerie.js"></script>
+<script type="text/javascript" src="/static/lib/Highcharts.js"></script>
+<script type="text/javascript" src="/static/lib/Highcharts/Serie.js"></script>
+<script type="text/javascript" src="/static/lib/Highcharts/SplineSerie.js"></script>
+<script type="text/javascript" src="/static/lib/Highcharts/AreaSplineSerie.js"></script>
+<script type="text/javascript" src="/static/lib/Highcharts/ColumnSerie.js"></script>
+<script type="text/javascript" src="/static/lib/Highcharts/RangeSerie.js"></script>
+<script type="text/javascript" src="/static/lib/Highcharts/ColumnRangeSerie.js"></script>
+<!--<script type="text/javascript" src="/static/js/ext-lang-zh_CN.js"></script>-->
+<script>
+    Highcharts.setOptions({
+        global: {
+            useUTC: false
+        }
+    });
+</script>

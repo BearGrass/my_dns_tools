@@ -1,0 +1,13 @@
+
+include $(LDNS_TRUNK)/mk/Makefile.config
+include $(LDNS_TRUNK)/mk/Makefile.include
+
+all = $(SCRIPTS)
+
+clean:
+
+ifndef USE_SPEC_INSTALL
+install:
+	cp $(SCRIPTS) $(LDNS_TRUNK)/target/script/
+endif
+

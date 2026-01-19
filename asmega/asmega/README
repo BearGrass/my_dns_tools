@@ -1,0 +1,20 @@
+DNS Mega, come from DNS Megalith.
+High performance DNS cache for BIND, improve BIND qps.
+A Linux kernel module.
+
+All code formatted with:
+ find . -name "*.[ch]" | xargs indent -nbad -bap -nbc -bbo -hnl -br -brs -c33 -cd33 -ncdb -ce -ci4 -cli4 -d0 -di1 -nfc1 -i4 -ip0 -l110 -lp -npcs -nprs -npsl -sai -saf -saw -ncs -nsc -sob -nfca -cp33 -ss -ts4 -il0 -nut -bli1 -l80 -lc80
+
+Git commit messages conform to Angular specification.
+http://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html
+
+network_irq.sh中断设置的脚本，支持一键式设置Linux中断，如果CPU处理网卡中断不均匀，可以使用这个脚本。钟会<lei.xu@alibaba-inc.com>写的，DNS Mega只是拿来用。
+network_irq.sh选自《Linux中断探讨，调优实践》http://www.atatech.org/articles/51019
+
+在alimake下编译通过
+alicpp/built/tools/alimake.py --kernel-version=3.10.0-327.ali2000.alios7.x86_64 --compiler-version=4.9.2
+以上命令必须在linux 3.10下编译，因为到目前为止，alicpp里不含有2.6.32的kernel源码。
+
+义送<songyi.sy@alibaba-inc.com>
+墨骨<mogu.lwp@alibaba-inc.com>
+2016.3

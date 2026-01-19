@@ -1,0 +1,1 @@
+0 * * * * /bin/sh @base/crontab/get_topn_data.sh

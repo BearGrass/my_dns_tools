@@ -1,0 +1,10 @@
+targets = {
+    'dnsmega_adm' : cpp_program (
+        incs = [
+            '../include/',
+        ],
+        srcs = [
+            'dnsmega_adm.c',
+        ],
+    ),
+}

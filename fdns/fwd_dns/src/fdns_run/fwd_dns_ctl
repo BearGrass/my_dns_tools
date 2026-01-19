@@ -1,0 +1,159 @@
+#!/bin/bash
+export BASE=`pwd`
+export LOG_BASE=`pwd`/runlog/
+export USERCONF=$BASE/etc/fwd_dns_user.conf
+export CONF=$BASE/etc/.fwd_dns.conf
+
+function msg(){
+        message=$1
+        log=fwd_dns_ctl.log
+        echo "`date '+%F_%T'` - ${message}" >> ${log} 2>&1
+        echo "`date '+%F_%T'` - ${message}" 
+}
+
+function stop()
+{
+	t_crontab=/var/t_root_crontabstop
+	crontab -uroot -l |grep -E -v "get_topn_data.sh"|grep -E -v "get_whitelist.sh" |grep -E -v "get_oversealist.sh" > ${t_crontab}
+	crontab -uroot ${t_crontab}
+	rm -f ${t_crontab}
+	killall ospfd
+	killall zebra
+	killall fwd_dns_dpdk
+	killall supervise
+	killall cronlog
+	pkill -9 -f "/bin/sh ./run"
+	pkill -9 -f "get_blacklist.sh"
+	rm -f fwd_dns.out
+}
+
+function clean()
+{
+	rm -f fwd_dns.out
+	rm -rf $BASE/runlog/server_log/server_log*
+	rm -rf $BASE/runlog/query_log/query_log*
+	rm -rf $BASE/runlog/answer_log/answer_log*
+	rm -rf $BASE/runlog/attack_log/attack_log*
+}
+
+function show_status()
+{
+        echo "== show zebra route summery =="
+        /usr/bin/expect -c "
+        set timeout 2
+        spawn telnet 0 2601
+        expect \"Password: \" { send \"zebra\r\" }
+    	expect \"*>*\" { send \"show ip route\r\" }
+        "
+        echo 
+        sleep 1
+
+        echo "== show ospfd route summery =="
+        /usr/bin/expect -c "
+        set timeout 2
+        spawn telnet 0 2604
+        expect \"Password: \" { send \"zebra\r\" }
+        expect \"*>*\" { send \"show ip ospf route\r\" }
+        expect \"*>*\" { send \"show ip ospf nei\r\" }
+        expect \"*>*\" { send \"quit\r\" }
+        "
+}
+
+function start()
+{
+
+	#parsh fwd_dns_user.conf
+	#source $BASE/scripts/parse.sh $USERCONF
+
+	#start pipe log
+	sh $LOG_BASE/start_pipe_log.sh clean
+	
+	#prepare config file
+	st=$(echo $BASE|sed "s/\//\\\\\//g");
+	sed -i "s/@base/$st/g" $CONF
+	#cp $BASE/crontab/.cronjob $BASE/crontab/cronjob
+	#cp $BASE/crontab/.get_topn_data.sh $BASE/crontab/get_topn_data.sh
+	#cp $BASE/crontab/.get_whitelist.sh $BASE/crontab/get_whitelist.sh
+	#cp $BASE/crontab/.get_blacklist.sh $BASE/crontab/get_blacklist.sh
+	sed -i "s/@base/$st/g" $BASE/crontab/cronjob
+	sed -i "s/@base/$st/g" $BASE/crontab/get_topn_data.sh
+	sed -i "s/@base/$st/g" $BASE/crontab/get_whitelist.sh
+	sed -i "s/@base/$st/g" $BASE/crontab/get_man_whitelist.sh
+	sed -i "s/@base/$st/g" $BASE/crontab/get_man_blacklist.sh
+	sed -i "s/@base/$st/g" $BASE/crontab/get_blacklist.sh
+
+	vEth0=`grep vEth0_ip $CONF|awk '{print $3}'` 
+	vEth1=`grep vEth1_ip $CONF|awk '{print $3}'`
+	vip=`grep vip $USERCONF|awk '{print $2}'`
+	
+	
+        t_crontab=/var/t_root_crontab
+        crontab -uroot -l |grep -E -v "get_topn_data.sh" |grep -E -v "get_man_whitelist.sh" |grep -E -v "get_man_blacklist.sh" |grep -E -v "get_whitelist.sh" |grep -E -v "get_oversealist.sh" |grep -E -v "get_threshold.sh"  |grep -E -v "get_cofflsvm.sh" |grep -E -v "get_coffstd.sh"> ${t_crontab}
+        cat ${BASE}/crontab/cronjob >> ${t_crontab}
+        crontab -uroot ${t_crontab}
+        rm -f ${t_crontab}
+        echo "crontab add ok"
+	#nohup /bin/bash $BASE/crontab/get_blacklist.sh &
+
+    
+    #cp $BASE/.attack_cofflsvm_active.demo $BASE/.attack_cofflsvm_active
+    #cp $BASE/.attack_coffstd_active.demo $BASE/.attack_coffstd_active
+    #cp $BASE/.attack_threshold_active.demo $BASE/.attack_threshold_active
+    #cp $BASE/.man_whitelist_active.demo $BASE/.man_whitelist_active
+    #cp $BASE/.man_blacklist_active.demo $BASE/.man_blacklist_active
+
+	$BASE/bin/fwd_dns_dpdk -c 0x7ff -n 4 -- -p 0x3 -f $CONF	
+	i=0;
+	while [ true ] ; do
+		sleep 1;
+		grep "Init_ENV_done" fwd_dns.out;
+		if [ $? -eq 0 ] ; then
+			sleep 1;
+			source $BASE/scripts/ip.sh	
+			break;
+		else
+			((i ++))
+			echo "wait for start..$i s"
+			if [ $i -gt 80 ] ; then
+				echo "please tail -f fwd_dns.out to have a look"
+			fi
+		fi
+	done
+	
+	echo "FWD DNS Start Done"
+}
+
+function run()
+{
+	action=$1
+	if [ -z ${action} ];then
+	   echo "control fwd_dns , input start | stop | restart | status | clean "
+	   exit
+	fi
+	
+	case ${action} in
+        start)
+        msg "start fwd_dns"
+	stop
+        start 
+        ;;
+        stop)
+        msg "stop fwd_dns"
+        stop
+        ;;
+        restart)
+        msg "restart fwd_dns"
+        stop
+        start
+        ;;
+	clean)
+	msg "clean fwd_dns_log"
+	clean
+	;;
+        status)
+        show_status
+        ;;
+esac
+}
+
+run $@

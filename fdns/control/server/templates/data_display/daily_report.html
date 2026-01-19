@@ -1,0 +1,716 @@
+{% extends "layout/default.html" %}
+<script type="text/javascript" src="/static/content/portal/portal.js"></script>
+{% block content %}
+    <script language="javascript" type="text/javascript">
+    Ext.require([
+        'Ext.chart.*',
+        'Ext.ux.DataTip',
+        'Ext.layout.container.Column'
+    ]);
+    //全局变量，记录protal版本和用户信息
+    var global_para = {
+        client_ip_chart_store: Ext.create('Ext.data.Store', {
+            fields: ["date", "client_ip", "client_real_ip"],
+            autoLoad: true,
+            proxy: {
+                type: 'ajax',
+                url: '/data_display/get_client_ip_datas',
+                reader: {
+                    type: 'json',
+                    root: 'result'
+                }
+            }
+        }),
+        total_query_chart_store: Ext.create('Ext.data.Store', {
+            fields: ["date", "cm10", "cm9", "st3"],
+            autoLoad: true,
+            proxy: {
+                type: 'ajax',
+                url: '/data_display/get_total_query_datas',
+                reader: {
+                    type: 'json',
+                    root: 'result'
+                }
+            }
+        }),
+        query_type_chart_store: Ext.create('Ext.data.Store', {
+            fields: ["qtype", "count"],
+            autoLoad: true,
+            proxy: {
+                type: 'ajax',
+                url: '/data_display/get_query_type_datas',
+                reader: {
+                    type: 'json',
+                    root: 'result'
+                }
+            }
+        }),
+        query_len_chart_store: Ext.create('Ext.data.Store', {
+            fields: ["qlen", "count"],
+            autoLoad: true,
+            proxy: {
+                type: 'ajax',
+                url: '/data_display/get_query_len_datas',
+                reader: {
+                    type: 'json',
+                    root: 'result'
+                }
+            }
+        }),
+        query_label_chart_store: Ext.create('Ext.data.Store', {
+            fields: ["qlabel", "count"],
+            autoLoad: true,
+            proxy: {
+                type: 'ajax',
+                url: '/data_display/get_query_label_datas',
+                reader: {
+                    type: 'json',
+                    root: 'result'
+                }
+            }
+        })
+//        ,
+//        rcode_chart_store: Ext.create('Ext.data.Store', {
+//            fields: ["rcode", "count"],
+//            autoLoad: true,
+//            proxy: {
+//                type: 'ajax',
+//                url: '/data_display/get_rcode_datas',
+//                reader: {
+//                    type: 'json',
+//                    root: 'result'
+//                }
+//            }
+//        }),
+//        rcode_servfail_chart_store: Ext.create('Ext.data.Store', {
+//            fields: ["qname", "count"],
+//            autoLoad: true,
+//            proxy: {
+//                type: 'ajax',
+//                url: '/data_display/get_rcode_servfail_datas',
+//                reader: {
+//                    type: 'json',
+//                    root: 'result'
+//                }
+//            }
+//        }),
+//        rcode_nxdomain_chart_store: Ext.create('Ext.data.Store', {
+//            fields: ["qname", "count"],
+//            autoLoad: true,
+//            proxy: {
+//                type: 'ajax',
+//                url: '/data_display/get_rcode_nxdomain_datas',
+//                reader: {
+//                    type: 'json',
+//                    root: 'result'
+//                }
+//            }
+//        })
+    };
+
+    Ext.onReady(function () {
+        var client_ip_chart = Ext.create('Chart.ux.Highcharts', {
+            series : [{
+                type: 'column',
+                dataIndex : 'client_ip',
+                name : '独立IP数',
+                visible : true
+            }, {
+                type: 'column',
+                dataIndex : 'client_real_ip',
+                name : '服务用户数',
+                visible : true
+            }],
+            store: global_para.client_ip_chart_store,
+            xField : 'date',
+            chartConfig : {
+                chart : {
+//                    zoomType : 'x'
+                },
+                rangeSelector: {
+                },
+                title : {
+                    text : '日独立访问IP',
+                    x : -20 //center
+                },
+                subtitle : {
+                    text : '数据来源：一级FWD查询日志',
+                    x : -20
+                },
+                xAxis : [{
+                    title: {
+                        text: '日期'
+                    },
+                    tickInterval: 10
+                }],
+                yAxis :  [{
+                    title: {
+                        align: 'middle',
+                        style:{"color": "#707070", "fontWeight": "bold"},
+                        text: 'COUNT( 次 )'
+                    }
+                }],
+                tooltip: {
+                    shared: true                //共享一个气泡显示数据
+                },
+                credits : {
+                    text : ''
+                },
+                plotOptions: {
+                    column:{
+//                        stacking:'normal'
+                    }
+                },
+                legend : {
+                    enabled: true,
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'top',
+                    borderWidth: 0,
+                    floating:true,
+                    x:-30
+                }
+            }
+        });
+        var total_query_chart = Ext.create('Chart.ux.Highcharts', {
+            series : [{
+                type: 'column',
+                dataIndex : 'cm10',
+                name : 'cm10',
+                visible : true
+            }, {
+                type: 'column',
+                dataIndex : 'cm9',
+                name : 'cm9',
+                visible : true
+            },{
+                type: 'column',
+                dataIndex : 'st3',
+                name : 'st3',
+                visible : true
+            }],
+            store: global_para.total_query_chart_store,
+            xField : 'date',
+            chartConfig : {
+                chart : {
+//                    zoomType : 'x'
+                },
+                rangeSelector: {
+                },
+                title : {
+                    text : '日总访问量',
+                    x : -20 //center
+                },
+                subtitle : {
+                    text : '数据来源：一级FWD查询日志',
+                    x : -20
+                },
+                xAxis : [{
+                    title: {
+                        text: '日期'
+                    },
+                    tickInterval: 10
+                }],
+                yAxis :  [{
+                    title: {
+                        align: 'middle',
+                        style:{"color": "#707070", "fontWeight": "bold"},
+                        text: 'COUNT( 次 )'
+                    }
+                }],
+                tooltip: {
+                    valueDecimals: 0,    //2:保留小数点后两位
+                    formatter: function() {
+                        var s = '<b>' + (this.x) + '</b>';
+                        $.each(this.points, function(i, point) {
+                            s += '<br/><b>' + point.series.name + '</b> : ' + Highcharts.numberFormat(point.y,0,'.',',') + ' = ' + point.percentage.toFixed(2) + '%';
+                        });
+                        return s + '<br/><b>Total : ' + Highcharts.numberFormat(this.points[0].total,0,'.',',') + '</b>';
+                    },
+                    shared: true                //共享一个气泡显示数据
+                },
+                credits : {
+                    text : ''
+                },
+                plotOptions: {
+                    column:{
+                        stacking:'normal'
+                    }
+                },
+                legend : {
+                    enabled: true,
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'top',
+                    borderWidth: 0,
+                    floating:true,
+                    x:-30
+                }
+            }
+        });
+        var query_type_chart = Ext.create('Chart.ux.Highcharts', {
+            series : [{
+                type: 'column',
+                dataIndex : 'count',
+                name : 'count',
+                visible : true
+            }],
+            store: global_para.query_type_chart_store,
+            xField : 'qtype',
+            chartConfig : {
+                chart : {
+//                    zoomType : 'x'
+                },
+                rangeSelector: {
+                },
+                title : {
+                    text : '昨日查询类型分布',
+                    x : -20 //center
+                },
+                subtitle : {
+                    text : '数据来源：一级FWD查询日志',
+                    x : -20
+                },
+                xAxis : [{
+                    title: {
+                        text: '查询类型'
+                    }
+                }],
+                yAxis :  [{
+                    title: {
+                        align: 'middle',
+                        style:{"color": "#707070", "fontWeight": "bold"},
+                        text: 'COUNT( 次 )'
+                    }
+                }],
+                tooltip: {
+                    shared: true                //共享一个气泡显示数据
+                },
+                credits : {
+                    text : ''
+                },
+                plotOptions: {
+                    column:{
+//                        stacking:'normal'
+                    }
+                },
+                legend : {
+                    enabled: true,
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'top',
+                    borderWidth: 0,
+                    floating:true,
+                    x:-30
+                }
+            }
+        });
+        var query_len_chart = Ext.create('Chart.ux.Highcharts', {
+            series : [{
+                type: 'column',
+                dataIndex : 'count',
+                name : 'count',
+                visible : true
+            }],
+            store: global_para.query_len_chart_store,
+            xField : 'qlen',
+            chartConfig : {
+                chart : {
+//                    zoomType : 'x'
+                },
+                rangeSelector: {
+                },
+                title : {
+                    text : '昨日查询域名字符串长度分布',
+                    x : -20 //center
+                },
+                subtitle : {
+                    text : '数据来源：一级FWD查询日志',
+                    x : -20
+                },
+                xAxis : [{
+                    title: {
+                        text: '查询域名字符串长度'
+                    },
+                    tickInterval: 25
+                }],
+                yAxis :  [{
+                    title: {
+                        align: 'middle',
+                        style:{"color": "#707070", "fontWeight": "bold"},
+                        text: 'COUNT( 次 )'
+                    }
+                }],
+                tooltip: {
+                    shared: true                //共享一个气泡显示数据
+                },
+                credits : {
+                    text : ''
+                },
+                plotOptions: {
+                    column:{
+//                        stacking:'normal'
+                    }
+                },
+                legend : {
+                    enabled: true,
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'top',
+                    borderWidth: 0,
+                    floating:true,
+                    x:-30
+                }
+            }
+        });
+        var query_label_chart = Ext.create('Chart.ux.Highcharts', {
+            series : [{
+                type: 'column',
+                dataIndex : 'count',
+                name : 'count',
+                visible : true
+            }],
+            store: global_para.query_label_chart_store,
+            xField : 'qlabel',
+            chartConfig : {
+                chart : {
+//                    zoomType : 'x'
+                },
+                rangeSelector: {
+                },
+                title : {
+                    text : '昨日查询域名Label级数分布',
+                    x : -20 //center
+                },
+                subtitle : {
+                    text : '数据来源：一级FWD查询日志',
+                    x : -20
+                },
+                xAxis : [{
+                    title: {
+                        text: '查询域名Label级数'
+                    },
+                    tickInterval: 25
+                }],
+                yAxis :  [{
+                    title: {
+                        align: 'middle',
+                        style:{"color": "#707070", "fontWeight": "bold"},
+                        text: 'COUNT( 次 )'
+                    }
+                }],
+                tooltip: {
+                    shared: true                //共享一个气泡显示数据
+                },
+                credits : {
+                    text : ''
+                },
+                plotOptions: {
+                    column:{
+//                        stacking:'normal'
+                    }
+                },
+                legend : {
+                    enabled: false
+                }
+            }
+        });
+        var rcode_chart = Ext.create('Chart.ux.Highcharts', {
+            series : [{
+                type: 'column',
+                dataIndex : 'count',
+                name : 'count',
+                visible : true
+            }],
+            store: global_para.rcode_chart_store,
+            xField : 'rcode',
+            chartConfig : {
+                chart : {
+//                    zoomType : 'x'
+                },
+                rangeSelector: {
+                },
+                title : {
+                    text : '昨日查询响应状态码分布',
+                    x : -20 //center
+                },
+                subtitle : {
+                    text : '数据来源：一级FWD CM10 流量镜像',
+                    x : -20
+                },
+                xAxis : [{
+                    title: {
+                        text: '响应状态码'
+                    }
+                }],
+                yAxis :  [{
+                    title: {
+                        align: 'middle',
+                        style:{"color": "#707070", "fontWeight": "bold"},
+                        text: 'COUNT( 次 )'
+                    }
+                }],
+                tooltip: {
+                    shared: true                //共享一个气泡显示数据
+                },
+                credits : {
+                    text : ''
+                },
+                plotOptions: {
+                    column:{
+//                        stacking:'normal'
+                    }
+                },
+                legend : {
+                    enabled: false
+                }
+            }
+        });
+        var rcode_servfail_chart = Ext.create('Chart.ux.Highcharts', {
+            series : [{
+                type: 'column',
+                dataIndex : 'count',
+                name : 'count',
+                visible : true
+            }],
+            store: global_para.rcode_servfail_chart_store,
+            xField : 'qname',
+            chartConfig : {
+                chart : {
+//                    zoomType : 'x'
+                },
+                rangeSelector: {
+                },
+                title : {
+                    text : '昨日ServFail TOP 10',
+                    x : -20 //center
+                },
+                subtitle : {
+                    text : '数据来源：一级FWD CM10 流量镜像',
+                    x : -20
+                },
+                xAxis : [{
+                    title: {
+                        text: '域名+类型'
+                    },
+                    allowDecimals:false,
+                    tickInterval:1
+                }],
+                yAxis :  [{
+                    title: {
+                        align: 'middle',
+                        style:{"color": "#707070", "fontWeight": "bold"},
+                        text: 'COUNT( 次 )'
+                    }
+                }],
+                tooltip: {
+                    shared: true                //共享一个气泡显示数据
+                },
+                credits : {
+                    text : ''
+                },
+                plotOptions: {
+                    column:{
+//                        stacking:'normal'
+                    }
+                },
+                legend : {
+                    enabled: false
+                }
+            }
+        });
+        var rcode_nxdomain_chart = Ext.create('Chart.ux.Highcharts', {
+            series : [{
+                type: 'column',
+                dataIndex : 'count',
+                name : 'count',
+                visible : true
+            }],
+            store: global_para.rcode_nxdomain_chart_store,
+            xField : 'qname',
+            chartConfig : {
+                chart : {
+//                    zoomType : 'x'
+                },
+                rangeSelector: {
+                },
+                title : {
+                    text : '昨日NxDomain TOP 10',
+                    x : -20 //center
+                },
+                subtitle : {
+                    text : '数据来源：一级FWD CM10 流量镜像',
+                    x : -20
+                },
+                xAxis : [{
+                    title: {
+                        text: '域名+类型'
+                    },
+                    allowDecimals:false,
+                    categories: ['1', '2', '3','4','5','6','7','8','9','10'],
+                    tickInterval:1
+                }],
+                yAxis :  [{
+                    title: {
+                        align: 'middle',
+                        style:{"color": "#707070", "fontWeight": "bold"},
+                        text: 'COUNT( 次 )'
+                    }
+                }],
+                tooltip: {
+                    shared: true                //共享一个气泡显示数据
+                },
+                credits : {
+                    text : ''
+                },
+                plotOptions: {
+                    column:{
+//                        stacking:'normal'
+                    }
+                },
+                legend : {
+                    enabled: false
+                }
+            }
+        });
+        // 开始渲染页面
+        Ext.create('Ext.Panel', {
+            renderTo: 'template-panel-1',
+            width: '100%',
+            height: 500,
+            bodyPadding: 10,
+            layout: {
+                type: 'hbox',
+                align: 'stretch'
+            },
+            defaults: {
+                frame: true
+            },
+            items: [{
+                xtype: 'panel',
+                title: '日独立访问IP',
+                flex: 1,
+                margin: '0 10 0 0',
+                items : [
+                    client_ip_chart
+                ]
+            },{
+                xtype: 'panel',
+                title: '日查询总量',
+                margin: '0 10 0 0',
+                flex: 1,
+                items : [
+                    total_query_chart
+                ]
+            }]
+        });
+        Ext.create('Ext.Panel', {
+            renderTo: 'template-panel-2',
+            width: '100%',
+            height: 500,
+            bodyPadding: 10,
+            layout: {
+                type: 'hbox',
+                align: 'stretch'
+            },
+            defaults: {
+                frame: true
+            },
+            items: [{
+                xtype: 'panel',
+                title: '昨日查询类型分布',
+                flex: 1,
+                margin: '0 10 0 0',
+                items:[
+                    query_type_chart
+                ]
+            }]
+        });
+        Ext.create('Ext.Panel', {
+            renderTo: 'template-panel-3',
+            width: '100%',
+            height: 500,
+            bodyPadding: 10,
+            layout: {
+                type: 'hbox',
+                align: 'stretch'
+            },
+            defaults: {
+                frame: true
+            },
+            items: [{
+                xtype: 'panel',
+                title: '昨日查询域名字符串长度分布',
+                flex: 1,
+                margin: '0 10 0 0',
+                items:[query_len_chart]
+            }]
+        });
+        Ext.create('Ext.Panel', {
+            renderTo: 'template-panel-4',
+            width: '100%',
+            height: 500,
+            bodyPadding: 10,
+            layout: {
+                type: 'hbox',
+                align: 'stretch'
+            },
+            defaults: {
+                frame: true
+            },
+            items: [{
+                xtype: 'panel',
+                title: '昨日查询域名Label级数分布',
+                flex: 1,
+                margin: '0 10 0 0',
+                items:[query_label_chart]
+            }
+//                ,{
+//                xtype: 'panel',
+//                title: '昨日查询响应状态码分布',
+//                margin: '0 10 0 0',
+//                flex: 1,
+//                items:[rcode_chart]
+//            }
+            ]
+        });
+//        Ext.create('Ext.Panel', {
+//            renderTo: 'template-panel-5',
+//            width: '100%',
+//            height: 500,
+//            bodyPadding: 10,
+//            layout: {
+//                type: 'hbox',
+//                align: 'stretch'
+//            },
+//            defaults: {
+//                frame: true
+//            },
+//            items: [{
+//                xtype: 'panel',
+//                title: '昨日ServFail TOP 10',
+//                flex: 1,
+//                margin: '0 10 0 0',
+//                items:[rcode_servfail_chart]
+//            },{
+//                xtype: 'panel',
+//                title: '昨日NxDomain TOP 10',
+//                margin: '0 10 0 0',
+//                flex: 1,
+//                items:[rcode_nxdomain_chart]
+//            }]
+//        });
+    });
+
+    </script>
+    <div id="template-panel-1">
+    </div>
+    <div id="template-panel-2">
+    </div>
+    <div id="template-panel-3">
+    </div>
+    <div id="template-panel-4">
+    </div>
+    <!--<div id="template-panel-5">-->
+    <!--</div>-->
+{% endblock %}
