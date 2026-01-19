@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+#rm -rf output
+#rm -rf nginx-1.16.0
+
+[ -d  nginx-1.16.0 ] || tar xvf nginx-1.16.0.tar.gz
+[ -d "./output" ] || mkdir output
+
+rm -f output/sbin/nginx
+
+cd nginx-1.16.0/
+make clean 
+#ADNS_LIB=`pwd`/../stream-td-nginx-module/src/proclib/
+#ADNS_LIB=/home/adns/bin/
+#ADNS_LIB=`pwd`/../rpm/.dep_create/bin/
+ADNS_LIB=`pwd`/../../../target/bin/
+#rm -f $ADNS_LIB/libadns.a
+./configure --prefix=/home/ndns         \
+            --with-stream               \
+            --with-ipv6                 \
+            --add-module=../stream-td-nginx-module \
+            --with-ld-opt=" -L$ADNS_LIB -ladns -lcrypto  -lssl " || exit 1
+
+make
+#make && make install
+#./configure --prefix=`pwd`/../output \
+#./configure --prefix=/home/ndns         \
+#--with-ld-opt=" -L$ADNS_LIB -ladns " || exit 1

@@ -1,0 +1,74 @@
+.TH adns_tsar -
+.SH NAME
+adns_tsar \- Taobao System Activity Reporter
+.SH SYNOPSIS
+.B adns_tsar
+[options] --adns_tsar main function
+.PP
+adns_tsardevel
+[modname] --develop new mod
+.SH DESCRIPTION
+.PP
+\fBadns_tsar\fB is a monitor tool for collect system activity status and apps.
+.PP
+adns_tsar reads and logs messages to the log files,It support different output target
+such as local console or remote db/nagios host.It have a plugin system
+that is easy for collect plugin development.
+.PP
+
+.SH OPTIONS
+.TP
+.B \-check , \-check
+display last record for alert,it is just used for taobao inner alert
+.TP
+.B \-C , \-\-check
+display last record for alert.example:adns_tsar --check / adns_tsar --check --cpu --io
+.TP
+.B \-c , \-\-cron
+run in cron mode, output data to file,default is /var/log/adns_tsar.data
+.TP
+.B \-l ,\-\-live
+running print live mode which module will print
+.TP
+.B \-i , \-\-interval
+specify intervals numbers, if not with --live,it is in minutes;if with --live, it is in seconds
+.TP
+.B \-m , \-\-merge
+merge multiply item to one
+.TP
+.B \-L , \-\-list
+list enabled modules
+.TP
+.B \-n , \-\-ndays
+show the value for the past days (default: 1)
+.TP
+.B \-d , \-\-date
+special one day to display,support formate YYYYMMDD or int for somedays ago
+.TP
+.B \-f , \-\-file
+special adns_tsar.data for adns_tsar to read
+.TP
+.B \-n , \-\-ndays
+show the value for the past days (default: 1)
+.TP
+.B \-D , \-\-detail
+do not conver data to K/M/G
+.TP
+.B \-s , \-\-spec
+show spec field data, adns_tsar --cpu -s sys,util
+.TP
+.B \-h , \-\-help
+print help info
+.TP
+.SH DIAGNOSTICS
+It is expected that \fBadns_tsar\fP will run as root
+.SH FILES
+.TP
+.I /etc/adns_tsar/adns_tsar.conf
+Configuration file for adns_tsar.output mod list for differnt type
+.TP
+.I /etc/adns_tsar/cron.d/*.conf
+extrat config file, usually adns_tsar devel modules config
+.SH BUGS
+.PP
+If you find any, please send email to the kongjian@taobao.com

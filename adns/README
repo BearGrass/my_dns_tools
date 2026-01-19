@@ -1,0 +1,2 @@
+Build the adns which support private zone function:
+    make PVT_ZONE=1

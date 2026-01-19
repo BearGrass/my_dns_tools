@@ -1,0 +1,824 @@
+#include <unistd.h>
+#include <pthread.h>
+#include <sys/epoll.h>
+#include <stdio.h>
+#include <errno.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <pthread.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAX_PATH_LEN (1024)
+
+#include "ae.h"
+#include "anet.h"
+#include "list.h"
+//#include "hcMain.h"
+#define WORKER_NUM_MAX 1024
+#define MAX_DOMAIN_NAME 256
+
+/* Error codes */
+#define C_OK                    0
+#define C_ERR                   -1
+#define NET_IP_STR_LEN 46 /* INET6_ADDRSTRLEN is 46, but we need to be sure */
+#define LL_DEBUG 0
+#define LL_VERBOSE 1
+#define LL_NOTICE 2
+#define LL_WARNING 3
+#define LL_RAW (1<<10) /* Modifier to log without timestamp */
+#define CONFIG_DEFAULT_VERBOSITY LL_NOTICE
+#define CONFIG_FDSET_INCR 128
+#define UNUSED(x) (void)(x)
+
+struct dns_header {
+    uint16_t id;
+    uint8_t flags1;
+    uint8_t flags2;
+    uint16_t qdcount;
+    uint16_t ancount;
+    uint16_t nscount;
+    uint16_t arcount;
+} __attribute__((packed));
+
+struct ttt_worker_t {
+    aeEventLoop *loop;
+    struct list_head clients;
+    long lastPullTime;
+    long lastPushTime;
+};
+
+struct admin_t {
+    char admin_ip[30];
+    int admin_port;
+    aeEventLoop *loop;
+};
+
+struct ttt_server_t {
+    struct admin_t admin;   
+    struct ttt_worker_t worker[WORKER_NUM_MAX];
+    int pushTaskIntervalMs;
+    int pullTaskIntervalMs;
+    int state;
+    char adms_ip[MAX_DOMAIN_NAME];
+    int adms_port;
+    int maxclients;
+    int ipfd[4];
+    int ipfd_count;
+    pthread_mutex_t mutex;
+    int maxidletime;                   /* Client timeout in seconds */
+    int tcpkeepalive;                  /* Set SO_KEEPALIVE if non-zero. */
+
+    uint64_t stat_numconnections;      /* Number of connections received */
+    uint64_t stat_rejected_conn;       /* Clients rejected because of maxclients */
+};
+
+#define ttt_CMD_MAX_LEN     2048
+#define ttt_ADNS_IO_BUFLEN  2048
+#define ttt_EXTBUF_MAX_LEN  4096
+typedef struct ttt_ioClient {
+    struct list_head list;
+
+    int fd;
+    int tid;
+    int state;
+    int flags;
+    int reqtype;
+
+    struct list_head reply_list;
+    unsigned int reply_bytes;
+
+    /* query buffer */
+    char *extend_buf;
+    char querybuf[ttt_CMD_MAX_LEN];
+    int query_size;
+
+    uint32_t recvd_total;
+    uint32_t body_size;
+
+    /* response buffer */
+    int bufpos; // uint32_t is better, keep it for compatibility
+    int buf_size; // uint32_t is better, keep it for compatibility
+    char buf[ttt_ADNS_IO_BUFLEN+8];
+
+    /* peer info */
+    uint16_t port;
+    char addr_str[46];
+} ttt_ioClient;
+
+struct ttt_server_t ttt_server;
+
+
+static void adns_api_read_hdr_body(aeEventLoop *el, int fd, void *privdata, int mask);
+static void      adns_api_read_hdr(aeEventLoop *el, int fd, void *privdata, int mask);
+static inline void ttt_queueClient(struct ttt_ioClient *c, int tid)
+{
+    list_add_tail(&c->list, &ttt_server.worker[tid].clients);
+}
+
+static inline void ttt_dequeueClient(struct ttt_ioClient *c)
+{
+    list_del(&c->list);
+}
+
+ttt_ioClient *ttt_createClient(int fd, int tid)
+{
+    /* use malloc for better performance
+     * please do remember to set all fields properly
+     */
+    ttt_ioClient *c = malloc(sizeof(ttt_ioClient));
+    if (c == NULL)
+        return NULL;
+
+    /* passing -1 as fd it is possible to create a non connected client.
+     * This is useful since all the Redis commands needs to be executed
+     * in the context of a client. When commands are executed in other
+     * contexts (for instance a Lua script) we need a non connected client. */
+    if (fd != -1) {
+        //anetEnableNoSigpipe(NULL, fd);
+        anetNonBlock(NULL,fd);
+        anetEnableTcpNoDelay(NULL,fd);
+        if (ttt_server.tcpkeepalive)
+            anetKeepAlive(NULL,fd,ttt_server.tcpkeepalive);
+        if (aeCreateFileEvent(ttt_server.worker[tid].loop, fd, AE_READABLE,
+            /*adns_api_read_hdr_body*/
+            adns_api_read_hdr, c) == AE_ERR) {
+            close(fd);
+            free(c);
+            return NULL;
+        }
+    }
+
+    c->fd = fd;
+    c->tid = tid;
+    c->reqtype = 0;
+    c->flags = 0;
+
+    c->extend_buf = NULL;
+    c->query_size = 0;
+    
+    c->recvd_total = 0;
+    c->body_size = 0;
+
+    c->bufpos = 0;
+    c->buf_size = 0;
+
+    INIT_LIST_HEAD(&c->reply_list);
+    c->reply_bytes = 0;
+    if (fd != -1)
+        ttt_queueClient(c, tid);
+
+    return c;
+}
+
+static void fake_adns_api_read_hdr_body(aeEventLoop *el, int fd, void *privdata, int mask);
+ttt_ioClient * fake_ttt_createClient(int fd, int tid)
+{
+    /* use malloc for better performance
+     * please do remember to set all fields properly
+     */
+    ttt_ioClient *c = malloc(sizeof(ttt_ioClient));
+    if (c == NULL)
+        return NULL;
+
+    /* passing -1 as fd it is possible to create a non connected client.
+     * This is useful since all the Redis commands needs to be executed
+     * in the context of a client. When commands are executed in other
+     * contexts (for instance a Lua script) we need a non connected client. */
+    if (fd != -1) {
+        //anetEnableNoSigpipe(NULL, fd);
+        anetNonBlock(NULL,fd);
+        anetEnableTcpNoDelay(NULL,fd);
+        if (ttt_server.tcpkeepalive)
+            anetKeepAlive(NULL,fd,ttt_server.tcpkeepalive);
+        if (aeCreateFileEvent(ttt_server.worker[tid].loop, fd, AE_READABLE,
+            fake_adns_api_read_hdr_body,
+            /*adns_api_read_hdr,*/
+			c) == AE_ERR) {
+            close(fd);
+            free(c);
+            return NULL;
+        }
+    }
+
+    c->fd = fd;
+    c->tid = tid;
+    c->reqtype = 0;
+    c->flags = 0;
+
+    c->extend_buf = NULL;
+    c->query_size = 0;
+    
+    c->recvd_total = 0;
+    c->body_size = 0;
+
+    c->bufpos = 0;
+    c->buf_size = 0;
+
+    INIT_LIST_HEAD(&c->reply_list);
+    c->reply_bytes = 0;
+    if (fd != -1)
+        ttt_queueClient(c, tid);
+
+    return c;
+}
+
+static void fake_ab_adns_api_read_hdr_body(aeEventLoop *el, int fd, void *privdata, int mask);
+ttt_ioClient * fake_ab_createClient(int fd, int tid)
+{
+    /* use malloc for better performance
+     * please do remember to set all fields properly
+     */
+    ttt_ioClient *c = malloc(sizeof(ttt_ioClient));
+    if (c == NULL)
+        return NULL;
+
+    /* passing -1 as fd it is possible to create a non connected client.
+     * This is useful since all the Redis commands needs to be executed
+     * in the context of a client. When commands are executed in other
+     * contexts (for instance a Lua script) we need a non connected client. */
+    if (fd != -1) {
+        //anetEnableNoSigpipe(NULL, fd);
+        anetNonBlock(NULL,fd);
+        anetEnableTcpNoDelay(NULL,fd);
+        if (ttt_server.tcpkeepalive)
+            anetKeepAlive(NULL,fd,ttt_server.tcpkeepalive);
+        if (aeCreateFileEvent(ttt_server.worker[tid].loop, fd, AE_READABLE,
+            fake_ab_adns_api_read_hdr_body,
+            /*adns_api_read_hdr,*/
+			c) == AE_ERR) {
+            close(fd);
+            free(c);
+            return NULL;
+        }
+    }
+
+    c->fd = fd;
+    c->tid = tid;
+    c->reqtype = 0;
+    c->flags = 0;
+
+    c->extend_buf = NULL;
+    c->query_size = 0;
+    
+    c->recvd_total = 0;
+    c->body_size = 0;
+
+    c->bufpos = 0;
+    c->buf_size = 0;
+
+    INIT_LIST_HEAD(&c->reply_list);
+    c->reply_bytes = 0;
+    if (fd != -1)
+        ttt_queueClient(c, tid);
+
+    return c;
+}
+
+static void ttt_acceptCommonHandler(int fd, int flags, char *ip, int tid) {
+    #if 0 //tcp + dns + too many sys_call
+    ttt_ioClient *c;
+    if ((c = ttt_createClient(fd, tid)) == NULL) {
+        printf("Error registering fd event for the new client: %s (fd=%d)",
+            strerror(errno),fd);
+        close(fd); /* May be already closed, just ignore errors */
+        return;
+    }
+    ttt_server.stat_numconnections++;
+    #elif 0 //just test tcp cps
+    close(fd);
+    printf("close fd =%d from %s\n", fd, ip);
+    #elif 0
+    ab_process(fd);
+	#elif 0 //http + dns fake
+    ttt_ioClient *c;
+    if ((c = fake_ab_createClient(fd, tid)) == NULL) {
+        printf("Error registering fd event for the new client: %s (fd=%d)",
+            strerror(errno),fd);
+        close(fd); /* May be already closed, just ignore errors */
+        return;
+    }
+    ttt_server.stat_numconnections++;
+	#else //tcp + dns + a few sys_call
+    ttt_ioClient *c;
+    if ((c = fake_ttt_createClient(fd, tid)) == NULL) {
+        printf("Error registering fd event for the new client: %s (fd=%d)",
+            strerror(errno),fd);
+        close(fd); /* May be already closed, just ignore errors */
+        return;
+    }
+    ttt_server.stat_numconnections++;
+    #endif
+}
+
+#if 1
+void ttt_acceptTcpHandler(aeEventLoop *el, int fd, void *privdata, int mask) {
+    int tid, cport, cfd, max = 1;
+    char cip[NET_IP_STR_LEN];
+    char neterr[ANET_ERR_LEN];   /* Error buffer for anet.c */
+    UNUSED(el);
+    UNUSED(mask);
+    UNUSED(privdata);
+
+    tid = (int) privdata;
+    while(max--) {
+        if (pthread_mutex_trylock(&ttt_server.mutex) == 0) {
+            cfd = anetTcpAccept(neterr, fd, cip, sizeof(cip), &cport);
+            if(pthread_mutex_unlock(&ttt_server.mutex)){
+                printf("%s:pthread_mutex_unlock error\n",__FUNCTION__);
+            }
+            if (cfd == ANET_ERR) {
+                if (errno != EWOULDBLOCK)
+                    printf( "Accepting client connection: %s\n", neterr);
+                return;
+            }
+            //printf("Accepted %s:%d\n", cip, cport);
+            ttt_acceptCommonHandler(cfd, 0, cip, tid);
+        }
+    }
+}
+
+
+int listenToPort(int port, int *fds, int *count) {
+    int j;
+    char *bindaddr[16];             /* Addresses we should bind to */
+    char neterr[ANET_ERR_LEN];      /* Error buffer for anet.c */
+    bindaddr[0] = NULL;
+    *count = 0;
+
+    /* Bind the IPv4 address as well. */
+    fds[*count] = anetTcpServer(neterr,port,NULL);
+    if (fds[*count] != ANET_ERR) {
+        anetNonBlock(NULL,fds[*count]);
+        (*count)++;
+        anetNonBlock(NULL,fds[*count]);
+    } else {
+        printf("Not listening to IPv4\n");
+    }
+    return C_OK;
+}
+
+void ttt_initServer(int tid)
+{
+    memset(&ttt_server.worker[tid], 0, sizeof(struct ttt_worker_t));
+    INIT_LIST_HEAD(&ttt_server.worker[tid].clients);
+    ttt_server.worker[tid].loop = aeCreateEventLoop(1310720);
+    if (ttt_server.worker[tid].loop == NULL) {
+        printf("Failed creating the event loop. Error message: '%s'\n", strerror(errno));
+        exit(1);
+    }
+
+    /* Create an event handler for accepting new connections in TCP and Unix domain sockets. */
+    if (aeCreateFileEvent(ttt_server.worker[tid].loop, ttt_server.ipfd[0], AE_READABLE,
+                ttt_acceptTcpHandler,tid) == AE_ERR) {
+        printf("Unrecoverable error creating ttt_server.ipfd file event.\n");
+    }
+}
+
+static void chargeTime(int i)
+{
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	struct tm tm;
+	localtime_r((const time_t *)&(tv.tv_sec), &tm);
+	printf("%04d-%02d-%02d %02d:%02d:%02d, t=%d\n",tm.tm_year + 1900,tm.tm_mon + 1,tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec, i);
+}
+
+void  * ttt_worker_run(void *arg)
+{
+	int worker_id = *(int *)arg;
+	struct ttt_worker_t *worker = &ttt_server.worker[worker_id];
+	uint64_t counter = 0;
+        
+    ttt_initServer(worker_id);
+	while(1){
+		counter ++;
+		if(!(counter % 1000000))
+			chargeTime(worker_id);
+		aeMain(worker->loop);
+	}
+	return NULL;
+}
+
+void ttt_init(int thread_num)
+{
+    int i;
+	int id[64];
+	pthread_t workerThread[64];
+
+    memset(&ttt_server, 0, sizeof(ttt_server));
+    ttt_server.maxclients = 1024*16;
+    if ( pthread_mutex_init(&ttt_server.mutex, NULL) ) {
+        printf("pthread_mutex_init error!\n");
+        return;
+    }
+
+    /* Open the TCP listening socket for the user commands. */
+    if (listenToPort(53, ttt_server.ipfd, &ttt_server.ipfd_count) == C_ERR) {
+        printf("listen error!\n");
+        return;
+    }
+
+	for (i = 0 ; i < thread_num ; i++) {
+		id[i] = i;
+		if (pthread_create(&workerThread[i],NULL, ttt_worker_run, &id[i])!=0) {
+			printf("Create workerThread[%d] Fail in %s\n",i,__func__);
+			exit(1);
+		}
+	}
+}
+
+void ttt_adns_init(int thread_num)
+{
+    memset(&ttt_server, 0, sizeof(ttt_server));
+    ttt_server.maxclients = 1024*16;
+    if ( pthread_mutex_init(&ttt_server.mutex, NULL) ) {
+        printf("pthread_mutex_init error!\n");
+        return;
+    }
+
+    /* Open the TCP listening socket for the user commands. */
+    if (listenToPort(53, ttt_server.ipfd, &ttt_server.ipfd_count) == C_ERR) {
+        printf("listen error!\n");
+        return;
+    }
+}
+
+void ttt_adns_loop_tcp(void * arg)
+{
+	//RTE_PROC_PRIMARY
+	if (rte_eal_process_type() == 0) {
+		while (1)
+			sleep (1000);
+	} 
+	else {
+		ttt_worker_run(arg);
+	}
+}
+#endif
+
+#if 1
+#include <stdio.h>
+#include <string.h>
+#include <stdint.h>
+#include <errno.h>
+#include <unistd.h>
+#include <stdbool.h>
+#include <arpa/inet.h>
+
+/* local functions declaration */
+static void adns_api_write(aeEventLoop *el, int fd, void * privdata, int mask);
+static void adns_api_read_hdr(aeEventLoop *el, int fd, void *privdata, int mask);
+
+
+static inline uint32_t adns_api_hdr_read_body_size(char *buf)
+{
+    return ntohs(*(uint16_t *)buf);
+}
+
+static inline void adns_api_hdr_write_body_size(char *buf, uint32_t body_size)
+{
+   *(uint16_t *)buf = htons(body_size);
+   return;
+}
+
+static inline uint32_t adns_api_hdr_len()
+{
+    return 2;
+}
+
+static inline bool adns_api_hdr_initialized(ttt_ioClient *c)
+{
+    return (c->body_size == 0) ? false : true;
+}
+
+static void adns_api_write(aeEventLoop *el, int fd, void * privdata, int mask)
+{
+    int ret = -1;
+    ttt_ioClient *c = (ttt_ioClient*) privdata;
+    ret = write(fd, (void*)c->buf + c->bufpos, c->buf_size + adns_api_hdr_len());
+    if (ret <= 0) {
+        if (errno == EAGAIN){
+        }
+        else {
+            perror("recv error");
+            ttt_freeClient(c);
+        }
+    }
+    else {
+        c->bufpos += ret;
+        if (c->bufpos == c->buf_size + adns_api_hdr_len()) {
+            aeDeleteFileEvent(el, c->fd, AE_WRITABLE);
+            ret = aeCreateFileEvent(el, fd,AE_READABLE, adns_api_read_hdr, c);
+            if (ret == AE_ERR) {
+                ttt_freeClient(c);
+            }
+        }
+    }
+    return;
+}
+
+static void ttt_adns_api_write(aeEventLoop *el, int fd, void * privdata, int mask)
+{
+    int ret = -1;
+    ttt_ioClient *c = (ttt_ioClient*) privdata;
+    ret = write(fd, (void*)c->buf + c->bufpos, c->buf_size + adns_api_hdr_len());
+    return;
+}
+
+void ttt_freeClient(ttt_ioClient *c)
+{
+    int tid = c->tid;
+    if (c->fd != -1) {
+        aeDeleteFileEvent(ttt_server.worker[tid].loop, c->fd,AE_READABLE);
+        aeDeleteFileEvent(ttt_server.worker[tid].loop, c->fd,AE_WRITABLE);
+        close(c->fd);
+    }
+
+    /* Remove from the list of clients */
+    if (c->fd != -1) {
+        ttt_dequeueClient(c);
+    }
+
+    if (c->extend_buf != NULL) {
+        admin_client_extbuf_put(c->extend_buf);
+    }
+
+    free(c);
+}
+
+
+static void adns_api_read_hdr_body(aeEventLoop *el, int fd, void *privdata, int mask)
+{
+    ttt_ioClient *c = (ttt_ioClient*) privdata;
+    int ret = -1;
+    char * resp_body = NULL; // leave a header space here
+    uint32_t * p_resp_len = NULL;
+    char * query_holder = c->querybuf;
+    uint32_t query_holder_cap = ttt_CMD_MAX_LEN;
+
+    //admin.current_client = c;
+    if (c->extend_buf != NULL) {
+        query_holder = c->extend_buf;
+        query_holder_cap = ttt_EXTBUF_MAX_LEN;
+    }
+
+    ret = read(fd, query_holder + c->recvd_total, query_holder_cap - c->recvd_total);
+    if (ret < 0) {
+        if (errno == EAGAIN)
+            goto BACKTOPOLL;
+        else {
+            perror("recv error");
+            goto CLOSE;
+        }
+    }
+    else if (ret == 0)
+        goto CLOSE;
+    else {
+        c->recvd_total += ret;
+
+        if (c->recvd_total == c->body_size + adns_api_hdr_len()) {
+            resp_body = c->buf + adns_api_hdr_len(); // leave a header space here
+            p_resp_len = (uint32_t*)&(c->buf_size);
+
+            #if 0
+            recv  return (query_holder + adns_api_hdr_len(), c->body_size, resp_body, p_resp_len);
+            write return (c->buf, *p_resp_len); // now write the hdr
+            #else
+            {
+                #if 0
+                char header_ret[] = "HTTP/1.0 200 OK\r\n"
+                                "Content-Type: text/html\r\n"
+                                "\r\n"
+                                "OK\r\n";
+                struct dns_header * dh = query_holder + adns_api_hdr_len();
+                printf("dns_req_id = %d\n", htons(dh->id));
+                resp_set_refuse();
+                adns_api_hdr_write_body_size(header_ret, sizeof(header_ret)); // now write the hdr
+                #else
+                memcpy(c->buf, query_holder, c->recvd_total);
+                struct dns_header * dh = resp_body;
+                *p_resp_len = c->body_size;
+                if (0)
+					resp_set_refuse(dh);
+				else
+                //int ttt_tcp_input(int *append_len, char * tcp_input, int buf_len)
+                {
+                    int append_len = 0;
+                    int tcp_len = c->body_size;
+                    #define ADNS_PKT_ACCEPT 1
+                    ret = ttt_tcp_input(&append_len, dh, tcp_len, ttt_ADNS_IO_BUFLEN);
+                    *p_resp_len = tcp_len + append_len;
+            		adns_api_hdr_write_body_size(c->buf, *p_resp_len); // now write the hdr
+                    if (ret != ADNS_PKT_ACCEPT) {
+                        goto CLOSE;
+                    }
+                }
+                #endif
+            }
+            #endif
+
+			#if 0
+            /* reset read after processing */
+            aeDeleteFileEvent(el, c->fd, AE_READABLE);
+            c->recvd_total = 0;
+            c->body_size = 0; //TODO: could we delete it?
+            c->bufpos = 0; //TODO: could we delete it?
+            ret = aeCreateFileEvent(el, c->fd, AE_WRITABLE, adns_api_write, c);
+            if (ret == AE_ERR)
+                goto CLOSE;
+            goto BACKTOPOLL;
+			#else
+			ttt_adns_api_write(el, c->fd, c, 0);
+			#endif
+        }
+        // not enough for msg body, goto BACKTOPOLL
+        else if (c->recvd_total < c->body_size + adns_api_hdr_len())
+            goto BACKTOPOLL;
+        // exceed expection
+        else {
+            printf("Lenght of the msg client sending exceeds server recv buf max.\n");
+            printf("c->recvd_total=%d, c->body_size=%d,  adns_api_hdr_len()=%d\n", c->recvd_total, c->body_size, adns_api_hdr_len());
+            goto CLOSE;
+        }
+    }
+CLOSE:
+    //TODO: tell client the reason of failure
+    ttt_freeClient(c);
+BACKTOPOLL:
+    //admin.current_client = NULL;
+    return;
+}
+
+static void adns_api_read_hdr(aeEventLoop *el, int fd, void *privdata, int mask)
+{
+    ttt_ioClient *c = (ttt_ioClient*) privdata;
+    int ret = -1;
+
+    //admin.current_client = c;
+
+    ret = read(fd, c->querybuf, adns_api_hdr_len());
+    if (ret < 0) {
+        if (errno == EAGAIN)
+            goto BACKTOPOLL;
+        else {
+            perror("recv error");
+            goto CLOSE;
+        }
+    }
+    else if (ret == 0)
+        goto CLOSE;
+    else {
+        c->recvd_total += ret;
+
+        if (c->recvd_total == adns_api_hdr_len()) {
+            c->body_size = adns_api_hdr_read_body_size(c->querybuf);
+            if (c->body_size <= 0)
+                goto CLOSE;
+
+            if (c->body_size + adns_api_hdr_len() > ttt_CMD_MAX_LEN)
+                c->extend_buf = admin_client_extbuf_get();
+
+            aeDeleteFileEvent(el, c->fd, AE_READABLE);
+            ret = aeCreateFileEvent(el, c->fd, AE_READABLE, adns_api_read_hdr_body, c);
+            if (ret == AE_ERR)
+                goto CLOSE;
+            goto BACKTOPOLL;
+        }
+        else if (c->recvd_total < adns_api_hdr_len()) {
+            goto BACKTOPOLL;
+        }
+        else {
+            printf("reading of msg header exceeds what we expected");
+            goto CLOSE;
+        }
+    }
+CLOSE:
+    //TODO: tell client the reason of failure
+    ttt_freeClient(c);
+BACKTOPOLL:
+    //admin.current_client = NULL;
+    return;
+}
+
+static void fake_adns_api_read_hdr_body(aeEventLoop *el, int fd, void *privdata, int mask)
+{
+    ttt_ioClient *c = (ttt_ioClient*) privdata;
+    int ret = -1;
+    char * resp_body = NULL; // leave a header space here
+    uint32_t * p_resp_len = NULL;
+    char * query_holder = c->querybuf;
+    uint32_t query_holder_cap = ttt_CMD_MAX_LEN;
+
+    //admin.current_client = c;
+    if (c->extend_buf != NULL) {
+        query_holder = c->extend_buf;
+        query_holder_cap = ttt_EXTBUF_MAX_LEN;
+    }
+
+    ret = read(fd, query_holder + c->recvd_total, ttt_CMD_MAX_LEN);
+    if (ret < 0) {
+        if (errno == EAGAIN)
+            goto BACKTOPOLL;
+        else {
+            perror("recv error");
+            goto CLOSE;
+        }
+    }
+    else if (ret == 0)
+        goto CLOSE;
+    else if (ret <= 1) {
+        c->recvd_total += ret;
+        goto BACKTOPOLL;
+	}
+    else {
+        c->recvd_total += ret;
+        c->body_size = adns_api_hdr_read_body_size(c->querybuf);
+
+        if (c->recvd_total == c->body_size + adns_api_hdr_len()) {
+            resp_body = c->buf + adns_api_hdr_len(); // leave a header space here
+            p_resp_len = (uint32_t*)&(c->buf_size);
+
+            #if 0
+            recv  return (query_holder + adns_api_hdr_len(), c->body_size, resp_body, p_resp_len);
+            write return (c->buf, *p_resp_len); // now write the hdr
+            #else
+            {
+                #if 0
+                char header_ret[] = "HTTP/1.0 200 OK\r\n"
+                                "Content-Type: text/html\r\n"
+                                "\r\n"
+                                "OK\r\n";
+                struct dns_header * dh = query_holder + adns_api_hdr_len();
+                printf("dns_req_id = %d\n", htons(dh->id));
+                resp_set_refuse();
+                adns_api_hdr_write_body_size(header_ret, sizeof(header_ret)); // now write the hdr
+                #else
+                memcpy(c->buf, query_holder, c->recvd_total);
+                struct dns_header * dh = resp_body;
+                *p_resp_len = c->body_size;
+                if (0)
+					resp_set_refuse(dh);
+				else
+                //int ttt_tcp_input(int *append_len, char * tcp_input, int buf_len)
+                {
+                    int append_len = 0;
+                    int tcp_len = c->body_size;
+                    #define ADNS_PKT_ACCEPT 1
+                    ret = ttt_tcp_input(&append_len, dh, tcp_len, ttt_ADNS_IO_BUFLEN);
+                    *p_resp_len = tcp_len + append_len;
+            		adns_api_hdr_write_body_size(c->buf, *p_resp_len); // now write the hdr
+                    if (ret != ADNS_PKT_ACCEPT) {
+                        goto CLOSE;
+                    }
+                }
+                #endif
+            }
+            #endif
+
+			#if 0
+            /* reset read after processing */
+            aeDeleteFileEvent(el, c->fd, AE_READABLE);
+            c->recvd_total = 0;
+            c->body_size = 0; //TODO: could we delete it?
+            c->bufpos = 0; //TODO: could we delete it?
+            ret = aeCreateFileEvent(el, c->fd, AE_WRITABLE, adns_api_write, c);
+            if (ret == AE_ERR)
+                goto CLOSE;
+            goto BACKTOPOLL;
+			#else
+			ttt_adns_api_write(el, c->fd, c, 0);
+			#endif
+        }
+        // not enough for msg body, goto BACKTOPOLL
+        else if (c->recvd_total < c->body_size + adns_api_hdr_len())
+            goto BACKTOPOLL;
+        // exceed expection
+        else {
+            printf("Lenght of the msg client sending exceeds server recv buf max.\n");
+            printf("c->recvd_total=%d, c->body_size=%d,  adns_api_hdr_len()=%d\n", c->recvd_total, c->body_size, adns_api_hdr_len());
+            goto CLOSE;
+        }
+    }
+CLOSE:
+    //TODO: tell client the reason of failure
+    ttt_freeClient(c);
+BACKTOPOLL:
+    //admin.current_client = NULL;
+    return;
+}
+
+static void fake_ab_adns_api_read_hdr_body(aeEventLoop *el, int fd, void *privdata, int mask)
+{
+    ttt_ioClient *c = (ttt_ioClient*) privdata;
+
+	fake_ab_process(fd);
+CLOSE:
+    //TODO: tell client the reason of failure
+    ttt_freeClient(c);
+BACKTOPOLL:
+    //admin.current_client = NULL;
+    return;
+}
+#endif
+

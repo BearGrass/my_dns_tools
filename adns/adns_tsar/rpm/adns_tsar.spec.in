@@ -1,0 +1,82 @@
+Name: adns_tsar
+Version: _VERSION_
+Release: _RELEASE_
+Summary: Taobao System Activity Reporter
+URL: http://svn.simba.taobao.com/svn/cdn/trunk/adns_tsar/Revision_SVN_REVISION
+Group: Taobao/Common
+License: Commercial
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+Source: adns_tsar-%{version}.tar.gz
+
+%description
+adns_tsar is Taobao monitor tool for collect system activity status, and report it.
+It have a plugin system that is easy for collect plugin development. and may
+setup different output target such as local logfile and remote nagios host.
+
+%package devel
+Summary: Taobao Tsar Devel
+Group: Taobao/Common
+%description devel
+devel package include adns_tsar header files and module template for the development
+
+%prep
+%setup -q
+
+%build
+make clean;make
+
+%install
+
+rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/local/adns_tsar/
+mkdir -p %{buildroot}/usr/local/adns_tsar/modules/
+mkdir -p %{buildroot}/usr/local/adns_tsar/conf/
+mkdir -p %{buildroot}/usr/local/adns_tsar/devel/
+mkdir -p %{buildroot}/usr/local/man/man8/
+mkdir -p %{buildroot}/etc/logrotate.d/
+mkdir -p %{buildroot}/etc/adns_tsar/
+mkdir -p %{buildroot}/etc/cron.d/
+mkdir -p %{buildroot}/usr/bin
+
+install -p -D -m 0755 src/adns_tsar  %{buildroot}/usr/bin/adns_tsar
+install -p -D -m 0644 conf/adns_tsar.conf %{buildroot}/etc/adns_tsar/adns_tsar.conf
+install -p -D -m 0644 modules/*.so %{buildroot}/usr/local/adns_tsar/modules/
+install -p -D -m 0644 conf/adns_tsar.cron %{buildroot}/etc/cron.d/adns_tsar
+install -p -D -m 0644 conf/adns_tsar.logrotate %{buildroot}/etc/logrotate.d/adns_tsar
+install -p -D -m 0644 conf/adns_tsar.8 %{buildroot}/usr/local/man/man8/adns_tsar.8
+
+install -p -D -m 0755 devel/adns_tsardevel %{buildroot}/usr/bin/adns_tsardevel
+install -p -D -m 0644 devel/mod_test.c %{buildroot}/usr/local/adns_tsar/devel/mod_test.c
+install -p -D -m 0644 devel/mod_test.conf %{buildroot}/usr/local/adns_tsar/devel/mod_test.conf
+install -p -D -m 0644 devel/Makefile.test %{buildroot}/usr/local/adns_tsar/devel/Makefile.test
+install -p -D -m 0644 devel/adns_tsar.h %{buildroot}/usr/local/adns_tsar/devel/adns_tsar.h
+
+%clean
+[ "%{buildroot}" != "/" ] && %{__rm} -rf %{buildroot}
+
+
+%files
+%defattr(-,root,root)
+/usr/local/adns_tsar/modules/*.so
+
+%attr(755,root,root) %dir /usr/bin/adns_tsar
+%config(noreplace) /etc/adns_tsar/adns_tsar.conf
+%attr(644,root,root) %dir /etc/cron.d/adns_tsar
+%attr(644,root,root) %dir /etc/logrotate.d/adns_tsar
+%attr(644,root,root) %dir /usr/local/man/man8/adns_tsar.8
+
+%files devel
+%defattr(-,root,root)
+/usr/local/adns_tsar/devel/adns_tsar.h
+/usr/local/adns_tsar/devel/Makefile.test
+/usr/local/adns_tsar/devel/mod_test.c
+/usr/local/adns_tsar/devel/mod_test.conf
+%attr(755,root,root) %dir /usr/bin/adns_tsardevel
+
+%changelog
+* Wed Jan  6 2013 Ke Li <kongjian@taobao.com>
+- merge inner and opensource adns_tsar
+* Thu Dec  9 2010 Ke Li <kongjian@taobao.com>
+- add logrotate for adns_tsar.data
+* Tue Apr 26 2010 Bin Chen <kuotai@taobao.com>
+- first create adns_tsar rpm package

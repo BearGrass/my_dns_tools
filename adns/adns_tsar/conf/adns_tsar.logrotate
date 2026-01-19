@@ -1,0 +1,15 @@
+/var/log/adns_tsar.data
+{
+monthly
+rotate 120
+create
+nocompress
+nodateext
+notifempty
+prerotate
+/usr/bin/chattr -a /var/log/adns_tsar.data
+endscript
+postrotate
+/usr/bin/chattr +a /var/log/adns_tsar.data
+endscript
+}

@@ -1,0 +1,159 @@
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <ctype.h>
+
+#define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
+#define LOG(fmt, ...) printf(fmt" %s:%d\n", ##__VA_ARGS__, __FILENAME__, __LINE__)
+#define EXIT(error) do {perror(error); exit(EXIT_FAILURE);} while(0)
+
+#define MAX_REQUEST_LEN 10240
+#define MAX_METHOD_LEN  32
+#define MAX_URI_LEN     256
+
+char g_fake[2048];
+int g_fake_flag = 0;
+int g_fake_len = 0;
+int parse_request(int sockfd, char *method, char *uri) {
+    char buff[MAX_REQUEST_LEN] = {0};
+    ssize_t len = recv(sockfd, buff, sizeof(buff), 0);
+    if (len <= 0) {
+        LOG("call recv error, ret %d", (int)len);
+        return -1;
+    }
+
+	if (!g_fake_flag) {
+		g_fake_flag = 1;
+		g_fake_len = len -2;
+		memcpy(g_fake, &buff[2], g_fake_len);
+	}
+
+
+    char *cur = buff;
+    int i = 0;
+    while (i < MAX_METHOD_LEN && !isspace(*cur)) {
+        method[i++] = *cur++;
+    }
+    method[i] = '\0';
+
+    while(isspace(*cur)) cur++;
+    i = 0;
+    while (i < MAX_URI_LEN && !isspace(*cur)) {
+        uri[i++] = *cur++;
+    }
+    uri[i] = '\0';
+    return 0;
+}
+
+void unimplemented(int client) {
+    char buff[] =
+        "HTTP/1.0 501 Method Not Implemented\r\n"
+        "Content-Type: text/html\r\n"
+        "\r\n"
+        "Method Not Implemented";
+    send(client, buff, sizeof(buff), 0);
+}
+
+void not_found(int client)
+{
+    char buff[] =
+        "HTTP/1.0 404 NOT FOUND\r\n"
+        "Content-Type: text/html\r\n"
+        "\r\n"
+        "The resource specified is unavailable.\r\n";
+    send(client, buff, strlen(buff), 0);
+}
+
+extern char g_fake[2048];
+extern int g_fake_flag;
+extern int g_fake_len;
+int ttt_tcp_input(int *append_len, char * tcp_input, int tcp_len, int buf_len);
+void do_get(int sockfd, const char *uri) {
+    char filename[MAX_URI_LEN] = {0};
+    const char *cur = uri + 1;
+    size_t len = strlen(cur);
+	int appand_len = 0;
+
+    char header[] =
+        "HTTP/1.0 200 OK\r\n"
+        "Content-Type: text/html\r\n"
+        "\r\n"
+        "OK\r\n";
+    send(sockfd, header, sizeof(header), 0);
+}
+
+#if 1
+#define ttt_ADNS_IO_BUFLEN  2048
+int g_n;
+void fake_do_get(int sockfd, const char *uri) {
+    char filename[MAX_URI_LEN] = {0};
+    const char *cur = uri + 1;
+    size_t len = strlen(cur);
+	int appand_len = 0;
+	int ret = 0;
+	int n = 0;
+
+    char header[] =
+        "HTTP/1.0 200 OK\r\n"
+        "Content-Type: text/html\r\n"
+        "\r\n"
+        "OK\r\n";
+    char header_send[1024];
+	n = sizeof(header);
+	g_n = n;
+	memcpy(&header_send[0], header, n);
+	memcpy(&header_send[n], g_fake, g_fake_len);
+	ret = ttt_tcp_input(&appand_len, &header_send[n], g_fake_len, ttt_ADNS_IO_BUFLEN);
+    send(sockfd, header_send, n+g_fake_len+appand_len, 0);
+}
+#endif
+
+void * ab_process(int sockfd) 
+{
+    char method[MAX_METHOD_LEN] = {0};
+    char uri[MAX_URI_LEN] = {0};
+
+    if (parse_request(sockfd, method, uri) != 0)
+        goto FINAL;
+
+    if (strcmp(method, "GET") == 0) {
+        do_get(sockfd, uri);
+    } else {
+        unimplemented(sockfd);
+    }
+
+FINAL:
+    close(sockfd);
+    return NULL;
+}
+
+void * fake_ab_process(int sockfd) 
+{
+    char method[MAX_METHOD_LEN] = {0};
+    char uri[MAX_URI_LEN] = {0};
+
+    if (parse_request(sockfd, method, uri) != 0)
+        goto FINAL;
+
+	
+	#if 0 //http+refuse
+    if (strcmp(method, "GET") == 0) {
+        do_get(sockfd, uri);
+	#else //http+dig
+    if (1) {
+        fake_do_get(sockfd, uri);
+	#endif
+    } else {
+        unimplemented(sockfd);
+    }
+
+FINAL:
+    //close(sockfd);
+    return NULL;
+}
+

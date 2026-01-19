@@ -1,0 +1,22 @@
+Simple install procedure
+========================
+
+  % gzip -cd adns_tsar-2.1.0.tar.gz | tar xvf -  # unpack the sources
+  % cd adns_tsar-2.1.0                           # change to the toplevel directory
+  % make                                    # build adns_tsar
+
+  [ Become root if necessary ]
+  % make install                            # install adns_tsar
+  % make uninstall                          # uninstall adns_tsar
+  [ if you want install adns_tsardevel ]
+  % make adns_tsardevel
+  % make uninstall
+
+RPM install
+========================
+
+  %gzip -cd adns_tsar-2.1.0.tar.gz | tar xvf -  # unpack the sources
+  %cd adns_tsar-2.1.0/rpm                       # change to the rpm directory
+  %sh adns_tsar-build.sh .. adns_tsar 2.1.0 1        # create rpm for adns_tsar
+  %rpm -ivh *.rpm                          # install adns_tsar by rpm
+

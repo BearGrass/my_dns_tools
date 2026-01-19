@@ -1,0 +1,3 @@
+[deps]
+	libibverbs=current
+    libibverbs-devel=current

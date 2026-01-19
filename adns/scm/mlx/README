@@ -1,0 +1,21 @@
+mlx网卡开发包选择方法
+
+1 先查询到dpdk的版本
+
+2 进入到对应版本的dpdk的文档
+
+3 进入MLX5 poll mode driver
+查看dpdk支持的mlx的开发包的版本，
+如下所示
+"
+Currently supported by DPDK:
+Mellanox OFED 3.4-1.0.0.0.
+"
+
+4 进入Mellanox官网下载Mellanox开发包，
+大概300M, 海外链路下载时间太长，现在dns的git中有一份，
+git@gitlab.alibaba-inc.com:alibaba-dns/mlx_sdk.git
+
+操作建议：
+1 有mlx网卡的开发机测试上，可以安装Mellanox OFED，否则安装了没有意义
+2 需要部署adns-mlx\megav2-mlx时，机器交付后，做了网络的基础配置后，需要安装Mellanox OFED

@@ -1,0 +1,38 @@
+#!/bin/bash
+
+start() {
+
+    /home/adns/bin/adns -c 0x3ff -n 4 -- -p 0x3 -f /home/adns/etc/adns.conf
+}
+
+stop() {
+    killall adns
+#    killall ospfd
+#    killall zebra
+}
+
+restart() {
+    stop
+    start
+}
+
+
+case "$1" in
+    start)
+        start && exit 0
+        $1
+        ;;
+    stop)
+        stop || exit 0
+        $1
+        ;;
+    restart)
+	restart || exit 0
+        $1
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|restart}"
+        exit 2
+esac
+exit $?
+

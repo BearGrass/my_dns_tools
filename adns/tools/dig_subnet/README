@@ -1,0 +1,2 @@
+this dig binary can dig with subnet , like
+    dig @192.168.6.6 +subnet=1.2.3.4

@@ -1,0 +1,310 @@
+syntax = "proto2";
+
+package adnsapi;
+
+/* constant */
+
+enum RetCode {
+    RET_OK = 0;
+
+    RET_ERR_DESERIALIZE_FAILURE = 100;
+
+    RET_ERR_PARAMS_ZONE_INVALID = 200;
+    RET_ERR_PARAMS_DOMAIN_INVALID = 201;
+    RET_ERR_PARAMS_SOA_NS_INVALID = 202;
+    RET_ERR_PARAMS_SOA_MAIL_INVALID = 203;
+    RET_ERR_PARAMS_RR_VIEW_INVALID = 204;
+    RET_ERR_PARAMS_RR_CLASS_INVALID = 205;
+    RET_ERR_PARAMS_RR_RDATA_INVALID = 206;
+    RET_ERR_PARAMS_RR_WEIGHT_INVALID = 207;
+    RET_ERR_PARAMS_LINE_ATTR_VIEW_INVALID = 208;
+    RET_ERR_PARAMS_LINE_ATTR_SCHEDULE_MODE_INVALID = 209;
+    RET_ERR_PARAMS_LINE_ATTR_TYPE_INVALID = 210;
+
+    RET_ERR_ZONE_ADD_FAILURE = 300;
+    RET_ERR_ZONE_DEL_FAILURE = 301;
+    RET_ERR_ZONE_SET_ATTR_FAILURE = 302;
+    RET_ERR_ZONE_LOOKUP_FAILURE = 303;
+    RET_ERR_ZONE_REFRESH_CREATE_DANGLED_ZONE_FAILURE = 304;
+    RET_ERR_ZONE_REFRESH_ATTACH_RR_FAILURE = 305;
+    RET_ERR_ZONE_REFRESH_SET_DOMAIN_ATTR_FAILURE = 306;
+    RET_ERR_ZONE_REFRESH_REPLACE_FAILURE = 307;
+    RET_ERR_ZONE_REFRESH_SET_DNSSEC_FAILURE = 308;
+    RET_ERR_ZONE_REFRESH_ADD_DNSKEY_RRSIG_FAILURE = 309;
+    RET_ERR_ZONE_REFRESH_SET_LINE_ALGORITHM_FAILURE = 310;
+
+    RET_ERR_DOMAIN_DEL_FAILURE = 401;
+    RET_ERR_DOMAIN_SET_ATTR_FAILURE = 402;
+    RET_ERR_DOMAIN_LOOKUP_FAILURE = 403;
+    RET_ERR_DOMAIN_REFRESH_FIND_ZONE_FAILURE = 404;
+    RET_ERR_DOMAIN_REFRESH_FIND_OLD_DOMAIN_FAILURE = 405;
+    RET_ERR_DOMAIN_REFRESH_CREATE_DANGLED_DOMAIN_FAILURE = 406;
+    RET_ERR_DOMAIN_REFRESH_ATTACH_RR_FAILURE = 407;
+    RET_ERR_DOMAIN_REFRESH_REPLACE_FAILURE = 408;
+    RET_ERR_DOMAIN_REFRESH_SET_LINE_ALGORITHM_FAILURE = 409;
+
+    RET_ERR_RR_ADD_FAILURE = 500;
+    RET_ERR_RR_DEL_FAILURE = 501;
+    RET_ERR_RR_SET_ATTR_FAILURE = 502;
+    RET_ERR_RR_LOOKUP_FAILURE = 503;
+
+    RET_ERR_LOOKUP_SOA_SN_FIND_ZONE_FAILURE = 600;
+
+    RET_ERR_DNSSEC_FIND_ZONE_ERROR = 700;
+    RET_ERR_DNSSEC_CONVERT_ZONE_ERROR = 701;
+    RET_ERR_DNSSEC_SET_ZONE_ERROR = 702;
+    RET_ERR_DNSSEC_ZONE_EXCEED_LIMIT_ERROR = 703;
+    RET_ERR_DNSSEC_ADD_KEY_ERROR = 704;
+    RET_ERR_DNSSEC_DEL_ZSK_ERROR = 705;
+    RET_ERR_DNSSEC_ADD_DNSKEY_RRSIG_ERROR = 706;
+    RET_ERR_DNSSEC_QUOTA_ERROR = 707;
+}
+
+enum RrType {
+    RRTYPE_UNUSED = 0;
+    RRTYPE_A      = 1;
+    RRTYPE_NS     = 2;
+    RRTYPE_CNAME  = 5;
+    RRTYPE_SOA    = 6;
+    RRTYPE_PTR    = 12;
+    RRTYPE_MX     = 15;
+    RRTYPE_TXT    = 16;
+    RRTYPE_AAAA   = 28;
+    RRTYPE_SRV    = 33;
+    RRTYPE_CAA    = 257;
+}
+
+enum SchdlMode {
+    SCHDL_RATIO         = 0;
+    SCHDL_ALLRR         = 1;
+    SCHDL_UNKNOWN       = 2;
+}
+
+
+/* fundemental structures */
+
+message RrIndex {
+    optional RrType rrtype = 1;
+    optional string view = 2;
+    optional string rdata = 3;
+    optional string rrclass = 4;
+    optional int32  cview = 5;
+}
+
+message RrAttr {
+    optional uint32 ttl    = 1;
+    optional uint32 weight = 2;
+}
+
+// DomainIndex: string zone_name + string domain_name
+
+message DomainAttr {
+    optional SchdlMode schdl_mode = 1;
+    optional uint32 schdl_mode_4a = 2;
+    optional uint32 schdl_type    = 3;
+}
+
+
+message LineAttr {
+    optional SchdlMode schdl_mode = 1;
+    optional RrType schdl_type    = 2;
+    optional string view = 3;
+    optional int32  cview = 4;
+}
+
+// ZoneIndex: string zone_name
+
+message ZoneAttr {
+    message Soa {
+        optional string ns      = 1;
+        optional string mail    = 2;
+        optional uint32 serial  = 3;
+        optional uint32 refresh = 4;
+        optional uint32 retry   = 5;
+        optional uint32 expire  = 6;
+        optional uint32 nxttl   = 7;
+    }
+    optional Soa  soa       = 1;
+    optional bool cname_opt = 2;
+    optional bool wildcard_opt = 3;
+    optional bool private_route_opt = 4;
+    optional uint32 ttl     = 5;
+    optional bool dnssec_opt = 6;
+}
+
+
+/* Composition of fundemental structures */
+message Rr {
+    optional RrIndex rr_index = 1;
+    optional RrAttr  rr_attr = 2;
+}
+
+message DomainAttrRrlist {
+    optional DomainAttr domain_attr = 1;
+    repeated Rr rrlist = 2;
+    repeated LineAttr line_attrs = 3;
+}
+
+
+/* API params */
+
+message CommonOutput {
+    optional RetCode code = 1;
+    optional string  msg  = 2;
+}
+
+message AddZoneInput {
+    optional string zone_name = 1;
+    optional ZoneAttr zone_attr = 2;
+}
+
+message Rrsig{
+    optional uint32 type_covered = 1;
+    optional uint32 algorithm = 2;
+    optional uint32 labels = 3;
+    optional uint32 original_ttl = 4;
+    optional uint32 signature_expiration = 5; /* UTC timestampt */
+    optional uint32 signature_inception = 6;  /* UTC timestampt */
+    optional uint32 key_tag = 7;
+    optional string signer = 8;
+    optional string signature = 9;
+}
+
+message DnskeyRrsigAttr {
+    optional Rrsig rrsig = 1;
+    optional uint32 tag_num = 2;
+    optional uint32 alt_zsk = 3;
+    optional uint32 active_zsk = 4;
+}
+
+message RefreshZoneInput {
+    optional string zone_name = 1;
+    optional ZoneAttr zone_attr = 2;
+    map<string, DomainAttrRrlist> domains = 3;
+    optional DnskeyRrsigAttr dnskey_rrsig_attr = 4;
+}
+
+message DelZoneInput {
+    optional string zone_name = 1;
+}
+
+message SetZoneAttrInput {
+    optional string zone_name = 1;
+    optional ZoneAttr zone_attr = 2;
+}
+
+message LookupZoneInput {
+    optional string zone_name = 1;
+}
+
+message LookupZoneOutput {
+    optional CommonOutput base = 1;
+    optional ZoneAttr zone_attr = 2;
+}
+
+message RefreshDomainInput {
+    optional string zone_name = 1;
+    optional string domain_name = 2;
+    optional DomainAttrRrlist domain_attr_rrlist = 5;
+}
+
+message DelDomainInput {
+    optional string zone_name = 1;
+    optional string domain_name = 2;
+    optional string view = 3;
+    optional int32  cview = 4;
+}
+
+message SetDomainAttrInput {
+    optional string zone_name = 1;
+    optional string domain_name = 2;
+    optional string view = 3;
+    optional int32  cview = 4;
+    optional DomainAttr domain_attr = 5;
+}
+
+message LookupDomainInput {
+    optional string zone_name = 1;
+    optional string domain_name = 2;
+    optional string view = 3;
+    optional int32  cview = 4;
+}
+
+message LookupDomainOutput {
+    optional CommonOutput base = 1;
+    optional DomainAttr domain_attr = 2;
+}
+
+message AddRrInput {
+    optional string zone_name = 1;
+    optional string domain_name = 2;
+    optional RrIndex rr_index = 3;
+    optional RrAttr rr_attr = 4;
+}
+
+message DelRrInput {
+    optional string zone_name = 1;
+    optional string domain_name = 2;
+    optional RrIndex rr_index = 3;
+}
+
+message SetRrAttrInput {
+    optional string zone_name = 1;
+    optional string domain_name = 2;
+    optional RrIndex rr_index = 3;
+    optional RrAttr rr_attr = 4;
+}
+
+message LookupRrInput {
+    optional string zone_name = 1;
+    optional string domain_name = 2;
+    optional RrIndex rr_index = 3;
+}
+
+message LookupRrOutput {
+    optional CommonOutput base = 1;
+    optional RrAttr rr_attr = 2;
+}
+
+message SetSoaSnInput {
+    optional string zone_name = 1;
+    optional uint32 sn = 2;
+}
+
+message LookupSoaSnOutput {
+    optional CommonOutput base = 1;
+    optional uint32 sn = 2;
+}
+
+message ZoneNameInput {
+    optional string zone_name = 1;
+}
+
+enum DnssecOpt {
+    DNSSEC_OFF = 0;
+    DNSSEC_ON  = 1;
+}
+
+message SetDnssecInput {
+    optional string zone_name = 1;
+    optional DnssecOpt dnssec_opt = 2;
+}
+
+enum KeyType {
+    ZSK = 256;
+    KSK = 257;
+}
+message AddKeyInput {
+    optional string pub_key = 1;
+    optional string priv_key = 2;
+    optional KeyType key_type = 3;
+}
+
+message DelZskInput {
+    optional uint32 key_tag = 1;
+}
+
+message AddDnskeyRrsigInput {
+    optional string zone_name = 1;
+    optional DnskeyRrsigAttr dnskey_rrsig_attr = 2;
+}

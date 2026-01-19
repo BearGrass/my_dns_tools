@@ -1,0 +1,10 @@
+public libs:
+(1)termcolor.py: print buf with color
+(2)clientsubnetoption.py: dig with subnet
+
+scripts:
+(1)adns_check_record.py: check the record in server DB fulfiled expect when client dig;
+(2)adns_check_threshold.py: check the adns.conf's threshold;
+(3)adns_statis_data.py: statis the zone/domain/rr num etc;
+PS: python x.py -h can help you
+

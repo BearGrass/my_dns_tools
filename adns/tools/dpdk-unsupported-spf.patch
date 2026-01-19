@@ -1,0 +1,26 @@
+diff --git a/dpdk/config/common_linuxapp b/dpdk/config/common_linuxapp
+index 050acc1..596135f 100644
+--- a/dpdk/config/common_linuxapp
++++ b/dpdk/config/common_linuxapp
+@@ -190,7 +190,7 @@ CONFIG_RTE_LIBRTE_IXGBE_DEBUG_TX_FREE=n
+ CONFIG_RTE_LIBRTE_IXGBE_DEBUG_DRIVER=n
+ CONFIG_RTE_LIBRTE_IXGBE_PF_DISABLE_STRIP_CRC=n
+ CONFIG_RTE_LIBRTE_IXGBE_RX_ALLOW_BULK_ALLOC=y
+-CONFIG_RTE_LIBRTE_IXGBE_ALLOW_UNSUPPORTED_SFP=n
++CONFIG_RTE_LIBRTE_IXGBE_ALLOW_UNSUPPORTED_SFP=y
+ CONFIG_RTE_IXGBE_INC_VECTOR=y
+ CONFIG_RTE_IXGBE_RX_OLFLAGS_ENABLE=y
+ 
+diff --git a/dpdk/lib/librte_pmd_ixgbe/ixgbe_ethdev.c b/dpdk/lib/librte_pmd_ixgbe/ixgbe_ethdev.c
+index 59122a1..8126842 100644
+--- a/dpdk/lib/librte_pmd_ixgbe/ixgbe_ethdev.c
++++ b/dpdk/lib/librte_pmd_ixgbe/ixgbe_ethdev.c
+@@ -1428,6 +1428,8 @@ ixgbe_dev_start(struct rte_eth_dev *dev)
+ 	hw->adapter_stopped = FALSE;
+ 	ixgbe_stop_adapter(hw);
+ 
++	ixgbe_disable_tx_laser(hw);
++
+ 	/* reinitialize adapter
+ 	 * this calls reset and start */
+ 	status = ixgbe_pf_reset_hw(hw);

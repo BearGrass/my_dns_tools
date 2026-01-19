@@ -1,0 +1,4 @@
+[deps]
+    expect-5.45-14.1.alios7.x86_64.rpm
+    kernel-devel-3.10.0-327.ali2012.alios7.x86_64.rpm=stable
+    kernel-headers-3.10.0-327.ali2012.alios7.x86_64.rpm=stable
